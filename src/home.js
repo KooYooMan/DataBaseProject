@@ -4,9 +4,17 @@ import './home.scss';
 function Box(props) {
     return (
         <div className="el">
+<<<<<<< HEAD
             <button onClick={props.onClick}>
                 <img src={props.imgSrc} alt=""></img>
             </button>
+=======
+            <div class="">
+                <button onClick={props.onClick}>
+                    <img src={props.imgSrc} alt=""></img>
+                </button>
+            </div>
+>>>>>>> origin
             <div className="el__index">
                 <div className="el__index-back">
                     {props.content}
