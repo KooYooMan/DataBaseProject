@@ -10,6 +10,7 @@ class Main extends React.Component {
         this.state = {
             screen: 0,
         }
+        this.setScreen = this.setScreen.bind(this)
     }
 
     setScreen(idScreen) {
@@ -18,15 +19,23 @@ class Main extends React.Component {
         });
     }
 
-    renderedScreen(screen) {
-        if (screen === 0) return <Home setScreen={this.setScreen}/>
-        else if (screen === 1) return <Student setScreen={this.setScreen}/>
-        else if (screen === 2) return <Lecturer setScreen={this.setScreen}/>
-    }
-
     render() {
         return(
-            this.renderedScreen(this.state.screen)
+            <div>
+                <Home 
+                    screen={this.state.screen} 
+                    studentScreen={() => this.setScreen(1)} 
+                    lecturerScreen={() => this.setScreen(2)} 
+                />
+                <Student 
+                    screen={this.state.screen}
+                    homeScreen={() => this.setScreen(0)} 
+                />
+                <Lecturer 
+                    screen={this.state.screen} 
+                    homeScreen={() => this.setScreen(0)}
+                />
+            </div>
         );
     }
 }

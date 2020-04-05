@@ -2,8 +2,8 @@ import React from 'react';
 
 class Student extends React.Component {
     render() {
-        return (
-            <h1>Student Screen</h1>
+        return ((this.props.screen !== 1) ? <div></div> :
+            <h1>Student</h1>
         );
     }
 }
