@@ -1,34 +1,22 @@
 import React from 'react';
 import './home.scss';
 
-class buttonComponent extends React.Component {
-    onClick() {
-        alert('dmm');
-    }
-
-    render() {
-        return (
-            <div>
-                <h1>dkm chung may</h1>
-            </div>
-        );
-    }
+function anotherBox(props) {
+    return <h1>Helllo World</h1>;
 }
 
-class Box extends React.Component {
-    render() {
-        return (
-            <div className="el">
-                <buttonComponent />
-                <div className="el__index">
-                    <div className="el__index-back">{this.props.content}</div>
-                    <div className="el__index-front">
-                        <div className="el__index-overlay" data-index={this.props.content}>{this.props.num}</div>
-                    </div>
+function Box(props) {
+    return (
+        <div className="el">
+            <anotherBox />
+            <div className="el__index">
+                <div className="el__index-back">{props.content}</div>
+                <div className="el__index-front">
+                    <div className="el__index-overlay" data-index={props.content}>{props.num}</div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 class Home extends React.Component {
