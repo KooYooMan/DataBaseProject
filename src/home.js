@@ -39,8 +39,8 @@ class Home extends React.Component {
                             num="2" 
                             onClick={this.props.lecturerScreen}
                         />
-                        <h2>dkm</h2>
                     </div>
+                    <h2>lol</h2>
                 </div>
             </div>
         );
