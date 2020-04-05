@@ -1,14 +1,14 @@
 import React from 'react';
 import './home.scss';
 
-function anotherBox(props) {
-    return <h1>Helllo World</h1>;
-}
-
 function Box(props) {
     return (
         <div className="el">
-            <anotherBox />
+            <div class="button-image">
+                <button onClick={props.onClick}>
+                    <img src={props.imgSrc} alt=""></img>
+                </button>
+            </div>
             <div className="el__index">
                 <div className="el__index-back">{props.content}</div>
                 <div className="el__index-front">
