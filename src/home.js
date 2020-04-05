@@ -4,17 +4,9 @@ import './home.scss';
 function Box(props) {
     return (
         <div className="el">
-<<<<<<< HEAD
             <button onClick={props.onClick}>
                 <img src={props.imgSrc} alt=""></img>
             </button>
-=======
-            <div class="">
-                <button onClick={props.onClick}>
-                    <img src={props.imgSrc} alt=""></img>
-                </button>
-            </div>
->>>>>>> origin
             <div className="el__index">
                 <div className="el__index-back">
                     {props.content}
@@ -47,6 +39,7 @@ class Home extends React.Component {
                             num="2" 
                             onClick={this.props.lecturerScreen}
                         />
+                        <h2>dkm</h2>
                     </div>
                 </div>
             </div>
