@@ -4,7 +4,7 @@ import './home.scss';
 function Box(props) {
     return (
         <div className="el">
-            <div class="button-image">
+            <div class="">
                 <button onClick={props.onClick}>
                     <img src={props.imgSrc} alt=""></img>
                 </button>
