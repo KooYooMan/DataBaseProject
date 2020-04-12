@@ -20,23 +20,30 @@ class Main extends React.Component {
     }
 
     render() {
-        return(
-            <div>
-                <Home 
-                    screen={this.state.screen} 
-                    studentScreen={() => this.setScreen(1)} 
-                    lecturerScreen={() => this.setScreen(2)} 
-                />
-                <Student 
-                    screen={this.state.screen}
-                    homeScreen={() => this.setScreen(0)} 
-                />
-                <Lecturer 
-                    screen={this.state.screen} 
-                    homeScreen={() => this.setScreen(0)}
-                />
-            </div>
-        );
+        switch (this.state.screen) {
+            case 1:
+                return (
+                    <Student 
+                        screen={this.state.screen}
+                        homeScreen={() => this.setScreen(0)} 
+                    />
+                );
+            case 2:
+                return (
+                    <Lecturer 
+                        screen={this.state.screen} 
+                        homeScreen={() => this.setScreen(0)}
+                    />
+                );
+            default:
+                return (
+                    <Home 
+                        screen={this.state.screen} 
+                        studentScreen={() => this.setScreen(1)} 
+                        lecturerScreen={() => this.setScreen(2)} 
+                    />
+                );
+        }
     }
 }
 
