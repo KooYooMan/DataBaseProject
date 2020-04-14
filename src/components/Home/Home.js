@@ -1,5 +1,7 @@
 import React from 'react';
 import './home.scss';
+import { connect } from 'react-redux';
+import actions from '../../actions/index-screen-actions';
 
 function Box(props) {
     return (
@@ -23,8 +25,8 @@ function Box(props) {
 
 class Home extends React.Component {
     render() {
-        return ((this.props.screen !== 0) ? <div></div> :
-            <div class="home-background">
+        return (
+            <div className="home-background">
                 <div className="cont s--inactive">
                     <div className="cont__inner">
                         <Box 
@@ -46,4 +48,11 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        studentScreen : () => dispatch(actions.studentScreen),
+        lecturerScreen : () => dispatch(actions.lecturerScreen)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Home);
