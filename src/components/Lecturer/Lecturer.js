@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class Lecturer extends React.Component {
     render() {
-        console.log('dkm')
         return (
             <button onClick={this.props.homeScreen}>Home Screen</button>
         );
