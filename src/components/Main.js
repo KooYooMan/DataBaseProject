@@ -29,7 +29,7 @@ class Main extends React.Component {
 
 const mapStatetoProps = function(store) {
     return {
-        screen: store.indexScreen
+        screen: store.indexScreen.get('screen')
     };
 }
 

@@ -1,19 +1,65 @@
 import React from 'react';
-import actions from '../../actions/index-screen-actions';
 import { connect } from 'react-redux';
+import './Lecturer.scss';
+import Home from './Home';
+import actions from '../../actions/index-screen-actions'
 
 class Lecturer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            screen: 0,
+            listLecturer: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('https://uet-schedule.herokuapp.com/lecturer/getAll')
+        .then((result) => result.json())
+        .then(
+            (result) => {
+                this.setState({
+                    screen: 0,
+                    listLecturer: result.lecturerList
+                })
+            }
+        ).catch(err => {
+            this.setState({
+                screen: 1
+            })
+        })
+    }
+
     render() {
-        return (
-            <button onClick={this.props.homeScreen}>Home Screen</button>
-        );
+        switch(this.state.screen) {
+            case 0:
+                return (
+                    <Home 
+                        listLecturer={this.state.listLecturer}
+                    />
+                )
+            case 1:
+                return (
+                    <div>
+                        <h1>Can't invoke lecturer data from server</h1>
+                        <button onClick={this.props.homeScreen}>Back</button>
+                    </div>
+                );
+            default:
+                return (
+                    <div>
+                        <h1>Render Lecturer Error</h1>
+                        <button onClick={this.props.homeScreen}>Back</button>
+                    </div>
+                );
+        }
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchtoProps = (dispatch, ownProps) => {
     return {
         homeScreen: () => dispatch(actions.homeScreen)
     }
 }
 
-export default connect(null, mapDispatchToProps)(Lecturer);
+export default connect(null, mapDispatchtoProps)(Lecturer); 

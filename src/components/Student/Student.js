@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import actions from '../../actions/index-screen-actions';
+import './Student.scss';
 
 class Student extends React.Component {
     render() {
         return (
-            <button onClick={this.props.homeScreen}>Home Screen</button>
+            <div id="container"></div>
         );
     }
 }
