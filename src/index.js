@@ -7,7 +7,7 @@ import Schedule from './components/Schedule/Schedule';
 
 ReactDOM.render(
     <Provider store={store}>
-        <Schedule />
+        <Main />
     </Provider> ,
     document.getElementById('root')
 );
