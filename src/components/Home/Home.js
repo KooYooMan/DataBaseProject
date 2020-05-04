@@ -3,52 +3,82 @@ import './home.scss';
 import { connect } from 'react-redux';
 import actions from '../../actions/index-screen-actions';
 
-function Box(props) {
-    return (
-        <div className="el">
-            <button onClick={props.onClick}>
-                <img src={props.imgSrc} alt=""></img>
-            </button>
-            <div className="el__index">
-                <div className="el__index-back">
-                    {props.content}
-                </div>
-                <div className="el__index-front">
-                    <div className="el__index-overlay" data-index={props.content}>
-                        {props.num}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
 class Home extends React.Component {
     render() {
+        document.getElementById('root').style.height="100%";
+        document.getElementById('root').style.margin="auto";
         return (
-            <div className="home-background">
-                <div className="cont s--inactive">
-                    <div className="cont__inner">
-                        <Box 
-                            content="Student" 
-                            imgSrc="./image/student.jpg" 
-                            num="1" 
-                            onClick={this.props.studentScreen}
-                        />
-                        <Box 
-                            content="Lecturer" 
-                            imgSrc="./image/lecturer.webp" 
-                            num="2" 
-                            onClick={this.props.lecturerScreen}
-                        />
-                    </div>
+            <div id="home-component">
+                <div className="container">
+                <button className="card" onClick={this.props.studentScreen}>
+                    <h2>Student</h2>
+                    <i className="fas fa-arrow-right" />
+                    <div className="pic" />
+                    <ul>
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    </ul>
+                    <button></button>
+                </button>
+                <button className="card card2" onClick={this.props.lecturerScreen}>
+                    <h2>Lecturer</h2>
+                    <i className="fas fa-arrow-right" />
+                    <div className="pic" />
+                    <ul>
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    </ul>
+                    <button></button>
+                </button>
                 </div>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         studentScreen : () => dispatch(actions.studentScreen),
         lecturerScreen : () => dispatch(actions.lecturerScreen)

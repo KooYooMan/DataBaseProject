@@ -1,0 +1,108 @@
+.table {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    background-color: white;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+       "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    .table-body {
+       display: flex;
+       width: 100%;
+       color: black;
+       flex-wrap: wrap;
+    }
+    .table-header {
+       background-color: #36304a;
+       color: white;
+       width: 100%;
+       .column:hover {
+          background-color: #484848;
+          font-weight: 500;
+       }
+    }
+    .row {
+       display: inline-flex;
+       width: 100%;
+       box-sizing: border-box;
+    }
+    .column {
+       width: 25%;
+       padding: 10px;
+       text-align: center;
+    }
+    .icon {
+       background: transparent;
+       border: none;
+       width: 35px;
+       height: 35px;
+       margin: 0px;
+       padding: 0px;
+       font-size: 20px;
+    }
+ }
+ .form {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+       "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    fieldset {
+       margin: 0;
+       padding: 0.35em 0 0.75em;
+       border: 0;
+       .field {
+          margin-bottom: 0.5em;
+          box-sizing: border-box;
+          label {
+             text-align: right;
+             display: inline-block;
+             vertical-align: middle;
+             margin: 0 1em 0 0;
+             width: 250px;
+             text-align: center;
+          }
+          input {
+             padding: 0.5em 0.6em;
+             display: inline-block;
+             border: 1px solid #ccc;
+             box-shadow: inset 0 1px 3px #ddd;
+             border-radius: 4px;
+             vertical-align: middle;
+             box-sizing: border-box;
+             width: 400px;
+          }
+       }
+    }
+    button {
+       background-color: #0078e7;
+       color: #fff;
+       font-size: 100%;
+       padding: 0.5em 1em;
+       border: 1px solid #999;
+       border: transparent;
+       text-decoration: none;
+       border-radius: 2px;
+    }
+ }
+ @keyframes blinking {
+    0% {
+       background-color: #0078e7;
+    }
+    100% {
+       background-color: #36304a;
+       color: white;
+    }
+ }
+ .updating {
+    animation: blinking 1s infinite;
+ }
+ 

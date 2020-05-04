@@ -1,0 +1,87 @@
+#lecturer-menu-buttons {
+    text-align: center;
+    .container {
+        padding-top: 40px;
+        a {
+            position: relative;
+            width: 100%;
+            padding-top: 25.92%;
+            display: block;
+            background-size: 100% 100%;
+            font-family: 'luckiest guy';
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #333;
+       }
+        a.background-button {
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-shadow.png);
+            &:after {
+                content: attr(title);
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/yellow-top.png);
+                transition: all 0.3s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+           }
+            &:hover:after {
+                -webkit-transform: translate(2.5%, 10%);
+                transform: translate(2.5%, 10%);
+                text-shadow: 2px 2px 1px white;
+                color: black;
+           }
+       }
+        .button-wrapper {
+            width: 90%;
+            display: inline-block;
+            margin: 5px;
+            &:nth-child(2) a {
+                -webkit-filter: hue-rotate(36deg);
+                filter: hue-rotate(36deg);
+           }
+            &:nth-child(3) a {
+                -webkit-filter: hue-rotate(72deg);
+                filter: hue-rotate(72deg);
+           }
+            &:nth-child(4) {
+                -webkit-filter: hue-rotate(108deg);
+                filter: hue-rotate(108deg);
+           }
+            &:nth-child(5) {
+                -webkit-filter: hue-rotate(144deg);
+                filter: hue-rotate(144deg);
+           }
+            &:nth-child(6) {
+                -webkit-filter: hue-rotate(180deg);
+                filter: hue-rotate(180deg);
+           }
+            &:nth-child(7) {
+                -webkit-filter: hue-rotate(216deg);
+                filter: hue-rotate(216deg);
+           }
+            &:nth-child(8) {
+                -webkit-filter: hue-rotate(216deg);
+                filter: hue-rotate(216deg);
+           }
+            &:nth-child(9) {
+                -webkit-filter: hue-rotate(252deg);
+                filter: hue-rotate(252deg);
+           }
+            &:nth-child(7) {
+                -webkit-filter: hue-rotate(288deg);
+                filter: hue-rotate(288deg);
+           }
+            &:nth-child(8) {
+                -webkit-filter: hue-rotate(324deg);
+                filter: hue-rotate(324deg);
+           }
+       }
+    }
+    
+}
