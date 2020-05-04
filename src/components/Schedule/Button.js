@@ -4,12 +4,14 @@ import './Button.scss';
 class Button extends React.Component {
     render() {
         return (
-            <div className="container">
-                <div class="button-wrapper">
-                    <a class="background-button" href="#" title="Back"></a>
-                </div>
-                <div class="button-wrapper">
-                    <a class="background-button" href="#" title="Export"></a>
+            <div id="lecturer-menu-buttons">
+                <div className="container">
+                    <div className="button-wrapper">
+                        <a className="background-button" onClick={this.props.backButton} href="#" title="Back"></a>
+                    </div>
+                    <div className="button-wrapper">
+                        <a className="background-button" href="#" title="Export"></a>
+                    </div>
                 </div>
             </div>
         );
