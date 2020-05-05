@@ -567,7 +567,7 @@ class Student extends React.Component {
       );
     } else {
       return (
-        <Schedule listSubject={this.state.user} backButton={this.backButton} />
+        <Schedule listSubject={this.state.users} backButton={this.backButton} />
       );
     }
   }
