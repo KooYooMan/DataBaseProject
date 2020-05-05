@@ -77,7 +77,7 @@ function checkError(data) {
           return [
             i,
             "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
-              (i + 1).toString() + " (T" +data[i].dayOfWeek +":" + data[i].period +")",
+            (i + 1).toString() + " (T" + data[i].dayOfWeek + ":" + data[i].period + ")",
           ];
           // console.log(
           //   "Bạn có 2 môn bị trùng lịch là: " +
@@ -131,24 +131,24 @@ const SuggestionTH = (props) => {
       props.changeInput(props.list[0]);
     } else {
 
-       var renderList = props.list.map((value) =>
-         value.group !== "CL" ? (
-           <button
-             onClick={() => {
-               props.changeInput(value);
-               props.changeInput_Hidden(value_hidden);
-             }}
-             className="button-suggest"
-           >
-             {" "}
-             {value.group + " (T" + value.dayOfWeek + ":" + value.period + ")"}{" "}
-           </button>
-         ) : (
-           <button className="button-suggest"> {value.group} </button>
-         )
-       );
+      var renderList = props.list.map((value) =>
+        value.group !== "CL" ? (
+          <button
+            onClick={() => {
+              props.changeInput(value);
+              props.changeInput_Hidden(value_hidden);
+            }}
+            className="button-suggest"
+          >
+            {" "}
+            {value.group + " (T" + value.dayOfWeek + ":" + value.period + ")"}{" "}
+          </button>
+        ) : (
+            <button className="button-suggest"> {value.group} </button>
+          )
+      );
 
-       renderList.splice(0,1);
+      renderList.splice(0, 1);
       // var renderList = props.list.filter((value) => 
       //     (value.group !== "CL")
       // );
@@ -469,8 +469,8 @@ class Student extends React.Component {
       console.log("abc1");
       console.log(errorLog[0]);
       let { users } = this.state;
-      if(users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
-      else{
+      if (users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
+      else {
         console.log("djt me may");
         console.log(users[errorLog[0] + 1]);
       }
@@ -491,85 +491,90 @@ class Student extends React.Component {
   }
 
   render() {
-    if (this.state.screen === 0) {
-      return (
-        <div className="screen">
-          <BackButton homeScreen={this.props.homeScreen} />
-          <div className="screen_container">
-            <form onSubmit={this.handleSubmit}>
-              <div className="container">
-                <h1 style={{ textAlign: "center" }}>Course Search</h1>
-                <div className="input_flex">
-                  <input
-                    type="number"
-                    value={this.state.maSV}
-                    placeholder="Nhập mã sinh viên"
-                    name="maSV"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <input
-                    type="search"
-                    value={this.state.classID}
-                    placeholder="Nhập mã/tên môn học"
-                    name="classID"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <div>
-                    <Suggestion
-                      currentInput={this.state.currentInput}
-                      list={this.state.listSuggestion}
-                      changeInput={this.changeInput}
-                    />
-                  </div>
-                  <input
-                    type="search"
-                    value={this.state.group}
-                    placeholder="Nhập mã lớp thực hành"
-                    name="group"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <div>
-                    <SuggestionTH
-                      currentInput={this.state.currentInput}
-                      list={this.state.listThucHanh}
-                      changeInput={this.changeInput}
-                      changeInput_Hidden={this.changeInput_Hidden}
-                    />
-                  </div>
-                </div>
-                {this.state.error_type !== 0 ? (
-                  <p className="errorText">{this.state.error_type}</p>
-                ) : (
-                  console.log("ok")
-                )}
-                <button type="submit" className="button-add">
-                  Thêm
+    return (
+      <div id="student-component">
+        {(this.state.screen === 0) ?
+          (
+            <div className="screen">
+              <BackButton homeScreen={this.props.homeScreen} />
+              <div className="screen_container">
+                <form onSubmit={this.handleSubmit}>
+                  <div className="container">
+                    <h1 style={{ textAlign: "center" }}>Course Search</h1>
+                    <div className="input_flex">
+                      <input
+                        type="number"
+                        value={this.state.maSV}
+                        placeholder="Nhập mã sinh viên"
+                        name="maSV"
+                        onChange={this.handleChange}
+                        required
+                        autoComplete="off"
+                      />
+                      <input
+                        type="search"
+                        value={this.state.classID}
+                        placeholder="Nhập mã/tên môn học"
+                        name="classID"
+                        onChange={this.handleChange}
+                        required
+                        autoComplete="off"
+                      />
+                      <div>
+                        <Suggestion
+                          currentInput={this.state.currentInput}
+                          list={this.state.listSuggestion}
+                          changeInput={this.changeInput}
+                        />
+                      </div>
+                      <input
+                        type="search"
+                        value={this.state.group}
+                        placeholder="Nhập mã lớp thực hành"
+                        name="group"
+                        onChange={this.handleChange}
+                        required
+                        autoComplete="off"
+                      />
+                      <div>
+                        <SuggestionTH
+                          currentInput={this.state.currentInput}
+                          list={this.state.listThucHanh}
+                          changeInput={this.changeInput}
+                          changeInput_Hidden={this.changeInput_Hidden}
+                        />
+                      </div>
+                    </div>
+                    {this.state.error_type !== 0 ? (
+                      <p className="errorText">{this.state.error_type}</p>
+                    ) : (
+                        console.log("ok")
+                      )}
+                    <button type="submit" className="button-add">
+                      Thêm
                 </button>
-              </div>
-            </form>
-            <div className="table_flex">
-              <Table users={this.state.users} deleteUser={this.deleteUser} />
-              <button
-                type="submit"
-                className="button-submit"
-                onClick={() => {
-                  this.setState({ screen: 1 });
-                }}
-              >
-                Tạo TKB
+                  </div>
+                </form>
+                <div className="table_flex">
+                  <Table users={this.state.users} deleteUser={this.deleteUser} />
+                  <button
+                    type="submit"
+                    className="button-submit"
+                    onClick={() => {
+                      this.setState({ screen: 1 });
+                    }}
+                  >
+                    Tạo TKB
               </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <Schedule listSubject={this.state.users} backButton={this.backButton} />
-      );
-    }
+          )  : (
+            <Schedule listSubject={this.state.users} backButton={this.backButton} />
+          )
+        }
+      </div>
+    );
   }
 }
 
