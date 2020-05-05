@@ -230,13 +230,19 @@ input {
       width: 15%;
     }
     &:nth-child(2) {
-      width: 60%;
+      width: 49%;
     }
     &:nth-child(3) {
-      width: 10%;
+      width: 8%;
     }
     &:nth-child(4) {
-      width: 10%;
+      width: 5%;
+    }
+    &:nth-child(5) {
+      width: 6%;
+    }
+    &:nth-child(6) {
+      width: 12%;
     }
   }
   .icon {
@@ -268,11 +274,22 @@ input {
     &:nth-child(2) {
       border-right: 1px dashed #999;
       border-left: 1px dashed #999;
-      width: 60%;
+      width: 49%;
     }
     &:nth-child(3) {
       border-right: 1px dashed #999;
-      width: 10%;
+      width: 8%;
+    }
+    &:nth-child(4) {
+      border-right: 1px dashed #999;
+      width: 5%;
+    }
+    &:nth-child(5) {
+      border-right: 1px dashed #999;
+      width: 6%;
+    }
+    &:nth-child(6) {
+      width: 12%;
     }
   }
 }
