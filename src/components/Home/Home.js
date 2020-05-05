@@ -11,7 +11,7 @@ class Home extends React.Component {
             <div id="home-component">
                 <div className="container">
                 <button className="card" onClick={this.props.studentScreen}>
-                    <h2>Student</h2>
+                    <h2>Học sinh</h2>
                     <i className="fas fa-arrow-right" />
                     <div className="pic" />
                     <ul>
@@ -42,7 +42,7 @@ class Home extends React.Component {
                     <button></button>
                 </button>
                 <button className="card card2" onClick={this.props.lecturerScreen}>
-                    <h2>Lecturer</h2>
+                    <h2>Giảng viên</h2>
                     <i className="fas fa-arrow-right" />
                     <div className="pic" />
                     <ul>

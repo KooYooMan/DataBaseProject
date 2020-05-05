@@ -50,7 +50,7 @@ class CourseList extends React.Component {
                 <nav className="menu">
                     <ol style={{ paddingInlineStart: '0px' }}>
                         <li className="menu-item">
-                            <a href="#0">Course List</a>
+                            <a href="#0">Danh Sách Môn Học</a>
                             <List 
                                 listSubject={this.props.listSubject}
                             />

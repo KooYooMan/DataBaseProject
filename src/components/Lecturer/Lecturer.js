@@ -41,14 +41,14 @@ class Lecturer extends React.Component {
             case 1:
                 return (
                     <div>
-                        <h1>Can't invoke lecturer data from server</h1>
+                        <h1>Không lấy được dữ liệu từ server</h1>
                         <button onClick={this.props.homeScreen}>Back</button>
                     </div>
                 );
             default:
                 return (
                     <div>
-                        <h1>Render Lecturer Error</h1>
+                        <h1>Lỗi hiển thị</h1>
                         <button onClick={this.props.homeScreen}>Back</button>
                     </div>
                 );

@@ -7,10 +7,10 @@ class Button extends React.Component {
             <div id="lecturer-menu-buttons">
                 <div className="container">
                     <div className="button-wrapper">
-                        <a className="background-button" onClick={this.props.backButton} href="#" title="Back"></a>
+                        <a className="background-button" onClick={this.props.backButton} href="#" title="Trở về"></a>
                     </div>
                     <div className="button-wrapper">
-                        <a className="background-button" href="#" title="Export"></a>
+                        <a className="background-button" href="#" title="Xuất tệp"></a>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ class BackButton extends React.Component {
             <div className="back-button-container">
                 <a className="back-button" onClick={this.props.homeScreen}>
                     <i className="button__icon fa fa-arrow-left" style={{ padding: '5px' }}></i>
-                    <span className="button__text">Back</span>
+                    <span className="button__text">Trở về</span>
                 </a>
             </div>
         );
@@ -122,12 +122,12 @@ class Home extends React.Component {
                             <BackButton
                                 homeScreen={this.props.homeScreen}
                             />
-                            <h1 style={{ padding: '100px', textAlign: 'center' }} >Search Lecturer's Name</h1>
+                            <h1 style={{ padding: '100px', textAlign: 'center' }} >Tìm kiếm tên giảng viên</h1>
                             <div className="input">
                                 <div className="input-container">
                                     <input
                                         className="input-field"
-                                        placeholder="Enter Lecturer's name"
+                                        placeholder="Tên giảng viên"
                                         ref={this.nameInput}
                                         style={{ color: 'black', fontFamily: "'Open Sans', sans-serif" }}
                                         id="input-content"
@@ -140,6 +140,7 @@ class Home extends React.Component {
                                             type="submit"
                                             onClick={this.submitHandler}
                                             id="myBtn"
+                                            value="Xác nhận"
                                         />
                                     </div>
                                 </div>
