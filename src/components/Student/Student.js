@@ -49,10 +49,7 @@ function checkError(data) {
         data[i].group !== "CL" &&
         data[j].group !== "CL"
       ) {
-        return [
-          i,
-          "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"
-        ];
+        return [i, "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"];
         // console.log(
         //   "Hiện tại môn " +
         //     data[i]["className"] +
@@ -77,7 +74,12 @@ function checkError(data) {
           return [
             i,
             "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
-              (i + 1).toString() + " (T" +data[i].dayOfWeek +":" + data[i].period +")",
+              (i + 1).toString() +
+              " (T" +
+              data[i].dayOfWeek +
+              ":" +
+              data[i].period +
+              ")",
           ];
           // console.log(
           //   "Bạn có 2 môn bị trùng lịch là: " +
@@ -130,45 +132,28 @@ const SuggestionTH = (props) => {
     if (props.list.length === 1) {
       props.changeInput(props.list[0]);
     } else {
-
-       var renderList = props.list.map((value) =>
-         value.group !== "CL" ? (
-           <button
-             onClick={() => {
-               props.changeInput(value);
-               props.changeInput_Hidden(value_hidden);
-             }}
-             className="button-suggest"
-           >
-             {" "}
-             {value.group + " (T" + value.dayOfWeek + ":" + value.period + ")"}{" "}
-           </button>
-         ) : (
-           <button className="button-suggest"> {value.group} </button>
-         )
-       );
-
-       renderList.splice(0,1);
-      // var renderList = props.list.filter((value) => 
-      //     (value.group !== "CL")
-      // );
-      //  renderList.map((value) =>
-      //    value.group !== "CL" ? (
-      //      <button
-      //        onClick={() => {
-      //          props.changeInput(value);
-      //          props.changeInput_Hidden(value_hidden);
-      //        }}
-      //        className="button-suggest"
-      //      >
-      //        {" "}
-      //        {value.group}{" "}
-      //      </button>
-      //  ) : (
-      //    <button className="button-suggest"> {value.group} </button>
-      //    )
-      // );
-
+      var renderList = props.list.map((value) =>
+        value.group !== "CL" ? (
+          <button
+            onClick={() => {
+              props.changeInput(value);
+              props.changeInput_Hidden(value_hidden);
+            }}
+            className="button-suggest"
+          >
+            {" "}
+            {value.group +
+              " (T" +
+              value.dayOfWeek +
+              ":" +
+              value.period +
+              ")"}{" "}
+          </button>
+        ) : (
+          console.log("hidden CL suggest")
+        )
+      );
+      // renderList.map(0, 1);
     }
   }
 
@@ -282,7 +267,7 @@ class Student extends React.Component {
       this.makeListTH(item.classID);
     } else {
       this.setState({
-        group: item.group,
+        group: item.group === "CL" ? item.group : "N" + item.group,
         listThucHanh: [],
         period: item.period,
         dayOfWeek: item.dayOfWeek,
@@ -469,8 +454,8 @@ class Student extends React.Component {
       console.log("abc1");
       console.log(errorLog[0]);
       let { users } = this.state;
-      if(users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
-      else{
+      if (users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
+      else {
         console.log("djt me may");
         console.log(users[errorLog[0] + 1]);
       }
@@ -493,81 +478,105 @@ class Student extends React.Component {
   render() {
     if (this.state.screen === 0) {
       return (
-        <div className="screen">
-          <BackButton homeScreen={this.props.homeScreen} />
-          <div className="screen_container">
-            <form onSubmit={this.handleSubmit}>
-              <div className="container">
-                <h1 style={{ textAlign: "center" }}>Course Search</h1>
-                <div className="input_flex">
-                  <input
-                    type="number"
-                    value={this.state.maSV}
-                    placeholder="Nhập mã sinh viên"
-                    name="maSV"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <input
-                    type="search"
-                    value={this.state.classID}
-                    placeholder="Nhập mã/tên môn học"
-                    name="classID"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <div>
-                    <Suggestion
-                      currentInput={this.state.currentInput}
-                      list={this.state.listSuggestion}
-                      changeInput={this.changeInput}
+        <div id="student-component">
+          <div className="screen">
+            <BackButton homeScreen={this.props.homeScreen} />
+            <div className="screen_container">
+              {/* <form>
+                    <div className="container_studentID">
+                    <h1 style={{ textAlign: "center" }}>MÃ SINH VIÊN</h1>
+                      <div className="input_flex">
+                        <input
+                          type="number"
+                          id="maSV"
+                          value={this.state.maSV}
+                          placeholder="Nhập mã sinh viên"
+                          name="maSV"
+                          onChange={this.handleChange}
+                          required
+                          autoComplete="off"
+                        />
+                      <button type="submit" className="button-add" >
+                        Nhập
+                      </button>
+                    </div>  
+                    </div>
+                  </form> */}
+
+              <form onSubmit={this.handleSubmit}>
+                <div className="container">
+                  <h1 style={{ textAlign: "center" }}>TÌM MÔN HỌC</h1>
+                  <div className="input_flex">
+                    <input
+                      type="search"
+                      id="classID"
+                      value={this.state.classID}
+                      placeholder="Nhập mã/tên môn học"
+                      name="classID"
+                      onChange={this.handleChange}
+                      required
+                      autoComplete="off"
                     />
-                  </div>
-                  <input
-                    type="search"
-                    value={this.state.group}
-                    placeholder="Nhập mã lớp thực hành"
-                    name="group"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <div>
-                    <SuggestionTH
-                      currentInput={this.state.currentInput}
-                      list={this.state.listThucHanh}
-                      changeInput={this.changeInput}
-                      changeInput_Hidden={this.changeInput_Hidden}
+                    <div>
+                      <Suggestion
+                        currentInput={this.state.currentInput}
+                        list={this.state.listSuggestion}
+                        changeInput={this.changeInput}
+                      />
+                    </div>
+                    <input
+                      type="search"
+                      id="group"
+                      value={this.state.group}
+                      placeholder="Nhập mã lớp thực hành"
+                      name="group"
+                      onChange={this.handleChange}
+                      required
+                      autoComplete="off"
                     />
+                    <div>
+                      <SuggestionTH
+                        currentInput={this.state.currentInput}
+                        list={this.state.listThucHanh}
+                        changeInput={this.changeInput}
+                        changeInput_Hidden={this.changeInput_Hidden}
+                      />
+                    </div>
                   </div>
+                  {this.state.error_type !== 0 ? (
+                    <p className="errorText">{this.state.error_type}</p>
+                  ) : (
+                    console.log("ok")
+                  )}
+                  <button type="submit" className="button-add">
+                    Thêm
+                  </button>
                 </div>
-                {this.state.error_type !== 0 ? (
-                  <p className="errorText">{this.state.error_type}</p>
+              </form>
+
+              <div className="table_flex">
+                <Table users={this.state.users} deleteUser={this.deleteUser} />
+                {this.state.users.length !== 0 ? (
+                  <button
+                    type="submit"
+                    className="button-submit"
+                    onClick={() => {
+                      this.setState({ screen: 1 });
+                    }}
+                  >
+                    Tạo TKB
+                  </button>
                 ) : (
-                  console.log("ok")
+                  console.log("hide")
                 )}
-                <button type="submit" className="button-add">
-                  Thêm
-                </button>
               </div>
-            </form>
-            <div className="table_flex">
-              <Table users={this.state.users} deleteUser={this.deleteUser} />
-              <button
-                type="submit"
-                className="button-submit"
-                onClick={() => {
-                  this.setState({ screen: 1 });
-                }}
-              >
-                Tạo TKB
-              </button>
             </div>
           </div>
         </div>
       );
     } else {
       return (
-        <Schedule listSubject={this.state.user} backButton={this.backButton} />
+        <Schedule listSubject={this.state.users} backButton={this.backButton} />
       );
     }
   }
