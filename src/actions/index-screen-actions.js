@@ -12,8 +12,13 @@ var lecturerScreen = {
     type: types.INDEX_LECTURER_SCREEN
 }   
 
+var studentIDScreen = {
+    type: types.INDEX_STUDENTID_SCREEN
+}
+
 export default {
     homeScreen,
     studentScreen,
-    lecturerScreen
+    lecturerScreen,
+    studentIDScreen,
 }

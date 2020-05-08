@@ -18,6 +18,25 @@
     flex-direction: column;
   }
 
+  .screen_header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .studentID_text{
+    text-transform: uppercase;
+    font-weight: 700;
+    display: block;
+    border: 1px solid #f1f1f1;
+    width: 18%;
+    margin: 8px 0 0 0;
+    border-radius: 15px;
+    background-color: white;
+    padding: 8px 0 0 10px;
+    color: #403866;
+  }
+
   .screen_container {
     display: flex;
     flex-direction: row;
@@ -65,7 +84,7 @@
 
   .back-button {
     text-transform: uppercase;
-    margin: 8px 0 0 20px;
+    margin: 8px 18.3% 0 20px;
     transition: all 0.35s ease 0s;
     width: 6%;
     border-radius: 20px;
@@ -84,6 +103,7 @@
       color: #fff;
       width: 8.5%;
       text-align: center;
+      margin-right: 15.8%;
     }
   }
 

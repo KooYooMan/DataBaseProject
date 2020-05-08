@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import actions from "../../actions/index-screen-actions";
 import "./Student.scss";
 import Schedule from "../Schedule/Schedule";
+import StudentID from "../Student/StudentID.js";
+import axios from "axios";
 
 class BackButton extends React.Component {
   render() {
     return (
-      <a className="back-button" onClick={this.props.homeScreen}>
+      <a className="back-button" onClick={this.props.backButton}>
         <i
           className="button__icon fa fa-arrow-left"
           style={{ padding: "5px" }}
@@ -175,59 +177,39 @@ class Student extends React.Component {
     this.makeListTH = this.makeListTH.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.resetFormState = this.resetFormState.bind(this);
+    this.handleSubmitTKB = this.handleSubmitTKB.bind(this);
+
+    this.state = {
+      studentID: this.props.studentID,
+      screen: 1,
+      currentInput: "",
+      courseID: "",
+      maSV: "",
+      classID: "",
+      className: "",
+      group: "",
+      period: "",
+      dayOfWeek: "",
+      auditorium: "",
+      group_hidden: "",
+      period_hidden: "",
+      dayOfWeek_hidden: "",
+      auditorium_hidden: "",
+      error_type: "",
+      error_detect: false,
+      listSchedule: [], //tong hop dong cut :)
+      listSuggestion: [],
+      temp: [],
+      listThucHanh: [],
+      users: this.props.listUser || [],
+      enrollList: [],
+    };
   }
 
   backButton = () => {
     this.setState({
-      screen: 0,
+      screen: 1,
     });
-  };
-
-  state = {
-    screen: 0,
-    currentInput: "",
-    courseID: "",
-    maSV: "",
-    classID: "",
-    className: "",
-    group: "",
-    period: "",
-    dayOfWeek: "",
-    auditorium: "",
-    group_hidden: "",
-    period_hidden: "",
-    dayOfWeek_hidden: "",
-    auditorium_hidden: "",
-    error_type: "",
-    error_detect: false,
-    listSchedule: [], //tong hop dong cut :)
-    listSuggestion: [],
-    temp: [],
-    listThucHanh: [],
-    users: [
-      // {
-      //   id: 0,
-      //   courseID: "Mã môn học",
-      //   classID: "Mã lớp học",
-      //   className: "Tên môn học",
-      //   group: 1,
-      //   period: "7-9",
-      //   dayOfWeek: 3,
-      //   auditorium: "207-GĐ3",
-      //   error: false,
-      // },
-      // {
-      //   id: 1,
-      //   courseID: "Mã môn học",
-      //   classID: "Mã lớp học",
-      //   className: "Tên môn học",
-      //   group: 2,
-      //   period: "7-9",
-      //   dayOfWeek: 7,
-      //   auditorium: "201-GĐ3",
-      //   error: false,
-      // },
-    ],
   };
 
   makeListTH = (value) => {
@@ -267,7 +249,7 @@ class Student extends React.Component {
       this.makeListTH(item.classID);
     } else {
       this.setState({
-        group: item.group === "CL" ? item.group : "N" + item.group,
+        group: item.group,
         listThucHanh: [],
         period: item.period,
         dayOfWeek: item.dayOfWeek,
@@ -285,7 +267,6 @@ class Student extends React.Component {
         this.setState({
           listSchedule: result.scheduleList,
         });
-        //alert(this.state.listSchedule[0]);
       })
       .catch((err) => {
         alert("bu cu");
@@ -475,34 +456,45 @@ class Student extends React.Component {
     }
   }
 
+  handleSubmitTKB() {
+    this.setState({
+      screen: 4,
+    });
+    // this.state.users.map((value) => {
+    //   this.setState({
+    //     enrollList= [
+    //       ...this.state.enrollList,
+    //       {
+    //         classID: value.classID,
+    //         group: value.group,
+    //       }
+    //     ]
+    //   })
+    // })
+    const postEnrollList = this.state.users.map((user) => {
+      return { classID: user.classID, group: user.group};
+    });
+    axios
+      .post("https://uet-schedule.herokuapp.com/student/submitClass", {
+        studentID: this.state.studentID,
+        enrollList: postEnrollList,
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err.response);
+      });
+  }
+
   render() {
-    if (this.state.screen === 0) {
+    if (this.state.screen === 1) {
       return (
         <div id="student-component">
           <div className="screen">
-            <BackButton homeScreen={this.props.homeScreen} />
+            <div className="screen_header">
+              <BackButton backButton={this.props.backButton} />
+              <p className="studentID_text">Mã sinh viên: {this.state.studentID}</p>
+            </div>
             <div className="screen_container">
-              {/* <form>
-                    <div className="container_studentID">
-                    <h1 style={{ textAlign: "center" }}>MÃ SINH VIÊN</h1>
-                      <div className="input_flex">
-                        <input
-                          type="number"
-                          id="maSV"
-                          value={this.state.maSV}
-                          placeholder="Nhập mã sinh viên"
-                          name="maSV"
-                          onChange={this.handleChange}
-                          required
-                          autoComplete="off"
-                        />
-                      <button type="submit" className="button-add" >
-                        Nhập
-                      </button>
-                    </div>  
-                    </div>
-                  </form> */}
-
               <form onSubmit={this.handleSubmit}>
                 <div className="container">
                   <h1 style={{ textAlign: "center" }}>TÌM MÔN HỌC</h1>
@@ -560,9 +552,7 @@ class Student extends React.Component {
                   <button
                     type="submit"
                     className="button-submit"
-                    onClick={() => {
-                      this.setState({ screen: 1 });
-                    }}
+                    onClick={this.handleSubmitTKB}
                   >
                     Tạo TKB
                   </button>
@@ -574,10 +564,12 @@ class Student extends React.Component {
           </div>
         </div>
       );
-    } else {
+    } else if (this.state.screen === 4) {
       return (
         <Schedule listSubject={this.state.users} backButton={this.backButton} />
       );
+    } else {
+      return <StudentID />;
     }
   }
 }
@@ -601,7 +593,7 @@ const Table = ({ users = [], deleteUser }) => {
             <div className={`row ${user.error ? "error" : ""}`}>
               <div className="column">{user.classID}</div>
               <div className="column">{user.className}</div>
-              <div className="column">{user.group}</div>
+              <div className="column">{user.group==="CL"?user.group: "N" + user.group}</div>
               <div className="column">{user.dayOfWeek}</div>
               <div className="column">{user.period}</div>
               <div className="column">
@@ -622,7 +614,7 @@ const Table = ({ users = [], deleteUser }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    homeScreen: () => dispatch(actions.homeScreen),
+    studentIDScreen: () => dispatch(actions.studentIDScreen),
   };
 };
 
