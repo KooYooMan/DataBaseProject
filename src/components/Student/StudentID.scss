@@ -2,10 +2,6 @@
   font-family: Arial, Helvetica, sans-serif;
   // background: linear-gradient(0deg, #fdfcfb , #e2d1c3);
   background: linear-gradient(0deg, #cfd9df, #e2ebf0);
- 
-
-
-  
 
   height: 100%;
   margin: 0;
@@ -147,9 +143,6 @@
     font-size: 14px;
     padding: 8px 0 0 12px;
     height: 40px;
-    &:hover {
-      // color: white;
-    }
   }
 
   .form__group {
@@ -169,7 +162,7 @@
     color: black;
     padding: 7px 0 7px 7px;
     background: transparent;
-    transition: border-color 0.1s;
+    transition: border-color 0.2s;
 
     &::placeholder {
       color: transparent;
@@ -186,14 +179,16 @@
     text-transform: uppercase;
     position: absolute;
     top: 0;
+    // padding: 20px 0 0;
     display: block;
     transition: 0.2s;
     font-size: 1rem;
     color: black;
   }
 
-  .form__field:focus,
-  .form__field:hover {
+  .form__field:focus
+  // .form__field:hover 
+  {
     ~ .form__label {
       position: absolute;
       top: 0;
@@ -201,10 +196,10 @@
       transition: 0.2s;
       font-size: 1rem;
       color: $primary;
-      font-weight: 500;
+      font-weight: 500; 
     }
     padding-bottom: 6px;
-    font-weight: 700;
+    font-weight: 500;
     border-width: 3px;
     border-image: linear-gradient(to right, $primary, $secondary);
     border-image-slice: 1;

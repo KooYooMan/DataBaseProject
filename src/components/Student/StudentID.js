@@ -59,6 +59,13 @@ class StudentID extends React.Component {
 
   componentDidMount() {
     this.studentInput.current.focus();
+    var input = document.getElementById("name");
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+            }
+        });
     //GET data
   }
 
@@ -111,7 +118,7 @@ class StudentID extends React.Component {
               <BackButton homeScreen={this.props.homeScreen} />
               <div className="input-form">
                 <h1>NHẬP MÃ SINH VIÊN</h1>
-                <div className="input-field">
+                <form className="input-field" onSubmit={this.handleSubmit}>
                     <div class="form__group field">
                       <input
                         type="number"
@@ -119,6 +126,7 @@ class StudentID extends React.Component {
                         name="name"
                         id="name"
                         onChange={this.handleChange}
+                        placeholder="du con di~ me"
                         ref={this.studentInput}
                         required
                       />
@@ -126,10 +134,10 @@ class StudentID extends React.Component {
                         Mã sinh viên
                       </label>
                     </div>
-                    <button className="button-submit" onClick={this.handleSubmit} >
+                    <button className="button-submit" id="myBtn">
                       Nhập
                     </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>

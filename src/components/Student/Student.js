@@ -26,7 +26,6 @@ function convertStringToInt(s) {
 }
 
 function checkError(data) {
-  console.log(data);
   let n = data.length;
   var i = 0,
     j = 0;
@@ -40,11 +39,6 @@ function checkError(data) {
           i,
           "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString(),
         ];
-        // console.log(
-        //   "Bạn bị trùng môn: " +
-        //     data[i]["className"] +
-        //     ". Vui lòng kiểm tra lại môn học của bạn"
-        // );
       }
       if (
         data[i].classID === data[j].classID &&
@@ -52,15 +46,6 @@ function checkError(data) {
         data[j].group !== "CL"
       ) {
         return [i, "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"];
-        // console.log(
-        //   "Hiện tại môn " +
-        //     data[i]["className"] +
-        //     " của bạn đang ở cả 2 nhóm " +
-        //     data[i].group +
-        //     " và nhóm " +
-        //     data[j].group +
-        //     " .Bạn vui lòng kiểm tra lại nhóm lớp học của mình."
-        // );
       }
       if (data[i].dayOfWeek == data[j].dayOfWeek) {
         let period_i = convertStringToInt(data[i].period);
@@ -83,16 +68,6 @@ function checkError(data) {
               data[i].period +
               ")",
           ];
-          // console.log(
-          //   "Bạn có 2 môn bị trùng lịch là: " +
-          //     data[i]["className"] +
-          //     " và " +
-          //     data[j]["className"] +
-          //     " vào tiết" +
-          //     data[i].period +
-          //     " thứ " +
-          //     data[i].dayOfWeek
-          // );
         }
       }
     }
@@ -228,8 +203,6 @@ class Student extends React.Component {
       dayOfWeek_hidden: item.dayOfWeek,
       auditorium_hidden: item.auditorium,
     });
-    console.log(item.period + "perioddddd");
-    console.log(item.dayOfWeek + "dayyyyyy");
   };
 
   changeInput = (item) => {
@@ -308,7 +281,7 @@ class Student extends React.Component {
         var subClassID = value.classID.toString().toLowerCase();
       if (value.className != null)
         var subClassName = value.className.toString().toLowerCase();
-      if (text != null) var subText = text.toString().toLowerCase();
+      if (text != null) var subText = text.toString().toLowerCase().trim();
       return subClassID.includes(subText) || subClassName.includes(subText);
     });
 
@@ -429,17 +402,9 @@ class Student extends React.Component {
     }
 
     let errorLog = checkError(sub_Users);
-    console.log(errorLog);
-    console.log(sub_Users);
     if (errorLog[1] !== 0) {
-      console.log("abc1");
-      console.log(errorLog[0]);
       let { users } = this.state;
       if (users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
-      else {
-        console.log("djt me may");
-        console.log(users[errorLog[0] + 1]);
-      }
 
       this.setState({
         error_detect: true,
@@ -447,11 +412,9 @@ class Student extends React.Component {
         users,
       });
     } else {
-      console.log("abc");
       this.setState({
         users: sub_Users,
       });
-      console.log(sub_Users);
       this.resetFormState();
     }
   }
