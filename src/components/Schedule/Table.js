@@ -47,7 +47,7 @@ class Table extends React.Component {
     render() {
         return (
             <div className="container">
-                <table>
+                <table id="schedule-table">
                     <thead>
                         <tr>
                             <th></th>

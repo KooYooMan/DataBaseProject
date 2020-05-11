@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "react-component-export-image": "^0.1.4"
   }
 }

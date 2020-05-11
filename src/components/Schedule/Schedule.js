@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import './Schedule.scss';
 import Table from './Table';
 import Button from './Button';
 import CourseList from './CourseList';
+import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from "react-component-export-image";
 
 class Schedule extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            listSubject: []
+            listSubject: [],
         }
     }
 
@@ -39,7 +40,9 @@ class Schedule extends React.Component {
     }
 
     render() {
+        var componentRef = React.createRef();
         return (
+            <React.Fragment>
             <div id="lecturer">
                 <input id="menu__toggle" type="checkbox" className="menu__toggle" />
                 <label htmlFor="menu__toggle" className="menu__toggle-label">
@@ -53,6 +56,20 @@ class Schedule extends React.Component {
                 <div id="lecturer-menu">
                    <Button 
                         backButton={this.props.backButton}
+                        export={() => {
+                            document.getElementById("menu__toggle").checked = false;
+                            for (var i = 0; i <  document.getElementsByTagName('td').length; ++ i) {
+                                var element = document.getElementsByTagName('td')[i]
+                                element.style.backgroundColor = "darkorchid"
+                            }
+                            setTimeout(() =>{ 
+                                exportComponentAsPNG(componentRef)
+                                for (var i = 0; i <  document.getElementsByTagName('td').length; ++ i) {
+                                    var element = document.getElementsByTagName('td')[i]
+                                    element.style.backgroundColor = "rgba(255, 255, 255, 0.2)"
+                                }
+                            }, 2000)
+                        }}
                    />
                    <CourseList 
                         listSubject={this.state.listSubject}
@@ -61,9 +78,11 @@ class Schedule extends React.Component {
                 <div id="lecturer-table-container">
                     <Table 
                         listSubject={this.state.listSubject}
+                        ref={componentRef}
                     />
                 </div>
             </div>
+            </React.Fragment>
         );
     }
 }

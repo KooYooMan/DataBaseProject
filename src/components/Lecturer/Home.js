@@ -32,6 +32,66 @@ const Suggestion = (props) => {
     );
 }
 
+class LecturerScreen extends React.Component {
+    constructor(props) {
+        super(props)
+        this.nameInput = React.createRef();
+    }
+
+    componentDidMount() {
+        this.nameInput.current.focus();
+        var input = document.getElementById("input-content");
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+            }
+        });
+    }
+
+    render() {
+        return (
+            <div id="lecturer-container">
+                <div className="container">
+                    <BackButton
+                        homeScreen={this.props.homeScreen}
+                    />
+                    <h1 style={{ padding: '100px', textAlign: 'center' }} >Tìm kiếm tên giảng viên</h1>
+                    <div className="input">
+                        <div className="input-container">
+                            <input
+                                className="input-field"
+                                placeholder="Tên giảng viên"
+                                ref={this.nameInput}
+                                style={{ color: 'black', fontFamily: "'Open Sans', sans-serif" }}
+                                id="input-content"
+                                onChange={this.props.handleInputChange}
+                                autoComplete="off"
+                            />
+                            <div className="input-field-shadow" />
+                            <div className="submit-container">
+                                <input className="submit-btn"
+                                    type="submit"
+                                    onClick={this.props.submitHandler}
+                                    id="myBtn"
+                                    value="Xác nhận"
+                                />
+                            </div>
+                        </div>
+                        <Suggestion
+                            list={this.props.listLecturer}
+                            changeInput={(value) => {
+                                this.props.changeInput(value)
+                                this.nameInput.current.focus();
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -54,18 +114,6 @@ class Home extends React.Component {
         })
     }
 
-    componentDidMount() {
-        this.nameInput.current.focus();
-        var input = document.getElementById("input-content");
-        input.addEventListener("keyup", function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                document.getElementById("myBtn").click();
-            }
-        });
-
-    }
-
     changeInput = (value) => {
         this.setState({
             inputValue: value,
@@ -73,15 +121,19 @@ class Home extends React.Component {
             renderSubject: []
         })
         document.getElementById("input-content").value = value;
-        this.nameInput.current.focus();
     }
 
     submitHandler = () => {
+        if (this.state.listLecturer.length === 1) {
+            document.getElementById("input-content").value = this.state.listLecturer[0]
+        }
+        console.log('lecturer name', document.getElementById("input-content").value)
         axios.post('https://uet-schedule.herokuapp.com/lecturer/getSchedule', {
             name: document.getElementById("input-content").value
         })
         .then((result) => {
             this.setState({
+                listLecturer: [],
                 screen: 1,
                 renderSubject: result.data.scheduleList
             })
@@ -100,7 +152,7 @@ class Home extends React.Component {
             inputValue: text
         })
         var newlistLecturer = this.props.listLecturer.filter(value => {
-            return value.includes(text)
+            return value.toLowerCase().includes(text.toLowerCase())
         })
         if (newlistLecturer.length <= 20) {
             this.setState({
@@ -117,40 +169,13 @@ class Home extends React.Component {
         switch (this.state.screen) {
             case 0:
                 return (
-                    <div id="lecturer-container">
-                        <div className="container">
-                            <BackButton
-                                homeScreen={this.props.homeScreen}
-                            />
-                            <h1 style={{ padding: '100px', textAlign: 'center' }} >Tìm kiếm tên giảng viên</h1>
-                            <div className="input">
-                                <div className="input-container">
-                                    <input
-                                        className="input-field"
-                                        placeholder="Tên giảng viên"
-                                        ref={this.nameInput}
-                                        style={{ color: 'black', fontFamily: "'Open Sans', sans-serif" }}
-                                        id="input-content"
-                                        onChange={this.handleInputChange}
-                                        autoComplete="off"
-                                    />
-                                    <div className="input-field-shadow" />
-                                    <div className="submit-container">
-                                        <input className="submit-btn"
-                                            type="submit"
-                                            onClick={this.submitHandler}
-                                            id="myBtn"
-                                            value="Xác nhận"
-                                        />
-                                    </div>
-                                </div>
-                                <Suggestion
-                                    list={this.state.listLecturer}
-                                    changeInput={this.changeInput}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <LecturerScreen
+                        homeScreen={this.props.homeScreen}
+                        handleInputChange={this.handleInputChange}
+                        submitHandler={this.submitHandler}
+                        listLecturer={this.state.listLecturer}
+                        changeInput={this.changeInput}
+                    />
                 );
             case 1:
                 return (
