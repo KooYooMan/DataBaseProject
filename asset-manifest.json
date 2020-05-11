@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/my-app/static/css/main.f0f72a66.chunk.css",
-    "main.js": "/my-app/static/js/main.f12cfed4.chunk.js",
-    "main.js.map": "/my-app/static/js/main.f12cfed4.chunk.js.map",
-    "runtime-main.js": "/my-app/static/js/runtime-main.97334edf.js",
-    "runtime-main.js.map": "/my-app/static/js/runtime-main.97334edf.js.map",
-    "static/js/2.4d34088a.chunk.js": "/my-app/static/js/2.4d34088a.chunk.js",
-    "static/js/2.4d34088a.chunk.js.map": "/my-app/static/js/2.4d34088a.chunk.js.map",
-    "index.html": "/my-app/index.html",
-    "precache-manifest.0fe3fef873d9e52ac3f435c974e687e8.js": "/my-app/precache-manifest.0fe3fef873d9e52ac3f435c974e687e8.js",
-    "service-worker.js": "/my-app/service-worker.js",
-    "static/css/main.f0f72a66.chunk.css.map": "/my-app/static/css/main.f0f72a66.chunk.css.map",
-    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/my-app/static/js/2.4d34088a.chunk.js.LICENSE.txt",
-    "static/media/home.scss": "/my-app/static/media/student.00bf7d58.jpg"
+    "main.css": "/auto-schedule/static/css/main.d82a22a4.chunk.css",
+    "main.js": "/auto-schedule/static/js/main.f12cfed4.chunk.js",
+    "main.js.map": "/auto-schedule/static/js/main.f12cfed4.chunk.js.map",
+    "runtime-main.js": "/auto-schedule/static/js/runtime-main.c4bdea07.js",
+    "runtime-main.js.map": "/auto-schedule/static/js/runtime-main.c4bdea07.js.map",
+    "static/js/2.4d34088a.chunk.js": "/auto-schedule/static/js/2.4d34088a.chunk.js",
+    "static/js/2.4d34088a.chunk.js.map": "/auto-schedule/static/js/2.4d34088a.chunk.js.map",
+    "index.html": "/auto-schedule/index.html",
+    "precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js": "/auto-schedule/precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js",
+    "service-worker.js": "/auto-schedule/service-worker.js",
+    "static/css/main.d82a22a4.chunk.css.map": "/auto-schedule/static/css/main.d82a22a4.chunk.css.map",
+    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/auto-schedule/static/js/2.4d34088a.chunk.js.LICENSE.txt",
+    "static/media/home.scss": "/auto-schedule/static/media/student.00bf7d58.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.97334edf.js",
+    "static/js/runtime-main.c4bdea07.js",
     "static/js/2.4d34088a.chunk.js",
-    "static/css/main.f0f72a66.chunk.css",
+    "static/css/main.d82a22a4.chunk.css",
     "static/js/main.f12cfed4.chunk.js"
   ]
 }
