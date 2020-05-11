@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/auto-schedule/static/css/main.d82a22a4.chunk.css",
-    "main.js": "/auto-schedule/static/js/main.f12cfed4.chunk.js",
-    "main.js.map": "/auto-schedule/static/js/main.f12cfed4.chunk.js.map",
-    "runtime-main.js": "/auto-schedule/static/js/runtime-main.c4bdea07.js",
-    "runtime-main.js.map": "/auto-schedule/static/js/runtime-main.c4bdea07.js.map",
-    "static/js/2.4d34088a.chunk.js": "/auto-schedule/static/js/2.4d34088a.chunk.js",
-    "static/js/2.4d34088a.chunk.js.map": "/auto-schedule/static/js/2.4d34088a.chunk.js.map",
-    "index.html": "/auto-schedule/index.html",
-    "precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js": "/auto-schedule/precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js",
-    "service-worker.js": "/auto-schedule/service-worker.js",
-    "static/css/main.d82a22a4.chunk.css.map": "/auto-schedule/static/css/main.d82a22a4.chunk.css.map",
-    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/auto-schedule/static/js/2.4d34088a.chunk.js.LICENSE.txt",
-    "static/media/home.scss": "/auto-schedule/static/media/student.00bf7d58.jpg"
+    "main.css": "/autoschedule/static/css/main.1dd62e8e.chunk.css",
+    "main.js": "/autoschedule/static/js/main.f12cfed4.chunk.js",
+    "main.js.map": "/autoschedule/static/js/main.f12cfed4.chunk.js.map",
+    "runtime-main.js": "/autoschedule/static/js/runtime-main.04f7763f.js",
+    "runtime-main.js.map": "/autoschedule/static/js/runtime-main.04f7763f.js.map",
+    "static/js/2.4d34088a.chunk.js": "/autoschedule/static/js/2.4d34088a.chunk.js",
+    "static/js/2.4d34088a.chunk.js.map": "/autoschedule/static/js/2.4d34088a.chunk.js.map",
+    "index.html": "/autoschedule/index.html",
+    "precache-manifest.bd18c46fc0ed41bd8c92c54cec4da659.js": "/autoschedule/precache-manifest.bd18c46fc0ed41bd8c92c54cec4da659.js",
+    "service-worker.js": "/autoschedule/service-worker.js",
+    "static/css/main.1dd62e8e.chunk.css.map": "/autoschedule/static/css/main.1dd62e8e.chunk.css.map",
+    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/autoschedule/static/js/2.4d34088a.chunk.js.LICENSE.txt",
+    "static/media/home.scss": "/autoschedule/static/media/student.00bf7d58.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c4bdea07.js",
+    "static/js/runtime-main.04f7763f.js",
     "static/js/2.4d34088a.chunk.js",
-    "static/css/main.d82a22a4.chunk.css",
+    "static/css/main.1dd62e8e.chunk.css",
     "static/js/main.f12cfed4.chunk.js"
   ]
 }
