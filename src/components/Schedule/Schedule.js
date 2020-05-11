@@ -63,7 +63,7 @@ class Schedule extends React.Component {
                                 element.style.backgroundColor = "darkorchid"
                             }
                             setTimeout(() =>{ 
-                                exportComponentAsPNG(componentRef)
+                                exportComponentAsJPEG(componentRef)
                                 for (var i = 0; i <  document.getElementsByTagName('td').length; ++ i) {
                                     var element = document.getElementsByTagName('td')[i]
                                     element.style.backgroundColor = "rgba(255, 255, 255, 0.2)"
