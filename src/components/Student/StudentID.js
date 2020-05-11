@@ -24,6 +24,7 @@ class StudentID extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.backButton = this.backButton.bind(this)
     this.studentInput = React.createRef();
   }
 
@@ -70,8 +71,11 @@ class StudentID extends React.Component {
   }
 
   handleChange(event) {
-    event.preventDefault();
     this.studentInput.current.focus();
+    event.preventDefault();
+    if (event.target.value.length > event.target.maxLength) {
+      event.target.value = event.target.value.slice(0, event.target.maxLength)
+    }
     this.setState({
       studentID: event.target.value,
     });
@@ -79,28 +83,31 @@ class StudentID extends React.Component {
   }
 
   handleSubmit(event) {
+    this.studentInput.current.focus();
     event.preventDefault();
     // this.setState({
     //   screen: 1,
     // });
-
-    axios.get(
-      `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-    )
-      .then((result) => {
-        this.setState({
-          users: result.data.scheduleList,
-          screen: 1,
+    if(this.state.studentID.length === 8){
+      axios.get(
+        `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+      )
+        .then((result) => {
+          this.setState({
+            users: result.data.scheduleList,
+            screen: 1,
+          });
+          console.log(result.scheduleList);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          this.setState({
+            users: [],
+            screen: 1,
+          });
         });
-        console.log(result.scheduleList);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        this.setState({
-          users: [],
-          screen: 1,
-        });
-      });
+      }
+      else alert("??");
   }
 
   backButton = () => {
@@ -125,6 +132,7 @@ class StudentID extends React.Component {
                         class="form__field"
                         name="name"
                         id="name"
+                        maxLength= "8"
                         onChange={this.handleChange}
                         placeholder="du con di~ me"
                         ref={this.studentInput}

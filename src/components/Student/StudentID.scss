@@ -186,8 +186,8 @@
     color: black;
   }
 
-  .form__field:focus
-  // .form__field:hover 
+  .form__field:focus,
+  .form__field:hover 
   {
     ~ .form__label {
       position: absolute;
