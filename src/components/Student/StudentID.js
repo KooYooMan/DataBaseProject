@@ -135,6 +135,7 @@ class StudentID extends React.Component {
                         maxLength= "8"
                         onChange={this.handleChange}
                         placeholder="du con di~ me"
+                        autocomplete= "off"
                         ref={this.studentInput}
                         required
                       />
