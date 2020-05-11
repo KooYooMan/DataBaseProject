@@ -10,7 +10,7 @@ class Home extends React.Component {
         return (
             <div id="home-component">
                 <div className="container">
-                <button className="card" onClick={this.props.studentScreen}>
+                <button className="card" onClick={this.props.studentIDScreen}>
                     <h2>Học sinh</h2>
                     <i className="fas fa-arrow-right" />
                     <div className="pic" />
@@ -80,7 +80,7 @@ class Home extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        studentScreen : () => dispatch(actions.studentScreen),
+        studentIDScreen : () => dispatch(actions.studentIDScreen),
         lecturerScreen : () => dispatch(actions.lecturerScreen)
     }
 }

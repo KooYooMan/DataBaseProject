@@ -13,6 +13,8 @@ const indexStateReducer = function(state = initialState, action) {
             return state.set('screen', 1);
         case types.INDEX_LECTURER_SCREEN: 
             return state.set('screen', 2);
+        case types.INDEX_STUDENTID_SCREEN:
+            return state.set('screen', 3);
         default:
     }
     return state;

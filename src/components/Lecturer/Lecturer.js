@@ -58,7 +58,7 @@ class Lecturer extends React.Component {
 
 const mapDispatchtoProps = (dispatch, ownProps) => {
     return {
-        homeScreen: () => dispatch(actions.homeScreen)
+        homeScreen: () => dispatch(actions.studentIDScreen)
     }
 }
 

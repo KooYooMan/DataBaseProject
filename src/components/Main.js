@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './Home/Home.js';
 import Student from './Student/Student.js';
 import Lecturer from './Lecturer/Lecturer.js';
+import StudentID from './Student/StudentID.js';
 import { connect } from 'react-redux';
 
 class Main extends React.Component {
@@ -19,6 +20,10 @@ class Main extends React.Component {
                 return (
                     <Home />
                 );
+            case 3:
+                return (
+                    <StudentID />
+                )
             default: 
                 return (
                     <h1>Error rendering</h1>
