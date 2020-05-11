@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/auto-schedule/static/css/main.d82a22a4.chunk.css",
-    "main.js": "/auto-schedule/static/js/main.f12cfed4.chunk.js",
-    "main.js.map": "/auto-schedule/static/js/main.f12cfed4.chunk.js.map",
-    "runtime-main.js": "/auto-schedule/static/js/runtime-main.c4bdea07.js",
-    "runtime-main.js.map": "/auto-schedule/static/js/runtime-main.c4bdea07.js.map",
-    "static/js/2.4d34088a.chunk.js": "/auto-schedule/static/js/2.4d34088a.chunk.js",
-    "static/js/2.4d34088a.chunk.js.map": "/auto-schedule/static/js/2.4d34088a.chunk.js.map",
-    "index.html": "/auto-schedule/index.html",
-    "precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js": "/auto-schedule/precache-manifest.4cd7262e680e4089ad8bb7e311e888da.js",
-    "service-worker.js": "/auto-schedule/service-worker.js",
-    "static/css/main.d82a22a4.chunk.css.map": "/auto-schedule/static/css/main.d82a22a4.chunk.css.map",
-    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/auto-schedule/static/js/2.4d34088a.chunk.js.LICENSE.txt",
-    "static/media/home.scss": "/auto-schedule/static/media/student.00bf7d58.jpg"
+    "main.css": "/DataBaseProject/static/css/main.193ec01f.chunk.css",
+    "main.js": "/DataBaseProject/static/js/main.f12cfed4.chunk.js",
+    "main.js.map": "/DataBaseProject/static/js/main.f12cfed4.chunk.js.map",
+    "runtime-main.js": "/DataBaseProject/static/js/runtime-main.9cd926aa.js",
+    "runtime-main.js.map": "/DataBaseProject/static/js/runtime-main.9cd926aa.js.map",
+    "static/js/2.4d34088a.chunk.js": "/DataBaseProject/static/js/2.4d34088a.chunk.js",
+    "static/js/2.4d34088a.chunk.js.map": "/DataBaseProject/static/js/2.4d34088a.chunk.js.map",
+    "index.html": "/DataBaseProject/index.html",
+    "precache-manifest.3f504706ccff727ca0ab63ceec3898da.js": "/DataBaseProject/precache-manifest.3f504706ccff727ca0ab63ceec3898da.js",
+    "service-worker.js": "/DataBaseProject/service-worker.js",
+    "static/css/main.193ec01f.chunk.css.map": "/DataBaseProject/static/css/main.193ec01f.chunk.css.map",
+    "static/js/2.4d34088a.chunk.js.LICENSE.txt": "/DataBaseProject/static/js/2.4d34088a.chunk.js.LICENSE.txt",
+    "static/media/home.scss": "/DataBaseProject/static/media/student.00bf7d58.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c4bdea07.js",
+    "static/js/runtime-main.9cd926aa.js",
     "static/js/2.4d34088a.chunk.js",
-    "static/css/main.d82a22a4.chunk.css",
+    "static/css/main.193ec01f.chunk.css",
     "static/js/main.f12cfed4.chunk.js"
   ]
 }
