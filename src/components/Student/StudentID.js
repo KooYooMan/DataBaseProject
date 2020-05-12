@@ -19,13 +19,65 @@ class BackButton extends React.Component {
   }
 }
 
+class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.studentInput = React.createRef();
+  }
+
+  componentDidMount() {
+    this.studentInput.current.focus();
+    var input = document.getElementById("name");
+    input.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("myBtn").click();
+      }
+    });
+  }
+
+  render() {
+    return (
+      <div id="studentID">
+        <div className="screen">
+          <BackButton homeScreen={this.props.homeScreen} />
+          <div className="input-form">
+            <h1>NHẬP MÃ SINH VIÊN</h1>
+            <div className="input-field" >
+              <div className="form__group field">
+                <input
+                  type="number"
+                  className="form__field"
+                  name="name"
+                  id="name"
+                  maxLength="8"
+                  onChange={this.props.handleChange}
+                  placeholder="du con di~ me"
+                  autoComplete="off"
+                  ref={this.studentInput}
+                  required
+                />
+                <label htmlFor="name" className="form__label">
+                  Mã sinh viên
+                      </label>
+              </div>
+              <button className="button-submit" id="myBtn" onClick={this.props.handleSubmit}>
+                Nhập
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 class StudentID extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.backButton = this.backButton.bind(this)
-    this.studentInput = React.createRef();
   }
 
   state = {
@@ -58,56 +110,35 @@ class StudentID extends React.Component {
     ],
   };
 
-  componentDidMount() {
-    this.studentInput.current.focus();
-    var input = document.getElementById("name");
-        input.addEventListener("keyup", function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                document.getElementById("myBtn").click();
-            }
-        });
-    //GET data
-  }
-
   handleChange(event) {
-    this.studentInput.current.focus();
-    event.preventDefault();
     if (event.target.value.length > event.target.maxLength) {
       event.target.value = event.target.value.slice(0, event.target.maxLength)
     }
     this.setState({
       studentID: event.target.value,
     });
-    console.log(this.state.studentID);
   }
 
-  handleSubmit(event) {
-    this.studentInput.current.focus();
-    event.preventDefault();
-    // this.setState({
-    //   screen: 1,
-    // });
-    if(this.state.studentID.length === 8){
+  handleSubmit() {
+    if (this.state.studentID.length === 8) {
       axios.get(
         `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
       )
-        .then((result) => {
-          this.setState({
-            users: result.data.scheduleList,
-            screen: 1,
-          });
-          console.log(result.scheduleList);
-        })
-        .catch((err) => {
-          console.log(err.response);
-          this.setState({
-            users: [],
-            screen: 1,
-          });
+      .then((result) => {
+        this.setState({
+          users: result.data.scheduleList,
+          screen: 1,
         });
-      }
-      else alert("??");
+      })
+      .catch((err) => {
+        console.log(err.response);
+        this.setState({
+          users: [],
+          screen: 1,
+        });
+      });
+    }
+    else alert("??");
   }
 
   backButton = () => {
@@ -120,40 +151,19 @@ class StudentID extends React.Component {
     switch (this.state.screen) {
       case 3:
         return (
-          <div id="studentID">
-            <div className="screen">
-              <BackButton homeScreen={this.props.homeScreen} />
-              <div className="input-form">
-                <h1>NHẬP MÃ SINH VIÊN</h1>
-                <form className="input-field" onSubmit={this.handleSubmit}>
-                    <div class="form__group field">
-                      <input
-                        type="number"
-                        class="form__field"
-                        name="name"
-                        id="name"
-                        maxLength= "8"
-                        onChange={this.handleChange}
-                        placeholder="du con di~ me"
-                        autocomplete= "off"
-                        ref={this.studentInput}
-                        required
-                      />
-                      <label for="name" class="form__label">
-                        Mã sinh viên
-                      </label>
-                    </div>
-                    <button className="button-submit" id="myBtn">
-                      Nhập
-                    </button>
-                </form>
-              </div>
-            </div>
-          </div>
+          <Home
+            homeScreen={this.props.homeScreen}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+          />
         );
       case 1:
         return (
-          <Student listUser={this.state.users} backButton={this.backButton} studentID={this.state.studentID} />
+          <Student 
+            listUser={this.state.users} 
+            backButton={this.backButton} 
+            studentID={this.state.studentID} 
+          />
         );
     }
   }
