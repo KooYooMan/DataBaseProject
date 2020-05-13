@@ -51,7 +51,7 @@ class LecturerScreen extends React.Component {
 
     render() {
         return (
-            <div id="lecturer-container">
+            <div id="lecturer-container" style={this.props.style}>
                 <div className="container">
                     <BackButton
                         homeScreen={this.props.homeScreen}
@@ -175,6 +175,7 @@ class Home extends React.Component {
                         submitHandler={this.submitHandler}
                         listLecturer={this.state.listLecturer}
                         changeInput={this.changeInput}
+                        style={this.props.style}
                     />
                 );
             case 1:
@@ -182,6 +183,7 @@ class Home extends React.Component {
                     <Schedule
                         listSubject={this.state.renderSubject}
                         backButton={this.backButton}
+                        style={this.props.style}
                     />
                 )
             case 2:
