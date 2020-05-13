@@ -30,16 +30,14 @@ class Lecturer extends React.Component {
             })
     }
 
-    render() {
-        switch (this.state.screen) {
+    renderedScreen = (id) => {
+        switch (id) {
             case 0:
                 return (
-                    <div style={this.props.style}>
-                        <Home
-                            listLecturer={this.state.listLecturer}
-                            style={this.props.style}
-                        />
-                    </div>
+                    <Home
+                        listLecturer={this.state.listLecturer}
+                        style={this.props.style}
+                    />
                 )
             case 1:
                 return (
@@ -57,11 +55,19 @@ class Lecturer extends React.Component {
                 );
         }
     }
+
+    render() {
+        return (
+            <div style={this.props.style}>
+                {this.renderedScreen(this.state.screen)}
+            </div>
+        );
+    }
 }
 
 const mapDispatchtoProps = (dispatch, ownProps) => {
     return {
-        homeScreen: () => dispatch(actions.studentIDScreen)
+        homeScreen: () => dispatch(actions.homeScreen)
     }
 }
 
