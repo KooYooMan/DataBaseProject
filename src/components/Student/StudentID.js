@@ -34,6 +34,7 @@ class Home extends React.Component {
         document.getElementById("myBtn").click();
       }
     });
+    this.props.resetInput()
   }
 
   render() {
@@ -77,7 +78,8 @@ class StudentID extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.backButton = this.backButton.bind(this)
+    this.backButton = this.backButton.bind(this);
+    this.resetInput = this.resetInput.bind(this);
   }
 
   state = {
@@ -110,6 +112,12 @@ class StudentID extends React.Component {
     ],
   };
 
+  resetInput() {
+    this.setState({
+      studentID: ''
+    })
+  }
+
   handleChange(event) {
     if (event.target.value.length > event.target.maxLength) {
       event.target.value = event.target.value.slice(0, event.target.maxLength)
@@ -135,10 +143,11 @@ class StudentID extends React.Component {
         this.setState({
           users: [],
           screen: 1,
+
         });
       });
     }
-    else alert("??");
+    else alert("địt con mẹ mày nhập mã sinh viên đúng vào");
   }
 
   backButton = () => {
@@ -155,6 +164,7 @@ class StudentID extends React.Component {
             homeScreen={this.props.homeScreen}
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
+            resetInput={this.resetInput}
           />
         );
       case 1:

@@ -318,6 +318,9 @@ class Student extends React.Component {
       period_hidden: "",
       dayOfWeek_hidden: "",
       auditorium_hidden: "",
+      error_detect: false,
+      error_type: 0,
+      errorLog: [],
     });
   }
 
@@ -423,19 +426,8 @@ class Student extends React.Component {
     this.setState({
       screen: 4,
     });
-    // this.state.users.map((value) => {
-    //   this.setState({
-    //     enrollList= [
-    //       ...this.state.enrollList,
-    //       {
-    //         classID: value.classID,
-    //         group: value.group,
-    //       }
-    //     ]
-    //   })
-    // })
     const postEnrollList = this.state.users.map((user) => {
-      return { classID: user.classID, group: user.group};
+      return { classID: user.classID, group: user.group };
     });
     axios
       .post("https://uet-schedule.herokuapp.com/student/submitClass", {
@@ -455,7 +447,9 @@ class Student extends React.Component {
           <div className="screen">
             <div className="screen_header">
               <BackButton backButton={this.props.backButton} />
-              <p className="studentID_text">Mã sinh viên: {this.state.studentID}</p>
+              <p className="studentID_text">
+                Mã sinh viên: {this.state.studentID}
+              </p>
             </div>
             <div className="screen_container">
               <form onSubmit={this.handleSubmit}>
@@ -550,26 +544,30 @@ const Table = ({ users = [], deleteUser }) => {
           <div className="column">Lựa chọn</div>
         </div>
       </div>
-      <div className="table-body">
-        {users.map((user, key) => {
-          return (
-            <div className={`row ${user.error ? "error" : ""}`}>
-              <div className="column">{user.classID}</div>
-              <div className="column">{user.className}</div>
-              <div className="column">{user.group==="CL"?user.group: "N" + user.group}</div>
-              <div className="column">{user.dayOfWeek}</div>
-              <div className="column">{user.period}</div>
-              <div className="column">
-                <button className="icon">
-                  <i
-                    class="fas fa-user-minus"
-                    onClick={() => deleteUser(key)}
-                  />
-                </button>
+      <div className="table-body-scroll">
+        <div className="table-body">
+          {users.map((user, key) => {
+            return (
+              <div className={`row ${user.error ? "error" : ""}`}>
+                <div className="column">{user.classID}</div>
+                <div className="column">{user.className}</div>
+                <div className="column">
+                  {user.group === "CL" ? user.group : "N" + user.group}
+                </div>
+                <div className="column">{user.dayOfWeek}</div>
+                <div className="column">{user.period}</div>
+                <div className="column">
+                  <button className="icon">
+                    <i
+                      class="fas fa-user-minus"
+                      onClick={() => deleteUser(key)}
+                    />
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
