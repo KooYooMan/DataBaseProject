@@ -8,7 +8,7 @@ class Home extends React.Component {
         document.getElementById('root').style.height="100%";
         document.getElementById('root').style.margin="auto";
         return (
-            <div id="home-component">
+            <div id="home-component" style={this.props.style}>
                 <div className="container">
                 <button className="card" onClick={this.props.studentIDScreen}>
                     <h2>Học sinh</h2>

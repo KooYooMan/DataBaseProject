@@ -15,28 +15,31 @@ class Lecturer extends React.Component {
 
     componentDidMount() {
         fetch('https://uet-schedule.herokuapp.com/lecturer/getAll')
-        .then((result) => result.json())
-        .then(
-            (result) => {
+            .then((result) => result.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        screen: 0,
+                        listLecturer: result.lecturerList
+                    })
+                }
+            ).catch(err => {
                 this.setState({
-                    screen: 0,
-                    listLecturer: result.lecturerList
+                    screen: 1
                 })
-            }
-        ).catch(err => {
-            this.setState({
-                screen: 1
             })
-        })
     }
 
     render() {
-        switch(this.state.screen) {
+        switch (this.state.screen) {
             case 0:
                 return (
-                    <Home 
-                        listLecturer={this.state.listLecturer}
-                    />
+                    <div style={this.props.style}>
+                        <Home
+                            listLecturer={this.state.listLecturer}
+                            style={this.props.style}
+                        />
+                    </div>
                 )
             case 1:
                 return (

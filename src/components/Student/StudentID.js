@@ -156,8 +156,8 @@ class StudentID extends React.Component {
     });
   };
 
-  render() {
-    switch (this.state.screen) {
+  renderedScreen = (id) => {
+    switch (id) {
       case 3:
         return (
           <Home
@@ -176,6 +176,14 @@ class StudentID extends React.Component {
           />
         );
     }
+  }
+
+  render() {
+    return (
+      <div style={this.props.style}>
+        {this.renderedScreen(this.state.screen)}
+      </div>
+    );
   }
 }
 

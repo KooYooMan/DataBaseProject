@@ -2,7 +2,7 @@
   "name": "project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://kooyooman.github.io/autoschedule",
+  "homepage": "http://kooyooman.github.io/DataBaseProject",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "axios": "^0.19.2",
     "gh-pages": "^2.2.0",
-    "react-component-export-image": "^0.1.4"
+    "react-component-export-image": "^0.1.4",
+    "react-spring": "^8.0.27"
   }
 }
