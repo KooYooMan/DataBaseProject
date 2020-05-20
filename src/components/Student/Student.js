@@ -26,28 +26,39 @@ function convertStringToInt(s) {
 }
 
 function checkError(data) {
-  let n = data.length;
+  let n = data.length,
+  errorLog = [];
+  errorLog.push("");
+  for (var i = 0; i < n; i++) {
+    errorLog.push(0);
+  }
+
   var i = 0,
     j = 0;
-  for (i = 0; i < n; i++) {
+  for (i = 0; i < n - 1; i++) {
     for (j = i + 1; j < n; j++) {
       if (
         data[i].courseID === data[j].courseID &&
         data[i].classID !== data[i].classID
       ) {
-        return [
-          i,
-          "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString(),
-        ];
+        // return [
+        //   i,
+        //   "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString(),
+        // ];
+        errorLog[i + 1] = 1;
+        errorLog[0] =
+          "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString();
       }
       if (
         data[i].classID === data[j].classID &&
         data[i].group !== "CL" &&
         data[j].group !== "CL"
       ) {
-        return [i, "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"];
+        // return [i, "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"];
+        errorLog[i + 1] = 1;
+        errorLog[0] = "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học";
       }
-      if (data[i].dayOfWeek == data[j].dayOfWeek) {
+      if (data[i].dayOfWeek === data[j].dayOfWeek) {
         let period_i = convertStringToInt(data[i].period);
         let period_j = convertStringToInt(data[j].period);
         let start_i = period_i[0];
@@ -58,21 +69,35 @@ function checkError(data) {
           (start_j >= start_i && start_j <= finish_i) ||
           (finish_j >= start_i && finish_j <= finish_i)
         ) {
-          return [
-            i,
+          // return [
+          //   i,
+          //   "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
+          //     (i + 1).toString() +
+          //     " (T" +
+          //     data[i].dayOfWeek +
+          //     ":" +
+          //     data[i].period +
+          //     ")",
+          // ];
+          errorLog[i + 1] = 1;
+          errorLog[0] =
             "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
-              (i + 1).toString() +
-              " (T" +
-              data[i].dayOfWeek +
-              ":" +
-              data[i].period +
-              ")",
-          ];
+            (i + 1).toString() +
+            " (T" +
+            data[i].dayOfWeek +
+            ":" +
+            data[i].period +
+            ")";
+          // + (j + 1).toString() +
+          // " (T" +
+          // data[j].dayOfWeek +
+          // ":" +
+          // data[j].period
         }
       }
     }
   }
-  return [0, 0];
+  return errorLog;
 }
 
 const Suggestion = (props) => {
@@ -333,7 +358,6 @@ class Student extends React.Component {
     let period = this.state.period;
     let dayOfWeek = this.state.dayOfWeek;
     let auditorium = this.state.auditorium;
-
     let sub_Users = this.state.users;
 
     if (sub_Users.length !== 0) {
@@ -405,13 +429,18 @@ class Student extends React.Component {
     }
 
     let errorLog = checkError(sub_Users);
-    if (errorLog[1] !== 0) {
+    if (errorLog[0] !== "") {
       let { users } = this.state;
-      if (users[errorLog[0]] !== undefined) users[errorLog[0]].error = true;
+      errorLog.forEach((element, index) => {
+        if (index > 0 && element === 1) {
+          if (users[index - 1] !== undefined) users[index - 1].error = true;
+          else alert(index - 1);
+        }
+      });
 
       this.setState({
         error_detect: true,
-        error_type: errorLog[1],
+        error_type: errorLog[0],
         users,
       });
     } else {

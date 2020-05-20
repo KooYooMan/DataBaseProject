@@ -180,7 +180,7 @@ class StudentID extends React.Component {
 
   render() {
     return (
-      <div style={this.props.style}>
+      <div style={this.props.style, {height: '100%'}}>
         {this.renderedScreen(this.state.screen)}
       </div>
     );
