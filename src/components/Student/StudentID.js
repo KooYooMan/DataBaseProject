@@ -5,6 +5,7 @@ import Schedule from "../Schedule/Schedule";
 import Student from "../Student/Student.js";
 import axios from 'axios';
 import "./StudentID.scss";
+
 class BackButton extends React.Component {
   render() {
     return (
@@ -180,7 +181,7 @@ class StudentID extends React.Component {
 
   render() {
     return (
-      <div style={this.props.style}>
+      <div style={this.props.style, {height: '100%'}}>
         {this.renderedScreen(this.state.screen)}
       </div>
     );
