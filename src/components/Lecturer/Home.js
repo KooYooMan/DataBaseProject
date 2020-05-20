@@ -127,15 +127,16 @@ class Home extends React.Component {
         if (this.state.listLecturer.length === 1) {
             document.getElementById("input-content").value = this.state.listLecturer[0]
         }
-        console.log('lecturer name', document.getElementById("input-content").value)
         axios.post('https://uet-schedule.herokuapp.com/lecturer/getSchedule', {
             name: document.getElementById("input-content").value
         })
         .then((result) => {
+            const data = result.data.scheduleList
+            data.type = "Working"
             this.setState({
                 listLecturer: [],
                 screen: 1,
-                renderSubject: result.data.scheduleList
+                renderSubject: data
             })
         })
         .catch(() => {

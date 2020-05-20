@@ -3,7 +3,7 @@ import './Schedule.scss';
 import Table from './Table';
 import Button from './Button';
 import CourseList from './CourseList';
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from "react-component-export-image";
+import { exportComponentAsJPEG, exportComponenstAsPDF, exportComponentAsPNG } from "react-component-export-image";
 import { Spring } from 'react-spring/renderprops'
 
 class Schedule extends React.Component {
@@ -21,19 +21,31 @@ class Schedule extends React.Component {
 
     componentDidMount() {
         var listSubject = []
-        console.log(this.props)
         for (var i = 0; i < this.props.listSubject.length; ++i) {
             var value = this.props.listSubject[i]
-            listSubject.push({
-                courseName: value.className,
-                dayOfWeek: value.dayOfWeek,
-                start: this.process(value.period)[0],
-                finish: this.process(value.period)[1],
-                auditorium: value.auditorium,
-                group: value.group,
-                id: i,
-                classID: value.classID
-            })
+            if (this.props.listSubject.type === "Working") {
+                listSubject.push({
+                    courseName: value.className,
+                    id: i,
+                    classID: value.classID,
+                    auditorium: value.auditorium,
+                    dayOfWeek: value.dayOfWeek,
+                    start: this.process(value.period)[0],
+                    finish: this.process(value.period)[1],
+                    group: value.group
+                })
+            } else {
+                listSubject.push({
+                    courseName: value.className,
+                    id: i,
+                    classID: value.classID,
+                    auditorium: value.auditorium,
+                    shift: value.shift,
+                    start: value.start,
+                    day: value.day,
+                    examType: value.examType
+                })
+            }
         }
         this.setState({
             listSubject: listSubject
@@ -89,11 +101,13 @@ class Schedule extends React.Component {
                                     />
                                     <CourseList
                                         listSubject={this.state.listSubject}
+                                        type={this.props.listSubject.type}
                                     />
                                 </div>
                                 <div id="lecturer-table-container">
                                     <Table
                                         listSubject={this.state.listSubject}
+                                        type={this.props.listSubject.type}
                                         ref={componentRef}
                                     />
                                 </div>

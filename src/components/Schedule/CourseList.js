@@ -19,9 +19,14 @@ const List = (props) => {
     for (var i = 0; i < props.listSubject.length; ++ i) {
         var item = props.listSubject[i]
         result.push(
-            <li className="menu-item">
+            <li className="menu-item" key={i}>
                 <a href="#0" onMouseOver={onMouseFunction(i)} onMouseLeave={offMouseFunction(i)}>
-                    <div style={{fontWeight: 'bold'}}>{item.courseName} - {item.classID}</div> ({(item.group === 'CL') ? 'Lý thuyết' : 'Thực hành'})
+                    <div style={{fontWeight: 'bold'}}>{item.courseName} - {item.classID}</div> 
+                    {
+                        (props.type === 'Working') ? 
+                        ((item.group === 'CL') ? 'Lý thuyết' : 'Thực hành') :
+                        ""
+                    }
                 </a>
             </li>
         )
@@ -53,6 +58,7 @@ class CourseList extends React.Component {
                             <a href="#0">Danh Sách Môn Học</a>
                             <List 
                                 listSubject={this.props.listSubject}
+                                type={this.props.type}
                             />
                         </li>
                     </ol>
