@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import actions from "../../actions/index-screen-actions";
 import Schedule from "../Schedule/Schedule";
 import Student from "../Student/Student.js";
+import HomeStudent from "../Student/HomeStudent.js";
 import axios from 'axios';
 import "./StudentID.scss";
 
@@ -84,9 +85,10 @@ class StudentID extends React.Component {
   }
 
   state = {
-    screen: 3,
+    screen: 1,
     studentID: "",
     listSubject: [],
+    listExam: [],
     users: [
       {
         id: 0,
@@ -136,30 +138,31 @@ class StudentID extends React.Component {
       .then((result) => {
         this.setState({
           users: result.data.scheduleList,
-          screen: 1,
+          screen: 3,
         });
       })
       .catch((err) => {
         console.log(err.response);
         this.setState({
           users: [],
-          screen: 1,
+          screen: 3,
 
         });
       });
     }
-    else alert("địt con mẹ mày nhập mã sinh viên đúng vào");
+    else alert("nhập mã sinh viên đúng vào nhé bạn yêu ☻");
   }
 
   backButton = () => {
+    
     this.setState({
-      screen: 3,
+      screen: 1,
     });
   };
 
   renderedScreen = (id) => {
     switch (id) {
-      case 3:
+      case 1: //it self
         return (
           <Home
             homeScreen={this.props.homeScreen}
@@ -168,11 +171,12 @@ class StudentID extends React.Component {
             resetInput={this.resetInput}
           />
         );
-      case 1:
+      case 3:
         return (
-          <Student 
+          <HomeStudent 
             listUser={this.state.users} 
-            backButton={this.backButton} 
+            listExam={this.state.listExam}  
+            backButton={this.backButton}
             studentID={this.state.studentID} 
           />
         );
@@ -180,6 +184,7 @@ class StudentID extends React.Component {
   }
 
   render() {
+    console.log("dcmmm");
     return (
       <div style={this.props.style, {height: '100%'}}>
         {this.renderedScreen(this.state.screen)}

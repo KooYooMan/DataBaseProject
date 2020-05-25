@@ -453,7 +453,7 @@ class Student extends React.Component {
 
   handleSubmitTKB() {
     this.setState({
-      screen: 4,
+      screen: 6,
     });
     const postEnrollList = this.state.users.map((user) => {
       return { classID: user.classID, group: user.group };
@@ -470,6 +470,8 @@ class Student extends React.Component {
   }
 
   render() {
+    var data = this.state.users
+    data.type = "Working"
     if (this.state.screen === 1) {
       return (
         <div id="student-component">
@@ -550,9 +552,9 @@ class Student extends React.Component {
           </div>
         </div>
       );
-    } else if (this.state.screen === 4) {
+    } else if (this.state.screen === 6) {
       return (
-        <Schedule listSubject={this.state.users} backButton={this.backButton} />
+        <Schedule listSubject={data} backButton={this.backButton} />
       );
     } else {
       return <StudentID />;
@@ -604,7 +606,7 @@ const Table = ({ users = [], deleteUser }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    studentIDScreen: () => dispatch(actions.studentIDScreen),
+    homeStudentScreen: () => dispatch(actions.homeStudentScreen),
   };
 };
 

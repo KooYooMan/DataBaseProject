@@ -1,0 +1,228 @@
+.mainscreen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url("./cool-background.png");
+  background-size: cover;
+  background-position: center center;
+  .subject {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    margin: 10px 0;
+    ._button {
+      height: 50px;
+    }
+  }
+  .exam {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    ._button {
+      height: 50px;
+      align-items: center;
+    }
+  }
+}
+
+$speed: 0.35s;
+
+.back-button-flip{
+  width: 8%;
+  height: 8vh;
+  opacity: 1;
+	outline: 0;
+	color: white;
+  line-height: 5vh;
+  margin-left: 7px;
+  margin-top: 4px;
+  font-size: 13px;
+	position: relative;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+	
+	&:hover{
+		
+		&:after{
+			opacity: 1;
+			transform: translateY(0) rotateX(0);
+		}
+		
+		&:before{
+			opacity: 0;
+			transform: translateY(50%) rotateX(90deg);
+		}
+	}
+	
+	&:after{
+    width: 100%;
+    height: 5vh;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		display: block;
+		transition: $speed;
+		position: absolute;
+		background: #18aaa8;
+		content: attr(data-back);
+		transform: translateY(-50%) rotateX(90deg);
+	}
+	
+	&:before{
+    width: 100%;
+    height: 5vh;
+		top: 0;
+		left: 0;
+		opacity: 1;
+		display: block;
+		transition: $speed;
+		position: relative;
+		background: #6dabe4;
+		content: attr(data-front);
+		transform: translateY(0) rotateX(0);
+	}
+}
+//-----------------------------------
+.btn-flip1 {
+  width: 50%;
+  height: 80%;
+  opacity: 1;
+  outline: 0;
+  line-height: 32vh;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans";
+  color: white;
+  font-size: 35px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  // background-image: url(./exam.jpg);
+
+  &:hover {
+    &:after {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    &:before {
+      opacity: 0;
+      transform: translateY(50%) rotateX(90deg);
+    }
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    color: #18aaa8;
+    display: block;
+    transition: $speed;
+    position: absolute;
+    background-image: url(./study.jpg);
+    background-size: cover;
+    background-position: center center;
+    justify-content: center;
+    content: attr(data-back);
+    transform: translateY(-50%) rotateX(90deg);
+  }
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    // color: #adadaf;
+    display: block;
+    transition: $speed;
+    position: relative;
+    // background: #323237;
+    background-image: url(./study_b.jpg);
+    background-size: cover;
+    background-position: center center;
+    // -webkit-filter: blur(2.5px);
+    content: attr(data-front);
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+.btn-flip2 {
+  width: 50%;
+  height: 80%;
+  opacity: 1;
+  outline: none;
+  line-height: 32vh;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans";
+  color: white;
+  font-size: 35px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+
+  // background-image: url(./exam.jpg);
+
+  &:hover {
+    &:after {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    &:before {
+      opacity: 0;
+      transform: translateY(50%) rotateX(90deg);
+    }
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    color: #18aaa8;
+    display: block;
+    transition: $speed;
+    position: absolute;
+    background-image: url(./exam.jpg);
+    background-size: cover;
+    background-position: center center;
+    content: attr(data-back);
+    transform: translateY(-50%) rotateX(90deg);
+    margin-bottom: 2px;
+  }
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    // color: #adadaf;
+    display: block;
+    transition: $speed;
+    position: relative;
+    // background: #323237;
+    background-image: url(./exam_b.jpg);
+    background-size: cover;
+    background-position: center center;
+    // -webkit-filter: blur(2.5px);
+    content: attr(data-front);
+    transform: translateY(0) rotateX(0);
+  }
+}
