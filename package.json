@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "gh-pages": "^2.2.0",
     "react-component-export-image": "^0.1.4",
     "react-spring": "^8.0.27"
