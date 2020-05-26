@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import actions from "../../actions/index-screen-actions";
-import Schedule from "../Schedule/Schedule";
 import Student from "../Student/Student.js";
 import HomeStudent from "../Student/HomeStudent.js";
-import axios from 'axios';
+import axios from "axios";
+import fetchingStudentData from "./../../Utility/fetchingStudentData";
 import "./StudentID.scss";
 
 class BackButton extends React.Component {
@@ -23,7 +23,7 @@ class BackButton extends React.Component {
 
 class Home extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.studentInput = React.createRef();
   }
 
@@ -36,7 +36,7 @@ class Home extends React.Component {
         document.getElementById("myBtn").click();
       }
     });
-    this.props.resetInput()
+    this.props.resetInput();
   }
 
   render() {
@@ -46,7 +46,7 @@ class Home extends React.Component {
           <BackButton homeScreen={this.props.homeScreen} />
           <div className="input-form">
             <h1>NHẬP MÃ SINH VIÊN</h1>
-            <div className="input-field" >
+            <div className="input-field">
               <div className="form__group field">
                 <input
                   type="number"
@@ -62,9 +62,13 @@ class Home extends React.Component {
                 />
                 <label htmlFor="name" className="form__label">
                   Mã sinh viên
-                      </label>
+                </label>
               </div>
-              <button className="button-submit" id="myBtn" onClick={this.props.handleSubmit}>
+              <button
+                className="button-submit"
+                id="myBtn"
+                onClick={this.props.handleSubmit}
+              >
                 Nhập
               </button>
             </div>
@@ -82,48 +86,76 @@ class StudentID extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.backButton = this.backButton.bind(this);
     this.resetInput = this.resetInput.bind(this);
+    this.resetData = this.resetData.bind(this);
   }
 
   state = {
     screen: 1,
+    empty: true,
+    error: false,
     studentID: "",
     listSubject: [],
     listExam: [],
-    users: [
-      {
-        id: 0,
-        courseID: "Mã môn học",
-        classID: "Mã lớp học",
-        className: "Tên môn học",
-        group: 1,
-        period: "7-9",
-        dayOfWeek: 3,
-        auditorium: "207-GĐ3",
-        error: false,
-      },
-      {
-        id: 1,
-        courseID: "Mã môn học",
-        classID: "Mã lớp học2222",
-        className: "Tên môn học",
-        group: 2,
-        period: "7-9",
-        dayOfWeek: 7,
-        auditorium: "201-GĐ3",
-        error: false,
-      },
-    ],
+    listSchedule: [],
+    // listSubject: [
+    //   {
+    //     id: 0,
+    //     courseID: "Mã môn học",
+    //     classID: "Mã lớp học",
+    //     className: "Tên môn học",
+    //     group: 1,
+    //     period: "7-9",
+    //     dayOfWeek: 3,
+    //     auditorium: "207-GĐ3",
+    //     error: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     courseID: "Mã môn học",
+    //     classID: "Mã lớp học2222",
+    //     className: "Tên môn học",
+    //     group: 2,
+    //     period: "7-9",
+    //     dayOfWeek: 7,
+    //     auditorium: "201-GĐ3",
+    //     error: false,
+    //   },
+    // ],
   };
+
+  componentDidMount() {
+    this.resetData();
+    fetch("https://uet-schedule.herokuapp.com/schedule/getAll") //Du lieu tong hop
+      .then((result) => result.json())
+      .then((result) => {
+        this.setState({
+          listSchedule: result.scheduleList,
+        });
+      })
+      .catch((err) => {
+        alert("Unable to fetch data");
+      });
+  }
 
   resetInput() {
     this.setState({
-      studentID: ''
-    })
+      studentID: "",
+    });
   }
+
+  resetData(){
+      this.setState({
+        listSubject: [],
+        listExam: [],
+        studentID: "",
+        error: false,
+        empty: false,
+      }) 
+   }
 
   handleChange(event) {
     if (event.target.value.length > event.target.maxLength) {
-      event.target.value = event.target.value.slice(0, event.target.maxLength)
+      event.target.value = event.target.value.slice(0, event.target.maxLength);
     }
     this.setState({
       studentID: event.target.value,
@@ -131,32 +163,94 @@ class StudentID extends React.Component {
   }
 
   handleSubmit() {
+    let listSubject1 = [];
+    let listSubject2 = [];
+    let listTemp = [];
+    let done = false;
     if (this.state.studentID.length === 8) {
-      axios.get(
-        `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-      )
-      .then((result) => {
-        this.setState({
-          users: result.data.scheduleList,
-          screen: 3,
+      fetchingStudentData(this.state.studentID)
+        .then((result) => {
+          //list mon hoc tam thoi
+            listTemp = result;
+            done = true;
+            for(var i=0;i<listTemp.length;i++){
+              if(listTemp[i].group !== "CL"){
+                listTemp.push({
+                  classID: listTemp[i].classID,
+                  group: "CL",
+                })
+              }
+            }
+           console.log("listTemp: "+ this.state.studentID);
+           console.log(listTemp);
+           console.log("result: "+ this.state.studentID);
+           console.log(result);
+           axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              console.log("data duy");
+              console.log(result.data.scheduleList);
+              listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
+              this.setState({
+                listSubject: listSubject1,
+                 empty: false,
+                 screen: 3,
+              })
+              console.log("main:")
+            console.log(this.state.listSubject)
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("loi me may roi")
+            this.setState({
+              empty: true,
+            });
+            //-----------------------------------------
+            for(var i = 0; i < listTemp.length;i++){
+              for(var j=0;j<this.state.listSchedule.length;j++){
+                if(listTemp[i].classID === this.state.listSchedule[j].classID && listTemp[i].group === this.state.listSchedule[j].group){
+                    listSubject2.push({
+                      courseID: this.state.listSchedule[j].courseID,
+                      classID: this.state.listSchedule[j].classID,
+                      group: this.state.listSchedule[j].group,
+                      className: this.state.listSchedule[j].className,
+                      dayOfWeek: this.state.listSchedule[j].dayOfWeek,
+                      period: this.state.listSchedule[j].period,
+                      auditorium: this.state.listSchedule[j].auditorium,
+                      error: false,
+                    })
+                }
+              }
+            }
+            
+            this.setState({
+              listSubject: listSubject2,
+              screen: 3,
+              error: false,
+            });
+            console.log("main:")
+            console.log(this.state.listSubject)
+            //--------------------------------------------------
+          });
+        })
+        .catch((err) => {
+          //ma sinh vien k ton tai
+          this.setState({
+            error: true,
+          });
         });
-      })
-      .catch((err) => {
-        console.log(err.response);
-        this.setState({
-          users: [],
-          screen: 3,
-
-        });
-      });
-    }
-    else alert("nhập mã sinh viên đúng vào nhé bạn yêu ☻");
+    } else alert("nhập mã sinh viên đúng vào nhé bạn yêu ☻");
+    
   }
 
   backButton = () => {
-    
     this.setState({
       screen: 1,
+      listSubject: [],
     });
   };
 
@@ -173,20 +267,19 @@ class StudentID extends React.Component {
         );
       case 3:
         return (
-          <HomeStudent 
-            listUser={this.state.users} 
-            listExam={this.state.listExam}  
+          <HomeStudent
+            listUser={this.state.listSubject}
+            listExam={this.state.listExam}
             backButton={this.backButton}
-            studentID={this.state.studentID} 
+            studentID={this.state.studentID}
           />
         );
     }
-  }
+  };
 
   render() {
-    console.log("dcmmm");
     return (
-      <div style={this.props.style, {height: '100%'}}>
+      <div style={(this.props.style, { height: "100%" })}>
         {this.renderedScreen(this.state.screen)}
       </div>
     );

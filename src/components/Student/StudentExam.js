@@ -54,14 +54,6 @@ class Home extends React.Component {
             backButton={this.props.backButton}
           />
         );
-      // case 1:
-      //   return (
-      //     <StudentExam
-      //       listUser={this.state.users}
-      //       backButton={this.backButton}
-      //       studentID={this.state.studentID}
-      //     />
-      //   );
     }
   };
 
