@@ -20,5 +20,4 @@ var fetchingStudentData = async (studentID) => {
         }
     })
 }
-
 export default fetchingStudentData;
