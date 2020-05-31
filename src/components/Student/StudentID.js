@@ -180,7 +180,7 @@ class StudentID extends React.Component {
     let listExamTemp = [];
     let done = false;
     if (this.state.studentID.length === 8) {
-      fetchingStudentData(this.state.studentID).then((result) => {
+      /*fetchingStudentData(this.state.studentID).then((result) => {
         //list mon hoc tam thoi
         listTemp = result;
         listTemp.sort((a, b) => a.classID - b.classID);
@@ -198,8 +198,8 @@ class StudentID extends React.Component {
         console.log("listTemp: " + this.state.studentID);
         console.log(listTemp);
         console.log("result: " + this.state.studentID);
-        console.log(result);
-        if (result.status !== "Error") {
+        console.log(result);*/
+        if (/*result.status !== "Error"*/ true) {
           axios
             .get(
               `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
@@ -226,7 +226,7 @@ class StudentID extends React.Component {
                 empty: true,
               });
               //-----------------------------------------
-              for (var i = 0; i < listTemp.length; i++) {
+              /*for (var i = 0; i < listTemp.length; i++) {
                 for (var j = 0; j < this.state.listSchedule.length; j++) {
                   if (
                     listTemp[i].classID ===
@@ -245,10 +245,11 @@ class StudentID extends React.Component {
                     });
                   }
                 }
-              }
+              }*/
 
               this.setState({
-                listSubject: listSubject2,
+                // listSubject: listSubject2,
+                listSubject: [],
                 screen: 3,
                 statusID: 0,
               });
@@ -262,7 +263,7 @@ class StudentID extends React.Component {
             statusID: 1,
           });
         }
-      });
+      // });
       // .catch((err2) => {
       //   //ma sinh vien k ton tai
       //   console.log("loiiiiiiiiiiiiiiiiiiiiiiiiii")
