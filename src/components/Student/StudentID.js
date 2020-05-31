@@ -171,15 +171,16 @@ class StudentID extends React.Component {
 
   handleSubmit() {
     console.log("da enter");
-    this.setState({
-      statusID: 2,
-    });
+    
     let listSubject1 = [];
     let listSubject2 = [];
     let listTemp = [];
     let listExamTemp = [];
     let done = false;
     if (this.state.studentID.length === 8) {
+      this.setState({
+        statusID: 2,
+      });
       /*fetchingStudentData(this.state.studentID).then((result) => {
         //list mon hoc tam thoi
         listTemp = result;
