@@ -9,12 +9,12 @@ class BackButton extends React.Component {
   render() {
     return (
       <a
-            href="#"
-            class="back-button-flip"
-            data-back="🡰 Trở lại"
-            data-front="🡰 Trở lại"
-            onClick={this.props.backButton}
-          ></a>
+        href="#"
+        class="back-button-flip"
+        data-back="🡰 Trở lại"
+        data-front="🡰 Trở lại"
+        onClick={this.props.backButton}
+      ></a>
     );
   }
 }
@@ -22,8 +22,35 @@ class BackButton extends React.Component {
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      tempList: [],
+      listAllExam: [],
+    };
+  }
 
-    this.state = {};
+  componentDidMount() {
+    //Get All Data  lich thi return listAllExam
+
+    if (this.props.listUser.length !== 0) {
+      for (var i = 0; i < this.props.listUser.length; i++) {
+        for (var j = 0; j < this.state.listAllExam.length; j++) {
+          if (
+            this.props.listUser[i].classID === this.state.listAllExam[j].classID &&
+            this.props.listUser[i].group === this.state.listAllExam[j].group
+          ) {
+            this.props.listExam.push({
+              classID: this.state.listAllExam[j].classID,
+              className: this.state.listAllExam[j].className,
+              day: this.state.listAllExam[j].day,
+              auditorium: this.state.listAllExam[j].auditorium,
+              shift: this.state.listAllExam[j].shift,
+              start: this.state.listAllExam[j].start,
+              error: false,
+            });
+          }
+        }
+      }
+    }
   }
 
   render() {
@@ -98,7 +125,13 @@ class HomeStudent extends React.Component {
       );
     }
     if (this.state.screen === 5) {
-      return <StudentExam backButton={this.backButton} />;
+      return (
+        <StudentExam
+          backButton={this.backButton}
+          listUser={this.state.listUser}
+          studentID={this.state.studentID}
+        />
+      );
     }
   }
 }

@@ -171,7 +171,7 @@ class StudentID extends React.Component {
 
   handleSubmit() {
     console.log("da enter");
-    
+
     let listSubject1 = [];
     let listSubject2 = [];
     let listTemp = [];
@@ -200,34 +200,35 @@ class StudentID extends React.Component {
         console.log(listTemp);
         console.log("result: " + this.state.studentID);
         console.log(result);*/
-        if (/*result.status !== "Error"*/ true) {
-          axios
-            .get(
-              `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-            )
-            .then((result) => {
-              if (result.data.scheduleList.length !== 0) {
-                console.log("data duy");
-                console.log(result.data.scheduleList);
-                listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
-                this.setState({
-                  listSubject: listSubject1,
-                  empty: false,
-                  screen: 3,
-                  statusID: 0,
-                });
-                console.log("main:");
-                console.log(this.state.listSubject);
-              }
-            })
-            .catch((err) => {
-              // console.log(err.response);
-              console.log("loi me may roi");
+      if (/*result.status !== "Error"*/ true) {
+        // lay lich hoc -----------------------------------------------------------------------
+        axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              console.log("data duy");
+              console.log(result.data.scheduleList);
+              listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
               this.setState({
-                empty: true,
+                listSubject: listSubject1,
+                empty: false,
+                screen: 3,
+                statusID: 0,
               });
-              //-----------------------------------------
-              /*for (var i = 0; i < listTemp.length; i++) {
+              console.log("main:");
+              console.log(this.state.listSubject);
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("loi me may roi");
+            this.setState({
+              empty: true,
+            });
+            //-----------------------------------------
+            /*for (var i = 0; i < listTemp.length; i++) {
                 for (var j = 0; j < this.state.listSchedule.length; j++) {
                   if (
                     listTemp[i].classID ===
@@ -248,22 +249,23 @@ class StudentID extends React.Component {
                 }
               }*/
 
-              this.setState({
-                // listSubject: listSubject2,
-                listSubject: [],
-                screen: 3,
-                statusID: 0,
-              });
-              console.log("main:");
-              console.log(this.state.listSubject);
-              //--------------------------------------------------
+            this.setState({
+              // listSubject: listSubject2,
+              listSubject: [],
+              screen: 3,
+              statusID: 0,
             });
-        } else {
-          //co loi
-          this.setState({
-            statusID: 1,
+            console.log("main:");
+            console.log(this.state.listSubject);
           });
-        }
+
+        //Ket thuc lay lich hoc ------------------------------------------------------
+      } else {
+        //co loi
+        this.setState({
+          statusID: 1,
+        });
+      }
       // });
       // .catch((err2) => {
       //   //ma sinh vien k ton tai

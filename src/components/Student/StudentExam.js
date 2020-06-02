@@ -21,39 +21,698 @@ class BackButton extends React.Component {
   }
 }
 
-class StudentExam extends React.Component {
+function convertStringToInt(s) {
+  const foo = s.split("-");
+  return [parseInt(foo[0]), parseInt(foo[1])];
+}
+
+function checkError(data) {
+  let n = data.length,
+    errorLog = [];
+  errorLog.push("");
+  for (var i = 0; i < n; i++) {
+    errorLog.push(0);
+  }
+
+  var i = 0,
+    j = 0;
+  for (i = 0; i < n - 1; i++) {
+    for (j = i + 1; j < n; j++) {
+      if (
+        data[i].courseID === data[j].courseID &&
+        data[i].classID !== data[i].classID
+      ) {
+        // return [
+        //   i,
+        //   "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString(),
+        // ];
+        errorLog[i + 1] = 1;
+        errorLog[0] =
+          "Môn hiện tại bạn chọn bị trùng với môn thứ " + (i + 1).toString();
+      }
+      if (
+        data[i].classID === data[j].classID &&
+        data[i].group !== "CL" &&
+        data[j].group !== "CL"
+      ) {
+        // return [i, "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học"];
+        errorLog[i + 1] = 1;
+        errorLog[0] = "Bạn chỉ có thể chọn 1 lớp cho mỗi môn học";
+      }
+      if (data[i].dayOfWeek === data[j].dayOfWeek) {
+        let period_i = convertStringToInt(data[i].period);
+        let period_j = convertStringToInt(data[j].period);
+        let start_i = period_i[0];
+        let finish_i = period_i[1];
+        let start_j = period_j[0];
+        let finish_j = period_j[1];
+        if (
+          (start_j >= start_i && start_j <= finish_i) ||
+          (finish_j >= start_i && finish_j <= finish_i)
+        ) {
+          // return [
+          //   i,
+          //   "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
+          //     (i + 1).toString() +
+          //     " (T" +
+          //     data[i].dayOfWeek +
+          //     ":" +
+          //     data[i].period +
+          //     ")",
+          // ];
+          errorLog[i + 1] = 1;
+          errorLog[0] =
+            "Môn hiện tại bạn chọn bị trùng thời gian với môn thứ " +
+            (i + 1).toString() +
+            " (T" +
+            data[i].dayOfWeek +
+            ":" +
+            data[i].period +
+            ")";
+          // + (j + 1).toString() +
+          // " (T" +
+          // data[j].dayOfWeek +
+          // ":" +
+          // data[j].period
+        }
+      }
+    }
+  }
+  return errorLog;
+}
+
+const Suggestion = (props) => {
+  if (props.currentInput === "classID") {
+    var renderList = props.list.map((value) => (
+      <button
+        onClick={() => props.changeInput(value)}
+        className="button-suggest"
+      >
+        {value.classID + " - " + value.className}
+      </button>
+    ));
+  }
+  return (
+    <div className="suggestion_flex" style={{ overflowY: "scroll" }}>
+      {renderList}
+    </div>
+    // </div>
+  );
+};
+
+function dateFromString(date) {
+  const part = date.split("/");
+  return new Date(parseInt(part[2]), parseInt(part[1]) - 1, parseInt(part[0]));
+}
+
+const SuggestionTH = (props) => {
+  console.log("alo")
+  console.log(props.list)
+  var value_hidden = [];
+  if (props.currentInput === "group") {
+    // props.list.map((value) =>{
+    //   if(value.group ==="CL") props.changeInput_Hidden(value);
+    // })
+    for (var i = 0; i < props.list.length; i++) {
+      if (props.list[i].group === "CL") {
+        value_hidden = props.list[i];
+      }
+    }
+
+    if (props.list.length === 1) {
+      props.changeInput(props.list[0]);
+    } else {
+      var renderList = props.list.map((value) =>
+        value.group !== "CL" ? (
+          <button
+            onClick={() => {
+              props.changeInput(value);
+              props.changeInput_Hidden(value_hidden);
+            }}
+            className="button-suggest"
+          >
+            {" "}
+            {value.group +
+              " (T" +
+              value.dayOfWeek +
+              ":" +
+              value.period +
+              ")"}{" "}
+          </button>
+        ) : (
+          console.log("hidden CL suggest")
+        )
+      );
+      // renderList.map(0, 1);
+    }
+  }
+
+  return (
+    <div className="suggestion_flex" style={{ overflowY: "scroll" }}>
+      {renderList}
+    </div>
+    // </div>
+  );
+};
+
+const Table = ({ users = [], deleteUser }) => {
+  return (
+    <div className="table">
+      <div className="table-header">
+        <div className="row">
+          <div className="column">Mã lớp học</div>
+          <div className="column">Tên môn học</div>
+          <div className="column">Lớp TH</div>
+          <div className="column">Thứ</div>
+          <div className="column">Tiết</div>
+          <div className="column">Lựa chọn</div>
+        </div>
+      </div>
+      <div className="table-body-scroll">
+        <div className="table-body">
+          {users.map((user, key) => {
+            return (
+              <div className={`row ${user.error ? "error" : ""}`}>
+                <div className="column">{user.classID}</div>
+                <div className="column">{user.className}</div>
+                <div className="column">
+                  {user.group === "CL" ? user.group : "N" + user.group}
+                </div>
+                <div className="column">{user.dayOfWeek}</div>
+                <div className="column">{user.period}</div>
+                <div className="column">
+                  <button className="icon">
+                    <i
+                      class="fas fa-user-minus"
+                      onClick={() => deleteUser(key)}
+                    />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+class Home extends React.Component {
   render() {
     return (
-      <div>
-        <BackButton backButton={this.props.backButton} />
-        <h1>Alo Alo</h1>
+      <div id="studentExam-component">
+        <div className="screen">
+          <div className="screen_header">
+            <BackButton backButton={this.props.backButton} />
+            <p className="studentID_text">
+              Mã sinh viên: {this.props.studentID}
+            </p>
+          </div>
+          <div className="screen_container">
+            <form onSubmit={this.props.handleSubmit}>
+              <div className="container">
+                <h1 style={{ textAlign: "center" }}>TÌM MÔN HỌC</h1>
+                <div className="input_flex">
+                  <input
+                    type="search"
+                    id="classID"
+                    value={this.props.classID}
+                    placeholder="Nhập mã/tên môn học"
+                    name="classID"
+                    onChange={this.props.handleChange}
+                    required
+                    autoComplete="off"
+                  />
+                  <div>
+                    <Suggestion
+                      currentInput={this.props.currentInput}
+                      list={this.props.listSuggestion}
+                      changeInput={this.props.changeInput}
+                    />
+                  </div>
+                  <input
+                    type="search"
+                    id="group"
+                    value={this.props.group}
+                    placeholder="Nhập mã lớp thực hành"
+                    name="group"
+                    onChange={this.props.handleChange}
+                    required
+                    autoComplete="off"
+                  />
+                  <div>
+                    <SuggestionTH
+                      currentInput={this.props.currentInput}
+                      list={this.props.listThucHanh}
+                      changeInput={this.props.changeInput}
+                      changeInput_Hidden={this.props.changeInput_Hidden}
+                    />
+                  </div>
+                </div>
+                {this.props.error_type !== 0 ? (
+                  <p className="errorText">{this.props.error_type}</p>
+                ) : (
+                  console.log("ok")
+                )}
+                <button type="submit" className="button-add">
+                  Thêm
+                </button>
+              </div>
+            </form>
+
+            <div className="table_flex">
+              <Table users={this.props.users} deleteUser={this.props.deleteUser} />
+              {this.props.users.length !== 0 ? (
+                <button
+                  type="submit"
+                  className="button-submit"
+                  onClick={this.props.handleSubmitTKB}
+                >
+                  Tạo TKB
+                </button>
+              ) : (
+                console.log("hide")
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-class Home extends React.Component {
-  state = {
-    screen: 4,
+class StudentExam extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeInput = this.changeInput.bind(this);
+    this.changeInput_Hidden = this.changeInput_Hidden.bind(this);
+    this.makeListTH = this.makeListTH.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+    this.resetFormState = this.resetFormState.bind(this);
+    this.handleSubmitTKB = this.handleSubmitTKB.bind(this);
+    this.state = {
+      screen: 5,
+      studentID: this.props.studentID,
+      currentInput: "",
+      courseID: "",
+      maSV: "",
+      classID: "",
+      className: "",
+      group: "",
+      period: "",
+      dayOfWeek: "",
+      auditorium: "",
+      group_hidden: "",
+      period_hidden: "",
+      dayOfWeek_hidden: "",
+      auditorium_hidden: "",
+      error_type: "",
+      error_detect: false,
+      listSchedule: [], //tong hop dong cut :)
+      listSuggestion: [],
+      temp: [],
+      listThucHanh: [],
+      users: this.props.listUser || [],
+      enrollList: [],
+      listExam: [],
+    listAllExam: [],
+    };
+  }
+
+  makeListTH = (value) => {
+    var list = this.state.listSchedule.filter((item) => {
+      return item.classID === value;
+    });
+    this.setState({
+      listThucHanh: list,
+    });
   };
+
+  changeInput_Hidden = (item) => {
+    this.setState({
+      group_hidden: item.group,
+      period_hidden: item.period,
+      dayOfWeek_hidden: item.dayOfWeek,
+      auditorium_hidden: item.auditorium,
+    });
+  };
+
+  changeInput = (item) => {
+    //xoa suggestion
+    this.setState({
+      listSuggestion: [],
+    });
+
+    if (this.state.currentInput === "classID") {
+      this.setState({
+        classID: item.classID,
+        className: item.className,
+        group: "",
+        courseID: item.courseID,
+        currentInput: "group",
+      });
+      this.makeListTH(item.classID);
+    } 
+    else {
+      this.setState({
+        group: item.group,
+        listThucHanh: [],
+        period: item.period,
+        dayOfWeek: item.dayOfWeek,
+        auditorium: item.auditorium,
+      });
+    }
+    //this.nameInput.current.focus();
+  };
+
+  componentDidMount() {
+    //GET data
+    fetch("https://uet-schedule.herokuapp.com/schedule/getAll")
+      .then((result) => result.json())
+      .then((result) => {
+        this.setState({
+          listSchedule: result.scheduleList,
+        });
+      })
+      .catch((err) => {
+        alert("Không thể lấy dữ liệu lịch học");
+      });
+
+      
+      fetch("https://uet-schedule.herokuapp.com/exam/getAll")
+      .then((result) => result.json())
+      .then((result) => {
+        this.setState({
+          listAllExam: result.scheduleList,
+        });
+      })
+      .catch((err) => {
+        alert("Không thể lấy dữ liệu lịch thi");
+      });
+
+
+      axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+              this.setState({
+                users: temp_listUser,
+              });
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("Không thể trích xuất dữ liệu.");
+          });
+  }
+
+  deleteUser = (key) => {
+    let { users } = this.state;
+    users.splice(key, 1);
+    this.setState({
+      users: [...users],
+    });
+  };
+
+  handleChange(event) {
+    event.preventDefault();
+    var text = event.target.value;
+    this.setState({
+      [event.target.name]: text,
+      currentInput: event.target.name,
+      error_detect: false,
+      error_type: 0,
+      errorLog: [],
+    });
+
+    {
+      this.state.users.map((user, key) => {
+        //Reset error status
+        user.error = false;
+      });
+    }
+
+    if (this.state.currentInput === "group") {
+      this.makeListTH(this.state.classID);
+    }
+
+    const list = this.state.listSchedule.filter((value) => {
+      if (value.classID != null)
+        var subClassID = value.classID.toString().toLowerCase();
+      if (value.className != null)
+        var subClassName = value.className.toString().toLowerCase();
+      if (text != null) var subText = text.toString().toLowerCase().trim();
+      return subClassID.includes(subText) || subClassName.includes(subText);
+    });
+
+    var reducedList = Object.values(
+      list.reduce((r, o) => {
+        r[o.classID] = o;
+        return r;
+      }, {})
+    );
+
+    if (reducedList.length <= 20) {
+      this.setState({
+        listSuggestion: reducedList,
+      });
+    } else {
+      this.setState({
+        listSuggestion: [],
+      });
+    }
+  }
+
+  resetFormState() {
+    document.querySelector("input[name=classID]").value = "";
+    this.setState({
+      currentInput: "",
+      courseID: "",
+      classID: "",
+      className: "",
+      group: "",
+      period: "",
+      dayOfWeek: "",
+      auditorium: "",
+      group_hidden: "",
+      period_hidden: "",
+      dayOfWeek_hidden: "",
+      auditorium_hidden: "",
+      error_detect: false,
+      error_type: 0,
+      errorLog: [],
+      listExam: [],
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let classID = this.state.classID;
+    let group = this.state.group;
+    let className = this.state.className;
+    let courseID = this.state.courseID;
+    let period = this.state.period;
+    let dayOfWeek = this.state.dayOfWeek;
+    let auditorium = this.state.auditorium;
+    let sub_Users = this.state.users;
+
+    if (sub_Users.length !== 0) {
+      //Them mon thu nhat
+      if (group !== "")
+        sub_Users = [
+          ...sub_Users,
+          {
+            id: sub_Users[sub_Users.length - 1].id + 1,
+            classID,
+            className,
+            group,
+            courseID,
+            period,
+            dayOfWeek,
+            auditorium,
+            error: false,
+          },
+        ];
+      //Them mon thu hai
+      if (this.state.group_hidden !== "")
+        sub_Users = [
+          ...sub_Users,
+          {
+            id: sub_Users[sub_Users.length - 1].id + 1,
+            classID,
+            className,
+            group: this.state.group_hidden,
+            courseID,
+            period: this.state.period_hidden,
+            dayOfWeek: this.state.dayOfWeek_hidden,
+            auditorium: this.state.auditorium_hidden,
+            error: false,
+          },
+        ];
+    } else {
+      //Them mon thu nhat
+      if (group !== "")
+        sub_Users = [
+          ...sub_Users,
+          {
+            id: 0,
+            classID,
+            className,
+            group,
+            courseID,
+            period,
+            dayOfWeek,
+            auditorium,
+            error: false,
+          },
+        ];
+      //Them mon thu hai
+      if (this.state.group_hidden !== "")
+        sub_Users = [
+          ...sub_Users,
+          {
+            id: 1,
+            classID,
+            className,
+            group: this.state.group_hidden,
+            courseID,
+            period: this.state.period_hidden,
+            dayOfWeek: this.state.dayOfWeek_hidden,
+            auditorium: this.state.auditorium_hidden,
+            error: false,
+          },
+        ];
+    }
+
+    let errorLog = checkError(sub_Users);
+    if (errorLog[0] !== "") {
+      let { users } = this.state;
+      errorLog.forEach((element, index) => {
+        if (index > 0 && element === 1) {
+          if (users[index - 1] !== undefined) users[index - 1].error = true;
+          else alert(index - 1);
+        }
+      });
+
+      this.setState({
+        error_detect: true,
+        error_type: errorLog[0],
+        users,
+      });
+    } else {
+      this.setState({
+        users: sub_Users,
+      });
+      this.resetFormState();
+    }
+  }
+
+  handleSubmitTKB() {
+    
+    //Get All Data  lich thi return listAllExam
+    if (this.state.users.length !== 0) {
+      var users_reduced = Object.values(
+        this.state.users.reduce((r, o) => {
+          r[o.classID] = o;
+          return r;
+        }, {})
+      );
+      var temp_listExam = [];
+       for (var i = 0; i < users_reduced.length; i++) {
+         for (var j = 0; j < this.state.listAllExam.length; j++) {
+           if (
+             users_reduced[i].classID === this.state.listAllExam[j].classID 
+           ) {
+             console.log("999")
+             temp_listExam.push({
+               classID: this.state.listAllExam[j].classID,
+               className: this.state.listAllExam[j].className,
+               day: this.state.listAllExam[j].date,
+               auditorium: this.state.listAllExam[j].auditorium,
+               shift: this.state.listAllExam[j].shift,
+               start: this.state.listAllExam[j].time,
+             });
+           }
+         }
+       }
+       temp_listExam.sort((a, b) => {
+         if(dateFromString(a.day) > dateFromString(b.day)){
+           return 1
+         }
+         else if(dateFromString(a.day) < dateFromString(b.day)) return -1
+         else{
+           if(a.shift > b.shift) return 1
+           else return -1
+         }
+       });
+       
+       this.setState({
+         listExam: temp_listExam,
+       })
+       console.log(this.state.listExam)
+     }
+    const postEnrollList = this.state.users.map((user) => {
+      return { classID: user.classID, group: user.group };
+    });
+    axios
+      .post("https://uet-schedule.herokuapp.com/student/submitClass", {
+        studentID: this.state.studentID,
+        enrollList: postEnrollList,
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err.response);
+      });
+
+      this.setState({
+        screen: 6,
+      });
+  }
 
   backButton = () => {
     this.setState({
-      screen: 4,
+      screen: 5,
     });
   };
 
   renderedScreen = (id) => {
+    var data = this.state.listExam;
+    data.type = "Exam";
     switch (id) {
-      case 4:
+      case 5:
         return (
-          <StudentExam
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-            resetInput={this.resetInput}
+          <Home
             backButton={this.props.backButton}
+            studentID={this.props.studentID}
+            listSubject={data} 
+            handleChange = {this.handleChange}
+            handleSubmit = {this.handleSubmit}
+            changeInput = {this.changeInput}
+            changeInput_Hidden = {this.changeInput_Hidden}
+            makeListTH = {this.makeListTH}
+            deleteUser = {this.deleteUser}
+            resetFormState = {this.resetFormState}
+            handleSubmitTKB = {this.handleSubmitTKB}
+            currentInput = {this.state.currentInput}
+            group = {this.state.group}
+            classID = {this.state.classID}
+            listSuggestion = {this.state.listSuggestion}
+            listThucHanh = {this.state.listThucHanh}
+            error_type = {this.state.error_type}
+            users = {this.state.users}
           />
         );
+      case 6:
+        return( 
+        <Schedule 
+        listSubject={data} 
+        backButton={this.backButton} 
+        />);
     }
   };
 
@@ -72,4 +731,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(StudentExam);

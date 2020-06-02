@@ -267,8 +267,27 @@ class Student extends React.Component {
         });
       })
       .catch((err) => {
-        alert("bu cu");
+        alert("Không thể trích xuất dữ liệu");
       });
+
+      //Get student's schedule list
+      axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+              this.setState({
+                users: temp_listUser,
+              });
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("Không thể trích xuất dữ liệu.");
+          });
+
   }
 
   deleteUser = (key) => {
@@ -464,7 +483,7 @@ class Student extends React.Component {
         enrollList: postEnrollList,
       })
       .catch((err) => {
-        alert(err);
+        alert("dcmm");
         console.log(err.response);
       });
   }
