@@ -5,7 +5,7 @@ const TableBody = (props) => {
   var result = [];
   var resultDay = [];
   var currentDay = "",
-    currentShift = 0;
+    currentShift = -1;
   for (var i = 0; i < props.listSubject.length; ++i) {
     var item = props.listSubject[i];
     if (currentDay !== item.day && currentDay !== "") {
@@ -13,9 +13,12 @@ const TableBody = (props) => {
         resultDay.push(<td key={j}></td>);
       result.push(<tr key={currentDay}>{resultDay}</tr>);
       resultDay = [];
+      currentShift = -1;
+    }
+    if (currentDay !== item.day) {
+      resultDay.push(<td key={0}>{item.day}</td>);
       currentShift = 0;
     }
-    if (currentDay !== item.day) resultDay.push(<td key={0}>{item.day}</td>);
     for (var k = currentShift + 1; k < item.shift; ++k)
       resultDay.push(<td key={k}></td>);
     resultDay.push(
@@ -33,6 +36,7 @@ const TableBody = (props) => {
     currentDay = item.day;
     currentShift = item.shift;
   }
+
   for (var j = currentShift + 1; j <= 4; ++j) resultDay.push(<td key={j}></td>);
   result.push(<tr key={currentDay}>{resultDay}</tr>);
   return <tbody>{result}</tbody>;
