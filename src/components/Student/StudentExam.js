@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import actions from "../../actions/index-screen-actions";
-import "./Student.scss";
 import Schedule from "../Schedule/Schedule";
-import StudentID from "../Student/StudentID.js";
+import Student from "../Student/Student.js";
+import homeStudentScreen from "../Student/HomeStudent.js";
 import axios from "axios";
+import "./StudentExam.scss";
 
 class BackButton extends React.Component {
   render() {
@@ -27,7 +28,7 @@ function convertStringToInt(s) {
 
 function checkError(data) {
   let n = data.length,
-  errorLog = [];
+    errorLog = [];
   errorLog.push("");
   for (var i = 0; i < n; i++) {
     errorLog.push(0);
@@ -119,7 +120,14 @@ const Suggestion = (props) => {
   );
 };
 
+function dateFromString(date) {
+  const part = date.split("/");
+  return new Date(parseInt(part[2]), parseInt(part[1]) - 1, parseInt(part[0]));
+}
+
 const SuggestionTH = (props) => {
+  console.log("alo")
+  console.log(props.list)
   var value_hidden = [];
   if (props.currentInput === "group") {
     // props.list.map((value) =>{
@@ -167,7 +175,133 @@ const SuggestionTH = (props) => {
   );
 };
 
-class Student extends React.Component {
+const Table = ({ users = [], deleteUser }) => {
+  return (
+    <div className="table">
+      <div className="table-header">
+        <div className="row">
+          <div className="column">Mã lớp học</div>
+          <div className="column">Tên môn học</div>
+          <div className="column">Lớp TH</div>
+          <div className="column">Thứ</div>
+          <div className="column">Tiết</div>
+          <div className="column">Lựa chọn</div>
+        </div>
+      </div>
+      <div className="table-body-scroll">
+        <div className="table-body">
+          {users.map((user, key) => {
+            return (
+              <div className={`row ${user.error ? "error" : ""}`}>
+                <div className="column">{user.classID}</div>
+                <div className="column">{user.className}</div>
+                <div className="column">
+                  {user.group === "CL" ? user.group : "N" + user.group}
+                </div>
+                <div className="column">{user.dayOfWeek}</div>
+                <div className="column">{user.period}</div>
+                <div className="column">
+                  <button className="icon">
+                    <i
+                      class="fas fa-user-minus"
+                      onClick={() => deleteUser(key)}
+                    />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+class Home extends React.Component {
+  render() {
+    return (
+      <div id="studentExam-component">
+        <div className="screen">
+          <div className="screen_header">
+            <BackButton backButton={this.props.backButton} />
+            <p className="studentID_text">
+              Mã sinh viên: {this.props.studentID}
+            </p>
+          </div>
+          <div className="screen_container">
+            <form onSubmit={this.props.handleSubmit}>
+              <div className="container">
+                <h1 style={{ textAlign: "center" }}>TÌM MÔN HỌC</h1>
+                <div className="input_flex">
+                  <input
+                    type="search"
+                    id="classID"
+                    value={this.props.classID}
+                    placeholder="Nhập mã/tên môn học"
+                    name="classID"
+                    onChange={this.props.handleChange}
+                    required
+                    autoComplete="off"
+                  />
+                  <div>
+                    <Suggestion
+                      currentInput={this.props.currentInput}
+                      list={this.props.listSuggestion}
+                      changeInput={this.props.changeInput}
+                    />
+                  </div>
+                  <input
+                    type="search"
+                    id="group"
+                    value={this.props.group}
+                    placeholder="Nhập mã lớp thực hành"
+                    name="group"
+                    onChange={this.props.handleChange}
+                    required
+                    autoComplete="off"
+                  />
+                  <div>
+                    <SuggestionTH
+                      currentInput={this.props.currentInput}
+                      list={this.props.listThucHanh}
+                      changeInput={this.props.changeInput}
+                      changeInput_Hidden={this.props.changeInput_Hidden}
+                    />
+                  </div>
+                </div>
+                {this.props.error_type !== 0 ? (
+                  <p className="errorText">{this.props.error_type}</p>
+                ) : (
+                  console.log("ok")
+                )}
+                <button type="submit" className="button-add">
+                  Thêm
+                </button>
+              </div>
+            </form>
+
+            <div className="table_flex">
+              <Table users={this.props.users} deleteUser={this.props.deleteUser} />
+              {this.props.users.length !== 0 ? (
+                <button
+                  type="submit"
+                  className="button-submit"
+                  onClick={this.props.handleSubmitTKB}
+                >
+                  Tạo TKB
+                </button>
+              ) : (
+                console.log("hide")
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class StudentExam extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -178,10 +312,9 @@ class Student extends React.Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.resetFormState = this.resetFormState.bind(this);
     this.handleSubmitTKB = this.handleSubmitTKB.bind(this);
-
     this.state = {
+      screen: 5,
       studentID: this.props.studentID,
-      screen: 1,
       currentInput: "",
       courseID: "",
       maSV: "",
@@ -203,14 +336,10 @@ class Student extends React.Component {
       listThucHanh: [],
       users: this.props.listUser || [],
       enrollList: [],
+      listExam: [],
+    listAllExam: [],
     };
   }
-
-  backButton = () => {
-    this.setState({
-      screen: 1,
-    });
-  };
 
   makeListTH = (value) => {
     var list = this.state.listSchedule.filter((item) => {
@@ -245,7 +374,8 @@ class Student extends React.Component {
         currentInput: "group",
       });
       this.makeListTH(item.classID);
-    } else {
+    } 
+    else {
       this.setState({
         group: item.group,
         listThucHanh: [],
@@ -267,10 +397,22 @@ class Student extends React.Component {
         });
       })
       .catch((err) => {
-        alert("Không thể trích xuất dữ liệu");
+        alert("Không thể lấy dữ liệu lịch học");
       });
 
-      //Get student's schedule list
+      
+      fetch("https://uet-schedule.herokuapp.com/exam/getAll")
+      .then((result) => result.json())
+      .then((result) => {
+        this.setState({
+          listAllExam: result.scheduleList,
+        });
+      })
+      .catch((err) => {
+        alert("Không thể lấy dữ liệu lịch thi");
+      });
+
+
       axios
           .get(
             `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
@@ -287,7 +429,6 @@ class Student extends React.Component {
             // console.log(err.response);
             console.log("Không thể trích xuất dữ liệu.");
           });
-
   }
 
   deleteUser = (key) => {
@@ -365,6 +506,7 @@ class Student extends React.Component {
       error_detect: false,
       error_type: 0,
       errorLog: [],
+      listExam: [],
     });
   }
 
@@ -471,9 +613,49 @@ class Student extends React.Component {
   }
 
   handleSubmitTKB() {
-    this.setState({
-      screen: 6,
-    });
+    
+    //Get All Data  lich thi return listAllExam
+    if (this.state.users.length !== 0) {
+      var users_reduced = Object.values(
+        this.state.users.reduce((r, o) => {
+          r[o.classID] = o;
+          return r;
+        }, {})
+      );
+      var temp_listExam = [];
+       for (var i = 0; i < users_reduced.length; i++) {
+         for (var j = 0; j < this.state.listAllExam.length; j++) {
+           if (
+             users_reduced[i].classID === this.state.listAllExam[j].classID 
+           ) {
+             console.log("999")
+             temp_listExam.push({
+               classID: this.state.listAllExam[j].classID,
+               className: this.state.listAllExam[j].className,
+               day: this.state.listAllExam[j].date,
+               auditorium: this.state.listAllExam[j].auditorium,
+               shift: this.state.listAllExam[j].shift,
+               start: this.state.listAllExam[j].time,
+             });
+           }
+         }
+       }
+       temp_listExam.sort((a, b) => {
+         if(dateFromString(a.day) > dateFromString(b.day)){
+           return 1
+         }
+         else if(dateFromString(a.day) < dateFromString(b.day)) return -1
+         else{
+           if(a.shift > b.shift) return 1
+           else return -1
+         }
+       });
+       
+       this.setState({
+         listExam: temp_listExam,
+       })
+       console.log(this.state.listExam)
+     }
     const postEnrollList = this.state.users.map((user) => {
       return { classID: user.classID, group: user.group };
     });
@@ -483,145 +665,65 @@ class Student extends React.Component {
         enrollList: postEnrollList,
       })
       .catch((err) => {
-        alert("dcmm");
+        alert(err);
         console.log(err.response);
+      });
+
+      this.setState({
+        screen: 6,
       });
   }
 
-  render() {
-    var data = this.state.users
-    data.type = "Working"
-    if (this.state.screen === 1) {
-      return (
-        <div id="student-component">
-          <div className="screen">
-            <div className="screen_header">
-              <BackButton backButton={this.props.backButton} />
-              <p className="studentID_text">
-                Mã sinh viên: {this.state.studentID}
-              </p>
-            </div>
-            <div className="screen_container">
-              <form onSubmit={this.handleSubmit}>
-                <div className="container">
-                  <h1 style={{ textAlign: "center" }}>TÌM MÔN HỌC</h1>
-                  <div className="input_flex">
-                    <input
-                      type="search"
-                      id="classID"
-                      value={this.state.classID}
-                      placeholder="Nhập mã/tên môn học"
-                      name="classID"
-                      onChange={this.handleChange}
-                      required
-                      autoComplete="off"
-                    />
-                    <div>
-                      <Suggestion
-                        currentInput={this.state.currentInput}
-                        list={this.state.listSuggestion}
-                        changeInput={this.changeInput}
-                      />
-                    </div>
-                    <input
-                      type="search"
-                      id="group"
-                      value={this.state.group}
-                      placeholder="Nhập mã lớp thực hành"
-                      name="group"
-                      onChange={this.handleChange}
-                      required
-                      autoComplete="off"
-                    />
-                    <div>
-                      <SuggestionTH
-                        currentInput={this.state.currentInput}
-                        list={this.state.listThucHanh}
-                        changeInput={this.changeInput}
-                        changeInput_Hidden={this.changeInput_Hidden}
-                      />
-                    </div>
-                  </div>
-                  {this.state.error_type !== 0 ? (
-                    <p className="errorText">{this.state.error_type}</p>
-                  ) : (
-                    console.log("ok")
-                  )}
-                  <button type="submit" className="button-add">
-                    Thêm
-                  </button>
-                </div>
-              </form>
+  backButton = () => {
+    this.setState({
+      screen: 5,
+    });
+  };
 
-              <div className="table_flex">
-                <Table users={this.state.users} deleteUser={this.deleteUser} />
-                {this.state.users.length !== 0 ? (
-                  <button
-                    type="submit"
-                    className="button-submit"
-                    onClick={this.handleSubmitTKB}
-                  >
-                    Tạo TKB
-                  </button>
-                ) : (
-                  console.log("hide")
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (this.state.screen === 6) {
-      return (
-        <Schedule listSubject={data} backButton={this.backButton} />
-      );
-    } else {
-      return <StudentID />;
+  renderedScreen = (id) => {
+    var data = this.state.listExam;
+    data.type = "Exam";
+    switch (id) {
+      case 5:
+        return (
+          <Home
+            backButton={this.props.backButton}
+            studentID={this.props.studentID}
+            listSubject={data} 
+            handleChange = {this.handleChange}
+            handleSubmit = {this.handleSubmit}
+            changeInput = {this.changeInput}
+            changeInput_Hidden = {this.changeInput_Hidden}
+            makeListTH = {this.makeListTH}
+            deleteUser = {this.deleteUser}
+            resetFormState = {this.resetFormState}
+            handleSubmitTKB = {this.handleSubmitTKB}
+            currentInput = {this.state.currentInput}
+            group = {this.state.group}
+            classID = {this.state.classID}
+            listSuggestion = {this.state.listSuggestion}
+            listThucHanh = {this.state.listThucHanh}
+            error_type = {this.state.error_type}
+            users = {this.state.users}
+          />
+        );
+      case 6:
+        return( 
+        <Schedule 
+        listSubject={data} 
+        backButton={this.backButton} 
+        />);
     }
+  };
+
+  render() {
+    return (
+      <div style={(this.props.style, { height: "100%" })}>
+        {this.renderedScreen(this.state.screen)}
+      </div>
+    );
   }
 }
-
-const Table = ({ users = [], deleteUser }) => {
-  return (
-    <div className="table">
-      <div className="table-header">
-        <div className="row">
-          <div className="column">Mã lớp học</div>
-          <div className="column">Tên môn học</div>
-          <div className="column">Lớp TH</div>
-          <div className="column">Thứ</div>
-          <div className="column">Tiết</div>
-          <div className="column">Lựa chọn</div>
-        </div>
-      </div>
-      <div className="table-body-scroll">
-        <div className="table-body">
-          {users.map((user, key) => {
-            return (
-              <div className={`row ${user.error ? "error" : ""}`}>
-                <div className="column">{user.classID}</div>
-                <div className="column">{user.className}</div>
-                <div className="column">
-                  {user.group === "CL" ? user.group : "N" + user.group}
-                </div>
-                <div className="column">{user.dayOfWeek}</div>
-                <div className="column">{user.period}</div>
-                <div className="column">
-                  <button className="icon">
-                    <i
-                      class="fas fa-user-minus"
-                      onClick={() => deleteUser(key)}
-                    />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
@@ -629,4 +731,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Student);
+export default connect(null, mapDispatchToProps)(StudentExam);

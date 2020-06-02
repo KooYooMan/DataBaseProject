@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import actions from "../../actions/index-screen-actions";
-import Schedule from "../Schedule/Schedule";
 import Student from "../Student/Student.js";
-import axios from 'axios';
+import HomeStudent from "../Student/HomeStudent.js";
+import axios from "axios";
+import fetchingStudentData from "./../../Utility/fetchingStudentData";
 import "./StudentID.scss";
 
 class BackButton extends React.Component {
@@ -22,7 +23,7 @@ class BackButton extends React.Component {
 
 class Home extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.studentInput = React.createRef();
   }
 
@@ -31,11 +32,12 @@ class Home extends React.Component {
     var input = document.getElementById("name");
     input.addEventListener("keyup", function (event) {
       if (event.keyCode === 13) {
+        console.log("da enter roi nhe š");
         event.preventDefault();
         document.getElementById("myBtn").click();
       }
     });
-    this.props.resetInput()
+    this.props.resetInput();
   }
 
   render() {
@@ -45,7 +47,7 @@ class Home extends React.Component {
           <BackButton homeScreen={this.props.homeScreen} />
           <div className="input-form">
             <h1>NHẬP MÃ SINH VIÊN</h1>
-            <div className="input-field" >
+            <div className="input-field">
               <div className="form__group field">
                 <input
                   type="number"
@@ -61,12 +63,21 @@ class Home extends React.Component {
                 />
                 <label htmlFor="name" className="form__label">
                   Mã sinh viên
-                      </label>
+                </label>
               </div>
-              <button className="button-submit" id="myBtn" onClick={this.props.handleSubmit}>
+              <button
+                className="button-submit"
+                id="myBtn"
+                onClick={this.props.handleSubmit}
+              >
                 Nhập
               </button>
             </div>
+            {this.props.statusID === 1 ? (
+              <p>Mã sinh viên không tồn tại</p>
+            ) : this.props.statusID === 2 ? (
+              <p>Đang tải dữ liệu</p>
+            ) : null}
           </div>
         </div>
       </div>
@@ -81,107 +92,225 @@ class StudentID extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.backButton = this.backButton.bind(this);
     this.resetInput = this.resetInput.bind(this);
+    this.resetData = this.resetData.bind(this);
   }
 
   state = {
-    screen: 3,
+    screen: 1,
+    empty: true,
+    statusID: 0,
     studentID: "",
     listSubject: [],
-    users: [
-      {
-        id: 0,
-        courseID: "Mã môn học",
-        classID: "Mã lớp học",
-        className: "Tên môn học",
-        group: 1,
-        period: "7-9",
-        dayOfWeek: 3,
-        auditorium: "207-GĐ3",
-        error: false,
-      },
-      {
-        id: 1,
-        courseID: "Mã môn học",
-        classID: "Mã lớp học2222",
-        className: "Tên môn học",
-        group: 2,
-        period: "7-9",
-        dayOfWeek: 7,
-        auditorium: "201-GĐ3",
-        error: false,
-      },
-    ],
+    listExam: [],
+    listSchedule: [],
+    // listSubject: [
+    //   {
+    //     id: 0,
+    //     courseID: "Mã môn học",
+    //     classID: "Mã lớp học",
+    //     className: "Tên môn học",
+    //     group: 1,
+    //     period: "7-9",
+    //     dayOfWeek: 3,
+    //     auditorium: "207-GĐ3",
+    //     statusID: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     courseID: "Mã môn học",
+    //     classID: "Mã lớp học2222",
+    //     className: "Tên môn học",
+    //     group: 2,
+    //     period: "7-9",
+    //     dayOfWeek: 7,
+    //     auditorium: "201-GĐ3",
+    //     statusID: false,
+    //   },
+    // ],
   };
+
+  componentDidMount() {
+    this.resetData();
+    fetch("https://uet-schedule.herokuapp.com/schedule/getAll") //Du lieu tong hop
+      .then((result) => result.json())
+      .then((result) => {
+        this.setState({
+          listSchedule: result.scheduleList,
+        });
+      })
+      .catch((err) => {
+        alert("Unable to fetch data");
+      });
+  }
 
   resetInput() {
     this.setState({
-      studentID: ''
-    })
+      studentID: "",
+    });
+  }
+
+  resetData() {
+    this.setState({
+      listSubject: [],
+      listExam: [],
+      studentID: "",
+      statusID: 0,
+      empty: false,
+    });
   }
 
   handleChange(event) {
     if (event.target.value.length > event.target.maxLength) {
-      event.target.value = event.target.value.slice(0, event.target.maxLength)
+      event.target.value = event.target.value.slice(0, event.target.maxLength);
     }
     this.setState({
       studentID: event.target.value,
+      statusID: 0,
     });
   }
 
   handleSubmit() {
-    if (this.state.studentID.length === 8) {
-      axios.get(
-        `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-      )
-      .then((result) => {
-        this.setState({
-          users: result.data.scheduleList,
-          screen: 1,
-        });
-      })
-      .catch((err) => {
-        console.log(err.response);
-        this.setState({
-          users: [],
-          screen: 1,
+    console.log("da enter");
 
-        });
+    let listSubject1 = [];
+    let listSubject2 = [];
+    let listTemp = [];
+    let listExamTemp = [];
+    let done = false;
+    if (this.state.studentID.length === 8) {
+      this.setState({
+        statusID: 2,
       });
-    }
-    else alert("địt con mẹ mày nhập mã sinh viên đúng vào");
+      /*fetchingStudentData(this.state.studentID).then((result) => {
+        //list mon hoc tam thoi
+        listTemp = result;
+        listTemp.sort((a, b) => a.classID - b.classID);
+        listExamTemp = listTemp;
+        done = true;
+        for (var i = 0; i < listTemp.length; i++) {
+          if (listTemp[i].group !== "CL") {
+            listTemp.push({
+              classID: listTemp[i].classID,
+              group: "CL",
+            });
+          }
+        }
+        listExamTemp.sort((a, b) => a.classID - b.classID);
+        console.log("listTemp: " + this.state.studentID);
+        console.log(listTemp);
+        console.log("result: " + this.state.studentID);
+        console.log(result);*/
+      if (/*result.status !== "Error"*/ true) {
+        // lay lich hoc -----------------------------------------------------------------------
+        axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              console.log("data duy");
+              console.log(result.data.scheduleList);
+              listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
+              this.setState({
+                listSubject: listSubject1,
+                empty: false,
+                screen: 3,
+                statusID: 0,
+              });
+              console.log("main:");
+              console.log(this.state.listSubject);
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("loi me may roi");
+            this.setState({
+              empty: true,
+            });
+            //-----------------------------------------
+            /*for (var i = 0; i < listTemp.length; i++) {
+                for (var j = 0; j < this.state.listSchedule.length; j++) {
+                  if (
+                    listTemp[i].classID ===
+                      this.state.listSchedule[j].classID &&
+                    listTemp[i].group === this.state.listSchedule[j].group
+                  ) {
+                    listSubject2.push({
+                      courseID: this.state.listSchedule[j].courseID,
+                      classID: this.state.listSchedule[j].classID,
+                      group: this.state.listSchedule[j].group,
+                      className: this.state.listSchedule[j].className,
+                      dayOfWeek: this.state.listSchedule[j].dayOfWeek,
+                      period: this.state.listSchedule[j].period,
+                      auditorium: this.state.listSchedule[j].auditorium,
+                      error: false,
+                    });
+                  }
+                }
+              }*/
+
+            this.setState({
+              // listSubject: listSubject2,
+              listSubject: [],
+              screen: 3,
+              statusID: 0,
+            });
+            console.log("main:");
+            console.log(this.state.listSubject);
+          });
+
+        //Ket thuc lay lich hoc ------------------------------------------------------
+      } else {
+        //co loi
+        this.setState({
+          statusID: 1,
+        });
+      }
+      // });
+      // .catch((err2) => {
+      //   //ma sinh vien k ton tai
+      //   console.log("loiiiiiiiiiiiiiiiiiiiiiiiiii")
+      //   this.setState({
+      //     statusID: true,
+      //   });
+      // });
+    } else alert("nhập mã sinh viên đúng vào nhé bạn yêu ☻");
   }
 
   backButton = () => {
     this.setState({
-      screen: 3,
+      screen: 1,
+      listSubject: [],
     });
   };
 
   renderedScreen = (id) => {
     switch (id) {
-      case 3:
+      case 1: //it self
         return (
           <Home
             homeScreen={this.props.homeScreen}
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
             resetInput={this.resetInput}
+            statusID={this.state.statusID}
           />
         );
-      case 1:
+      case 3:
         return (
-          <Student 
-            listUser={this.state.users} 
-            backButton={this.backButton} 
-            studentID={this.state.studentID} 
+          <HomeStudent
+            listUser={this.state.listSubject}
+            listExam={this.state.listExam}
+            backButton={this.backButton}
+            studentID={this.state.studentID}
           />
         );
     }
-  }
+  };
 
   render() {
     return (
-      <div style={this.props.style, {height: '100%'}}>
+      <div style={(this.props.style, { height: "100%" })}>
         {this.renderedScreen(this.state.screen)}
       </div>
     );
