@@ -6,17 +6,121 @@ import CourseList from './CourseList';
 import { exportComponentAsJPEG, exportComponenstAsPDF, exportComponentAsPNG } from "react-component-export-image";
 import { Spring } from 'react-spring/renderprops'
 
+class googleCalendar {
+    constructor(credentials) {
+        //load dependencies...
+        this.gapi = window.gapi;
+        this.gapi.load("client:auth2", init.bind(this));
+        let cal = this;
+        //create call stack...
+        this.callStack = {};
+        function init() {
+            //authorize api access...
+            this.gapi.client
+                .init({
+                    apiKey: credentials.apiKey,
+                    clientId: credentials.clientId,
+                    scope: credentials.scope,
+                    discoveryDocs: credentials.discoveryDocs
+                })
+                .then(function () {
+                    cal.gapi.auth2.getAuthInstance().isSignedIn.listen(updateCallstack);
+                    function updateCallstack() {
+                        cal.callStack.func(cal.callStack.args);
+                    }
+                });
+        }
+    }
+
+    userAuthStatus() {
+        if (!this.gapi.auth2.getAuthInstance().isSignedIn.get()) {
+            this.gapi.auth2.getAuthInstance().signIn();
+        }
+        return this.gapi.auth2.getAuthInstance().isSignedIn.get();
+    }
+
+    createEvent(events) {
+        if (this.userAuthStatus()) {
+            events.map(event => {
+                let request = this.gapi.client.calendar.events.insert({
+                    calendarId: "primary",
+                    resource: event
+                });
+                request.execute(() => { });
+            })
+            alert("done");
+        } else {
+            this.callStack.func = this.createEvent.bind(this);
+            this.callStack.args = events
+        }
+    }
+}
+
 class Schedule extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             listSubject: [],
         }
+        this.exportGoogleCalandar = this.exportGoogleCalandar.bind(this)
     }
 
     process(s) {
         var foo = s.split('-')
         return [parseInt(foo[0]), parseInt(foo[1])]
+    }
+
+    WorkingCalandarConvert(data) {
+        var result = data.map(value => ({
+            'summary': `${value.courseName} - ${value.classID} - ${((value.group === 'CL') ? value.group : 'N' + value.group)}`,
+            'location': `${value.auditorium}`,
+            'start': {
+                'dateTime': `2020-03-${value.dayOfWeek}T${value.start + 6}:00:00+07:00`,
+                'timeZone': 'Asia/Saigon',
+            },
+            'end': {
+                'dateTime': `2020-03-${value.dayOfWeek}T${value.finish + 6}:50:00+07:00`,
+                'timeZone': 'Asia/Saigon',
+            },
+            'recurrence': [
+                'RRULE:FREQ=WEEKLY;COUNT=15'
+            ],
+        }))
+        return result
+    }
+
+    ExamCalandarConvert(data) {
+        var covertShiftToHour = (shift) => {
+          switch(shift) {
+            case 1:
+              return '09';
+            case 2:
+              return '11';
+            case 3:
+              return '15';
+            default:
+              return '17';
+          }
+        }
+        var result = data.map(value => ({
+          'summary': `${value.courseName} - ${value.classID}`,
+          'location': `${value.auditorium}`,
+          'start': {
+            'dateTime': `2020-${value.day.substr(3, 2)}-${value.day.substr(0, 2)}T${value.start.substr(0, 2)}:${value.start.substr(3, 2)}:00+07:00`,
+            'timeZone': 'Asia/Saigon',
+          },
+          'end': {
+            'dateTime': `2020-${value.day.substr(3, 2)}-${value.day.substr(0, 2)}T${covertShiftToHour(value.shift)}:00:00+07:00`,
+            'timeZone': 'Asia/Saigon',
+          },
+        }))
+    }
+
+    exportGoogleCalandar() {
+        var events = ((this.props.listSubject.type === 'Working')
+        ? this.WorkingCalandarConvert(this.state.listSubject) 
+        : this.ExamCalandarConvert(this.state.listSubject));
+        window.googleCalendar.createEvent(events);
     }
 
     componentDidMount() {
@@ -50,20 +154,31 @@ class Schedule extends React.Component {
         this.setState({
             listSubject: listSubject
         })
+        let credentials = {
+            scope:
+                "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
+            clientId:
+                "314262756986-dphbp3k9g7htuqp4fm3398sof8v66bkr.apps.googleusercontent.com",
+            apiKey: "AIzaSyBNTqxm5ivV1wZR24Sq9s9V7VmiRpzz5Is",
+            discoveryDocs: [
+                "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
+            ]
+        };
+        window.googleCalendar = new googleCalendar(credentials);
     }
 
     render() {
         var componentRef = React.createRef();
         return (
             <Spring
-                from={{ 
-                    opacity: 0, 
+                from={{
+                    opacity: 0,
                     transform: 'translate3d(400px,0,0) scale(0.5) rotateX(90deg)'
                 }}
-                to={{ 
+                to={{
                     opacity: 1,
                     transform: 'translate3d(0px,0,0) scale(1) rotateX(0deg)'
-                 }}
+                }}
                 config={{
                     duration: 1000
                 }}
@@ -84,7 +199,7 @@ class Schedule extends React.Component {
                                 <div id="lecturer-menu">
                                     <Button
                                         backButton={this.props.backButton}
-                                        export={() => {
+                                        exportPNG={() => {
                                             document.getElementById("menu__toggle").checked = false;
                                             for (var i = 0; i < document.getElementsByTagName('td').length; ++i) {
                                                 var element = document.getElementsByTagName('td')[i]
@@ -98,6 +213,7 @@ class Schedule extends React.Component {
                                                 }
                                             }, 2000)
                                         }}
+                                        exportGoogleCalandar={this.exportGoogleCalandar}
                                     />
                                     <CourseList
                                         listSubject={this.state.listSubject}
