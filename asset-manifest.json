@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/DataBaseProject/static/css/main.9f85138e.chunk.css",
-    "main.js": "/DataBaseProject/static/js/main.b5144cbe.chunk.js",
-    "main.js.map": "/DataBaseProject/static/js/main.b5144cbe.chunk.js.map",
+    "main.js": "/DataBaseProject/static/js/main.4d221184.chunk.js",
+    "main.js.map": "/DataBaseProject/static/js/main.4d221184.chunk.js.map",
     "runtime-main.js": "/DataBaseProject/static/js/runtime-main.9cd926aa.js",
     "runtime-main.js.map": "/DataBaseProject/static/js/runtime-main.9cd926aa.js.map",
     "static/js/2.a638438e.chunk.js": "/DataBaseProject/static/js/2.a638438e.chunk.js",
     "static/js/2.a638438e.chunk.js.map": "/DataBaseProject/static/js/2.a638438e.chunk.js.map",
     "index.html": "/DataBaseProject/index.html",
-    "precache-manifest.cc330d0c04cfbdd11d49b5e8c0228764.js": "/DataBaseProject/precache-manifest.cc330d0c04cfbdd11d49b5e8c0228764.js",
+    "precache-manifest.73e68f6a93c4df8f7c86f68629cb7ea9.js": "/DataBaseProject/precache-manifest.73e68f6a93c4df8f7c86f68629cb7ea9.js",
     "service-worker.js": "/DataBaseProject/service-worker.js",
     "static/css/main.9f85138e.chunk.css.map": "/DataBaseProject/static/css/main.9f85138e.chunk.css.map",
     "static/js/2.a638438e.chunk.js.LICENSE.txt": "/DataBaseProject/static/js/2.a638438e.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.9cd926aa.js",
     "static/js/2.a638438e.chunk.js",
     "static/css/main.9f85138e.chunk.css",
-    "static/js/main.b5144cbe.chunk.js"
+    "static/js/main.4d221184.chunk.js"
   ]
 }
