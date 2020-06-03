@@ -35,7 +35,7 @@ const List = (props) => {
     return (
         <ol 
             className="sub-menu" 
-            style={{ paddingInlineStart: '0px', listStyleType: 'none', overflowY:'scroll', overflowX: 'hidden', height: '280px' }}>
+            style={{ paddingInlineStart: '0px', listStyleType: 'none', overflowY:'scroll', overflowX: 'hidden', height: '200px' }}>
             {result}
         </ol>
     );
