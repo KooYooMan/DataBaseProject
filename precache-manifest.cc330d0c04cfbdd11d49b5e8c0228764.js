@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5081828eb47086e118713bbd59ef4052",
+    "revision": "4b6e8cdefa8f242cfded12e6e2f651f1",
     "url": "/DataBaseProject/index.html"
   },
   {
-    "revision": "f5bc43b3e1557c7a8b15",
-    "url": "/DataBaseProject/static/css/main.bb6862e9.chunk.css"
+    "revision": "92a7e583ba6e404fcef8",
+    "url": "/DataBaseProject/static/css/main.9f85138e.chunk.css"
   },
   {
-    "revision": "0251db461319633d9674",
-    "url": "/DataBaseProject/static/js/2.7b33a81e.chunk.js"
+    "revision": "c7f7da13ca7e4972fef1",
+    "url": "/DataBaseProject/static/js/2.a638438e.chunk.js"
   },
   {
     "revision": "e0c192547816ef7be36ef6ba4b9d10df",
-    "url": "/DataBaseProject/static/js/2.7b33a81e.chunk.js.LICENSE.txt"
+    "url": "/DataBaseProject/static/js/2.a638438e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f5bc43b3e1557c7a8b15",
-    "url": "/DataBaseProject/static/js/main.f6c49636.chunk.js"
+    "revision": "92a7e583ba6e404fcef8",
+    "url": "/DataBaseProject/static/js/main.b5144cbe.chunk.js"
   },
   {
     "revision": "639d589ad23e73f24677",
@@ -36,12 +36,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DataBaseProject/static/media/exam_b.ee5bba7d.jpg"
   },
   {
-    "revision": "54de28187d6580da309f869c301c3b3b",
-    "url": "/DataBaseProject/static/media/lecturer.54de2818.webp"
+    "revision": "80b5e47ffd72b40c11c2c1efef14182c",
+    "url": "/DataBaseProject/static/media/lecturer2.80b5e47f.jpeg"
   },
   {
-    "revision": "00bf7d58a407d149e25c1a0686a1373c",
-    "url": "/DataBaseProject/static/media/student.00bf7d58.jpg"
+    "revision": "bfed14ffa7523b3bf65737576e6369c5",
+    "url": "/DataBaseProject/static/media/student2.bfed14ff.jpg"
   },
   {
     "revision": "ddc02adecf789c27939ccf2383a0e703",
