@@ -126,8 +126,6 @@ function dateFromString(date) {
 }
 
 const SuggestionTH = (props) => {
-  console.log("alo")
-  console.log(props.list)
   var value_hidden = [];
   if (props.currentInput === "group") {
     // props.list.map((value) =>{
@@ -337,7 +335,7 @@ class StudentExam extends React.Component {
       users: this.props.listUser || [],
       enrollList: [],
       listExam: [],
-    listAllExam: [],
+      listAllExam: [],
     };
   }
 
@@ -388,6 +386,24 @@ class StudentExam extends React.Component {
   };
 
   componentDidMount() {
+
+    axios
+          .get(
+            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+          )
+          .then((result) => {
+            if (result.data.scheduleList.length !== 0) {
+              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+              this.setState({
+                users: temp_listUser,
+              });
+            }
+          })
+          .catch((err) => {
+            // console.log(err.response);
+            console.log("Không thể trích xuất dữ liệu sinh viên.");
+          });
+
     //GET data
     fetch("https://uet-schedule.herokuapp.com/schedule/getAll")
       .then((result) => result.json())
@@ -412,23 +428,7 @@ class StudentExam extends React.Component {
         alert("Không thể lấy dữ liệu lịch thi");
       });
 
-
-      axios
-          .get(
-            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-          )
-          .then((result) => {
-            if (result.data.scheduleList.length !== 0) {
-              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
-              this.setState({
-                users: temp_listUser,
-              });
-            }
-          })
-          .catch((err) => {
-            // console.log(err.response);
-            console.log("Không thể trích xuất dữ liệu.");
-          });
+      
   }
 
   deleteUser = (key) => {
@@ -614,6 +614,21 @@ class StudentExam extends React.Component {
 
   handleSubmitTKB() {
     
+    const postEnrollList = this.state.users.map((user) => {
+      return { classID: user.classID, group: user.group };
+    });
+
+    axios
+      .post("https://uet-schedule.herokuapp.com/student/submitClass", {
+        studentID: this.state.studentID,
+        enrollList: postEnrollList,
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err.response);
+      });
+
+
     //Get All Data  lich thi return listAllExam
     if (this.state.users.length !== 0) {
       var users_reduced = Object.values(
@@ -622,13 +637,14 @@ class StudentExam extends React.Component {
           return r;
         }, {})
       );
+      console.log(users_reduced)
       var temp_listExam = [];
        for (var i = 0; i < users_reduced.length; i++) {
          for (var j = 0; j < this.state.listAllExam.length; j++) {
            if (
              users_reduced[i].classID === this.state.listAllExam[j].classID 
            ) {
-             console.log("999")
+             console.log("dmm?")
              temp_listExam.push({
                classID: this.state.listAllExam[j].classID,
                className: this.state.listAllExam[j].className,
@@ -654,21 +670,11 @@ class StudentExam extends React.Component {
        this.setState({
          listExam: temp_listExam,
        })
-       console.log(this.state.listExam)
+       console.log("listExam demo:")
+       console.log(temp_listExam)
      }
-    const postEnrollList = this.state.users.map((user) => {
-      return { classID: user.classID, group: user.group };
-    });
-    axios
-      .post("https://uet-schedule.herokuapp.com/student/submitClass", {
-        studentID: this.state.studentID,
-        enrollList: postEnrollList,
-      })
-      .catch((err) => {
-        alert(err);
-        console.log(err.response);
-      });
 
+    
       this.setState({
         screen: 6,
       });
