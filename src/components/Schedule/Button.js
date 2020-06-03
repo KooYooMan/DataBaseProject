@@ -7,13 +7,13 @@ class Button extends React.Component {
             <div id="lecturer-menu-buttons">
                 <div className="container">
                     <div className="button-wrapper">
-                        <a className="background-button" onClick={this.props.backButton} href="#" title="Trở về"></a>
+                        <a className="background-button" onClick={this.props.backButton} href="#" title="Trở về" style={{fontSize: '20px'}}></a>
                     </div>
                     <div className="button-wrapper">
-                        <a className="background-button" onClick={this.props.exportPNG} href="#" title="Lưu ảnh"></a>
+                        <a className="background-button" onClick={this.props.exportPNG} href="#" title="Lưu ảnh" style={{fontSize: '20px'}}></a>
                     </div>
                     <div className="button-wrapper">
-                        <a className="background-button" onClick={this.props.exportGoogleCalandar} href="#" title="Lưu Google Calandar"></a>
+                        <a className="background-button" onClick={this.props.exportGoogleCalandar} href="#" title="Lưu Google Calandar" style={{fontSize: '20px'}}></a>
                     </div>
                 </div>
             </div>

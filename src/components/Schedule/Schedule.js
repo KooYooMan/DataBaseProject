@@ -41,14 +41,18 @@ class googleCalendar {
 
     createEvent(events) {
         if (this.userAuthStatus()) {
-            events.map(event => {
+            for (let i = 0; i < events.length; ++i) {
+                var event = events[i];
                 let request = this.gapi.client.calendar.events.insert({
                     calendarId: "primary",
                     resource: event
                 });
-                request.execute(() => { });
-            })
-            alert("done");
+                request.execute(() => {
+                    if (i === events.length - 1) {
+                        alert('Đã thêm toàn bộ môn học')
+                    }
+                });
+            }
         } else {
             this.callStack.func = this.createEvent.bind(this);
             this.callStack.args = events
@@ -91,35 +95,36 @@ class Schedule extends React.Component {
 
     ExamCalandarConvert(data) {
         var covertShiftToHour = (shift) => {
-          switch(shift) {
-            case 1:
-              return '09';
-            case 2:
-              return '11';
-            case 3:
-              return '15';
-            default:
-              return '17';
-          }
+            switch (shift) {
+                case 1:
+                    return '09';
+                case 2:
+                    return '11';
+                case 3:
+                    return '15';
+                default:
+                    return '17';
+            }
         }
         var result = data.map(value => ({
-          'summary': `${value.courseName} - ${value.classID}`,
-          'location': `${value.auditorium}`,
-          'start': {
-            'dateTime': `2020-${value.day.substr(3, 2)}-${value.day.substr(0, 2)}T${value.start.substr(0, 2)}:${value.start.substr(3, 2)}:00+07:00`,
-            'timeZone': 'Asia/Saigon',
-          },
-          'end': {
-            'dateTime': `2020-${value.day.substr(3, 2)}-${value.day.substr(0, 2)}T${covertShiftToHour(value.shift)}:00:00+07:00`,
-            'timeZone': 'Asia/Saigon',
-          },
-        }))
+            'summary': `${value.courseName} - ${value.classID}`,
+            'location': `${value.auditorium}`,
+            'start': {
+                'dateTime': `2020-${value.day.split('/')[1].padStart(2, '0')}-${value.day.split('/')[0].padStart(2, '0')}T${value.start.substr(0, 2)}:${value.start.substr(3, 2)}:00+07:00`,
+                'timeZone': 'Asia/Saigon',
+            },
+            'end': {
+                'dateTime': `2020-${value.day.split('/')[1].padStart(2, '0')}-${value.day.split('/')[0].padStart(2, '0')}T${covertShiftToHour(value.shift)}:00:00+07:00`,
+                'timeZone': 'Asia/Saigon',
+            },
+        }));
+        return result;
     }
 
     exportGoogleCalandar() {
         var events = ((this.props.listSubject.type === 'Working')
-        ? this.WorkingCalandarConvert(this.state.listSubject) 
-        : this.ExamCalandarConvert(this.state.listSubject));
+            ? this.WorkingCalandarConvert(this.state.listSubject)
+            : this.ExamCalandarConvert(this.state.listSubject))
         window.googleCalendar.createEvent(events);
     }
 

@@ -10,7 +10,7 @@ class BackButton extends React.Component {
     return (
       <a
         href="#"
-        class="back-button-flip"
+        className="back-button-flip"
         data-back="🡰 Trở lại"
         data-front="🡰 Trở lại"
         onClick={this.props.backButton}
@@ -60,7 +60,7 @@ class Home extends React.Component {
         <div className="subject">
           <a
             href="#"
-            class="btn-flip1"
+            className="btn-flip1"
             data-back="bắt đầu"
             data-front="tạo lịch học"
             onClick={() => this.props.changeState(4)}
@@ -69,7 +69,7 @@ class Home extends React.Component {
         <div className="exam">
           <a
             href="#"
-            class="btn-flip2"
+            className="btn-flip2"
             data-back="bắt đầu"
             data-front="tạo lịch thi"
             onClick={() => this.props.changeState(5)}
