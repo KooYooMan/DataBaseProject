@@ -76,7 +76,7 @@ class Home extends React.Component {
             {this.props.statusID === 1 ? (
               <p>Mã sinh viên không tồn tại</p>
             ) : this.props.statusID === 2 ? (
-              <p>Đang tải dữ liệu</p>
+              <p>Đang tải dữ liệu...</p>
             ) : null}
           </div>
         </div>

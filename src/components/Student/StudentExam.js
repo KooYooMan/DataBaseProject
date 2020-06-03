@@ -288,7 +288,7 @@ class Home extends React.Component {
                   className="button-submit"
                   onClick={this.props.handleSubmitTKB}
                 >
-                  Tạo TKB
+                  Tạo lịch thi
                 </button>
               ) : (
                 console.log("hide")
