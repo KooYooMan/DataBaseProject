@@ -32,7 +32,6 @@ class Home extends React.Component {
     var input = document.getElementById("name");
     input.addEventListener("keyup", function (event) {
       if (event.keyCode === 13) {
-        console.log("da enter roi nhe š");
         event.preventDefault();
         document.getElementById("myBtn").click();
       }
@@ -170,7 +169,6 @@ class StudentID extends React.Component {
   }
 
   handleSubmit() {
-    console.log("da enter");
 
     let listSubject1 = [];
     let listSubject2 = [];
@@ -208,8 +206,6 @@ class StudentID extends React.Component {
           )
           .then((result) => {
             if (result.data.scheduleList.length !== 0) {
-              console.log("data duy");
-              console.log(result.data.scheduleList);
               listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
               this.setState({
                 listSubject: listSubject1,
@@ -217,13 +213,9 @@ class StudentID extends React.Component {
                 screen: 3,
                 statusID: 0,
               });
-              console.log("main:");
-              console.log(this.state.listSubject);
             }
           })
           .catch((err) => {
-            // console.log(err.response);
-            console.log("loi me may roi");
             this.setState({
               empty: true,
             });
@@ -255,8 +247,6 @@ class StudentID extends React.Component {
               screen: 3,
               statusID: 0,
             });
-            console.log("main:");
-            console.log(this.state.listSubject);
           });
 
         //Ket thuc lay lich hoc ------------------------------------------------------

@@ -10,7 +10,7 @@ import "./StudentExam.scss";
 class BackButton extends React.Component {
   render() {
     return (
-      <a className="back-button" onClick={this.props.backButton}>
+      <a href="/#" className="back-button" onClick={this.props.backButton}>
         <i
           className="button__icon fa fa-arrow-left"
           style={{ padding: "5px" }}
@@ -157,9 +157,7 @@ const SuggestionTH = (props) => {
               value.period +
               ")"}{" "}
           </button>
-        ) : (
-          console.log("hidden CL suggest")
-        )
+        ) : null
       );
       // renderList.map(0, 1);
     }
@@ -201,7 +199,7 @@ const Table = ({ users = [], deleteUser }) => {
                 <div className="column">
                   <button className="icon">
                     <i
-                      class="fas fa-user-minus"
+                      className="fas fa-user-minus"
                       onClick={() => deleteUser(key)}
                     />
                   </button>
@@ -269,9 +267,7 @@ class Home extends React.Component {
                 </div>
                 {this.props.error_type !== 0 ? (
                   <p className="errorText">{this.props.error_type}</p>
-                ) : (
-                  console.log("ok")
-                )}
+                ) : null}
                 <button type="submit" className="button-add">
                   Thêm
                 </button>
@@ -279,7 +275,10 @@ class Home extends React.Component {
             </form>
 
             <div className="table_flex">
-              <Table users={this.props.users} deleteUser={this.props.deleteUser} />
+              <Table
+                users={this.props.users}
+                deleteUser={this.props.deleteUser}
+              />
               {this.props.users.length !== 0 ? (
                 <button
                   type="submit"
@@ -288,9 +287,7 @@ class Home extends React.Component {
                 >
                   Tạo lịch thi
                 </button>
-              ) : (
-                console.log("hide")
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -336,6 +333,7 @@ class StudentExam extends React.Component {
       enrollList: [],
       listExam: [],
       listAllExam: [],
+      done: false,
     };
   }
 
@@ -372,8 +370,7 @@ class StudentExam extends React.Component {
         currentInput: "group",
       });
       this.makeListTH(item.classID);
-    } 
-    else {
+    } else {
       this.setState({
         group: item.group,
         listThucHanh: [],
@@ -386,23 +383,24 @@ class StudentExam extends React.Component {
   };
 
   componentDidMount() {
-
+    this.setState({
+      done: false,
+    })
     axios
-          .get(
-            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-          )
-          .then((result) => {
-            if (result.data.scheduleList.length !== 0) {
-              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
-              this.setState({
-                users: temp_listUser,
-              });
-            }
-          })
-          .catch((err) => {
-            // console.log(err.response);
-            console.log("Không thể trích xuất dữ liệu sinh viên.");
+      .get(
+        `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+      )
+      .then((result) => {
+        if (result.data.scheduleList.length !== 0) {
+          var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+          this.setState({
+            users: temp_listUser,
           });
+        }
+      })
+      .catch((err) => {
+        alert("Không thể trích xuất dữ liệu sinh viên.");
+      });
 
     //GET data
     fetch("https://uet-schedule.herokuapp.com/schedule/getAll")
@@ -416,19 +414,17 @@ class StudentExam extends React.Component {
         alert("Không thể lấy dữ liệu lịch học");
       });
 
-      
-      fetch("https://uet-schedule.herokuapp.com/exam/getAll")
+    fetch("https://uet-schedule.herokuapp.com/exam/getAll")
       .then((result) => result.json())
       .then((result) => {
         this.setState({
           listAllExam: result.scheduleList,
+          done: true,
         });
       })
       .catch((err) => {
         alert("Không thể lấy dữ liệu lịch thi");
       });
-
-      
   }
 
   deleteUser = (key) => {
@@ -613,7 +609,6 @@ class StudentExam extends React.Component {
   }
 
   handleSubmitTKB() {
-    
     const postEnrollList = this.state.users.map((user) => {
       return { classID: user.classID, group: user.group };
     });
@@ -625,59 +620,48 @@ class StudentExam extends React.Component {
       })
       .catch((err) => {
         alert(err);
-        console.log(err.response);
       });
 
-
     //Get All Data  lich thi return listAllExam
-    if (this.state.users.length !== 0) {
+    if (this.state.users.length !== 0 && this.state.done) {
       var users_reduced = Object.values(
         this.state.users.reduce((r, o) => {
           r[o.classID] = o;
           return r;
         }, {})
       );
-      console.log(users_reduced)
       var temp_listExam = [];
-       for (var i = 0; i < users_reduced.length; i++) {
-         for (var j = 0; j < this.state.listAllExam.length; j++) {
-           if (
-             users_reduced[i].classID === this.state.listAllExam[j].classID 
-           ) {
-             console.log("dmm?")
-             temp_listExam.push({
-               classID: this.state.listAllExam[j].classID,
-               className: this.state.listAllExam[j].className,
-               day: this.state.listAllExam[j].date,
-               auditorium: this.state.listAllExam[j].auditorium,
-               shift: this.state.listAllExam[j].shift,
-               start: this.state.listAllExam[j].time,
-             });
-           }
-         }
-       }
-       temp_listExam.sort((a, b) => {
-         if(dateFromString(a.day) > dateFromString(b.day)){
-           return 1
-         }
-         else if(dateFromString(a.day) < dateFromString(b.day)) return -1
-         else{
-           if(a.shift > b.shift) return 1
-           else return -1
-         }
-       });
-       
-       this.setState({
-         listExam: temp_listExam,
-       })
-       console.log("listExam demo:")
-       console.log(temp_listExam)
-     }
+      for (var i = 0; i < users_reduced.length; i++) {
+        for (var j = 0; j < this.state.listAllExam.length; j++) {
+          if (users_reduced[i].classID === this.state.listAllExam[j].classID) {
+            temp_listExam.push({
+              classID: this.state.listAllExam[j].classID,
+              className: this.state.listAllExam[j].className,
+              day: this.state.listAllExam[j].date,
+              auditorium: this.state.listAllExam[j].auditorium,
+              shift: this.state.listAllExam[j].shift,
+              start: this.state.listAllExam[j].time,
+            });
+          }
+        }
+      }
+      temp_listExam.sort((a, b) => {
+        if (dateFromString(a.day) > dateFromString(b.day)) {
+          return 1;
+        } else if (dateFromString(a.day) < dateFromString(b.day)) return -1;
+        else {
+          if (a.shift > b.shift) return 1;
+          else return -1;
+        }
+      });
 
-    
+      this.setState({
+        listExam: temp_listExam,
+      });
       this.setState({
         screen: 6,
       });
+    }
   }
 
   backButton = () => {
@@ -695,30 +679,26 @@ class StudentExam extends React.Component {
           <Home
             backButton={this.props.backButton}
             studentID={this.props.studentID}
-            listSubject={data} 
-            handleChange = {this.handleChange}
-            handleSubmit = {this.handleSubmit}
-            changeInput = {this.changeInput}
-            changeInput_Hidden = {this.changeInput_Hidden}
-            makeListTH = {this.makeListTH}
-            deleteUser = {this.deleteUser}
-            resetFormState = {this.resetFormState}
-            handleSubmitTKB = {this.handleSubmitTKB}
-            currentInput = {this.state.currentInput}
-            group = {this.state.group}
-            classID = {this.state.classID}
-            listSuggestion = {this.state.listSuggestion}
-            listThucHanh = {this.state.listThucHanh}
-            error_type = {this.state.error_type}
-            users = {this.state.users}
+            listSubject={data}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            changeInput={this.changeInput}
+            changeInput_Hidden={this.changeInput_Hidden}
+            makeListTH={this.makeListTH}
+            deleteUser={this.deleteUser}
+            resetFormState={this.resetFormState}
+            handleSubmitTKB={this.handleSubmitTKB}
+            currentInput={this.state.currentInput}
+            group={this.state.group}
+            classID={this.state.classID}
+            listSuggestion={this.state.listSuggestion}
+            listThucHanh={this.state.listThucHanh}
+            error_type={this.state.error_type}
+            users={this.state.users}
           />
         );
       case 6:
-        return( 
-        <Schedule 
-        listSubject={data} 
-        backButton={this.backButton} 
-        />);
+        return <Schedule listSubject={data} backButton={this.backButton} />;
     }
   };
 

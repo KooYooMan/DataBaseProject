@@ -9,7 +9,7 @@ class BackButton extends React.Component {
   render() {
     return (
       <a
-        href="#"
+        href="/#"
         className="back-button-flip"
         data-back="🡰 Trở lại"
         data-front="🡰 Trở lại"
@@ -35,7 +35,8 @@ class Home extends React.Component {
       for (var i = 0; i < this.props.listUser.length; i++) {
         for (var j = 0; j < this.state.listAllExam.length; j++) {
           if (
-            this.props.listUser[i].classID === this.state.listAllExam[j].classID &&
+            this.props.listUser[i].classID ===
+              this.state.listAllExam[j].classID &&
             this.props.listUser[i].group === this.state.listAllExam[j].group
           ) {
             this.props.listExam.push({
@@ -59,7 +60,7 @@ class Home extends React.Component {
         <BackButton backButton={this.props.backButton} />
         <div className="subject">
           <a
-            href="#"
+            href="/#"
             className="btn-flip1"
             data-back="bắt đầu"
             data-front="tạo lịch học"
@@ -68,7 +69,7 @@ class Home extends React.Component {
         </div>
         <div className="exam">
           <a
-            href="#"
+            href="/#"
             className="btn-flip2"
             data-back="bắt đầu"
             data-front="tạo lịch thi"

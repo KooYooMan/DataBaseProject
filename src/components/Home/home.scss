@@ -43,7 +43,6 @@
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-  
     .card {
       background-image: url($img-url);
       background-size: cover;
@@ -54,45 +53,8 @@
       background-color: #fff;
       overflow: hidden;
       margin-bottom: 4px;
-  
-      // &:before {
-      //   content: "";
-      //   z-index: 99;
-      //   position: absolute;
-      //   top: -10px;
-      //   left: 32px;
-      //   display: block;
-      //   width: 16px;
-      //   height: 16px;
-      //   border-radius: 16px;
-      //   background-color: $bg-color;
-      // }
-      // &:after {
-      //   content: "";
-      //   z-index: 99;
-      //   position: absolute;
-      //   bottom: -10px;
-      //   left: 32px;
-      //   display: block;
-      //   width: 16px;
-      //   height: 16px;
-      //   border-radius: 16px;
-      //   background-color: $bg-color;
-      // }
-      // ul {
-      //   z-index: 99;
-      //   position: absolute;
-      //   left: 39px;
-      //   top: 5px;
-      //   list-style-type: none;
-      //   li {
-      //     width: 2px;
-      //     height: 2px;
-      //     border-radius: 2px;
-      //     margin: 6px 0;
-      //     background-color: $bg-color;
-      //   }
-      // }
+      filter: grayscale(0.4);
+      transition: all 0.6s ease-in-out;
       h2 {
         z-index: 99;
         font-family: "Poppins", sans-serif;
@@ -112,29 +74,6 @@
         font-size: 40px;
         cursor: pointer;
       }
-      // p {
-      //   z-index: 99;
-      //   position: absolute;
-      //   top: 20px;
-      //   right: 70px;
-      //   color: #333;
-      //   opacity: 0.7;
-      //   font-size: 12px;
-      //   letter-spacing: 1px;
-      //   writing-mode: vertical-lr;
-      //   -webkit-transition: all 0.2s ease;
-      //   transition: all 0.2s ease;
-      // }
-
-      // .pic {
-      //   z-index: 100;
-      //   width: 60vw;
-      //   height: 45vh;
-      //   background-image: url($img-url);
-      //   background-position: center center;
-      //   background-size: cover;
-      //   filter: grayscale(30%);
-      // }
   
       button {
         position: absolute;
@@ -147,19 +86,14 @@
         border-radius: 30px;
         cursor: pointer;
         outline:none;
-        transition: all 0.3s ease;
+        transition: all 0.6s ease-in-out;
         mix-blend-mode: hard-light;
       }
 
       &:hover {
         width: 55vw;
         height: 42vh;
-        transition-duration: 2s;
-        .pic {
-          width: 820px;
-          height: 300px;
-          transition-duration: 2s;
-        }
+        filter: grayscale(0);
       }
 
       &:hover button {  
@@ -170,9 +104,6 @@
         color: #fff;
       }
       
-      &:hover .pic {
-        filter: grayscale(0);
-      }
     }
     
     .card2 {
