@@ -332,7 +332,7 @@ class Student extends React.Component {
       }, {})
     );
 
-    if (reducedList.length <= 20) {
+    if (reducedList.length <= 30) {
       this.setState({
         listSuggestion: reducedList,
       });
