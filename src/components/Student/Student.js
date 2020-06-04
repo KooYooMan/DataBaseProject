@@ -9,7 +9,7 @@ import axios from "axios";
 class BackButton extends React.Component {
   render() {
     return (
-      <a className="back-button" onClick={this.props.backButton}>
+      <a href="/#" className="back-button" onClick={this.props.backButton}>
         <i
           className="button__icon fa fa-arrow-left"
           style={{ padding: "5px" }}
@@ -27,7 +27,7 @@ function convertStringToInt(s) {
 
 function checkError(data) {
   let n = data.length,
-  errorLog = [];
+    errorLog = [];
   errorLog.push("");
   for (var i = 0; i < n; i++) {
     errorLog.push(0);
@@ -151,9 +151,7 @@ const SuggestionTH = (props) => {
               value.period +
               ")"}{" "}
           </button>
-        ) : (
-          console.log("hidden CL suggest")
-        )
+        ) : null
       );
       // renderList.map(0, 1);
     }
@@ -270,24 +268,22 @@ class Student extends React.Component {
         alert("Không thể trích xuất dữ liệu");
       });
 
-      //Get student's schedule list
-      axios
-          .get(
-            `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
-          )
-          .then((result) => {
-            if (result.data.scheduleList.length !== 0) {
-              var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
-              this.setState({
-                users: temp_listUser,
-              });
-            }
-          })
-          .catch((err) => {
-            // console.log(err.response);
-            console.log("Không thể trích xuất dữ liệu.");
+    //Get student's schedule list
+    axios
+      .get(
+        `https://uet-schedule.herokuapp.com/student/getSchedule?studentID=${this.state.studentID}`
+      )
+      .then((result) => {
+        if (result.data.scheduleList.length !== 0) {
+          var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+          this.setState({
+            users: temp_listUser,
           });
-
+        }
+      })
+      .catch((err) => {
+        alert("Không thể trích xuất dữ liệu.");
+      });
   }
 
   deleteUser = (key) => {
@@ -483,14 +479,13 @@ class Student extends React.Component {
         enrollList: postEnrollList,
       })
       .catch((err) => {
-        alert("dcmm");
-        console.log(err.response);
+        alert(err.response);
       });
   }
 
   render() {
-    var data = this.state.users
-    data.type = "Working"
+    var data = this.state.users;
+    data.type = "Working";
     if (this.state.screen === 1) {
       return (
         <div id="student-component">
@@ -544,9 +539,7 @@ class Student extends React.Component {
                   </div>
                   {this.state.error_type !== 0 ? (
                     <p className="errorText">{this.state.error_type}</p>
-                  ) : (
-                    console.log("ok")
-                  )}
+                  ) : null}
                   <button type="submit" className="button-add">
                     Thêm
                   </button>
@@ -563,18 +556,14 @@ class Student extends React.Component {
                   >
                     Tạo TKB
                   </button>
-                ) : (
-                  console.log("hide")
-                )}
+                ) : null}
               </div>
             </div>
           </div>
         </div>
       );
     } else if (this.state.screen === 6) {
-      return (
-        <Schedule listSubject={data} backButton={this.backButton} />
-      );
+      return <Schedule listSubject={data} backButton={this.backButton} />;
     } else {
       return <StudentID />;
     }
@@ -609,7 +598,7 @@ const Table = ({ users = [], deleteUser }) => {
                 <div className="column">
                   <button className="icon">
                     <i
-                      class="fas fa-user-minus"
+                      className="fas fa-user-minus"
                       onClick={() => deleteUser(key)}
                     />
                   </button>
