@@ -45,22 +45,60 @@ class googleCalendar {
 
   createEvent(events) {
     if (this.userAuthStatus()) {
-      for (let i = 0; i < events.length; ++i) {
-        var event = events[i];
-        let request = this.gapi.client.calendar.events.insert({
-          calendarId: "primary",
-          resource: event,
-        });
-        request.execute(() => {
-          if (i === events.length - 1) {
-            alert("Đã thêm toàn bộ môn học");
-            const win = window.open("https://calendar.google.com", "_blank");
-            if (win != null) {
-              win.focus();
+
+      var request = window.gapi.client.calendar.calendarList.list({});
+
+      request.execute(function (resp) {
+        if (!resp.error) {
+          const process = new Promise((resolve, reject) => {
+            let found = false;
+            let calendarId;
+            resp.items.forEach(value => {
+              if (value.summary === 'UETSchedule') {
+                found = true;
+                calendarId = value.id;
+              }
+            });
+
+            if (!found) {
+              const createRequest = window.gapi.client.calendar.calendars.insert({ summary: 'UETSchedule' })
+              createRequest.execute(resp => {
+                if (!resp.error) {
+                  calendarId = resp.id;
+                  resolve(calendarId);
+                }
+                else {
+                  reject();
+                }
+              })
             }
-          }
-        });
-      }
+            else resolve(calendarId);
+          });
+          process
+            .then(calendarId => {
+              for (let i = 0; i < events.length; ++i) {
+                var event = events[i];
+                let request = window.gapi.client.calendar.events.insert({
+                  calendarId: calendarId,
+                  resource: event,
+                });
+                request.execute(() => {
+                  if (i === events.length - 1) {
+                    alert("Đã thêm toàn bộ môn học");
+                    const win = window.open("https://calendar.google.com", "_blank");
+                    if (win != null) {
+                      win.focus();
+                    }
+                  }
+                });
+              }
+            })
+            .catch(() => { })
+        }
+        else {
+          alert('Error!')
+        }
+      });
     } else {
       this.callStack.func = this.createEvent.bind(this);
       this.callStack.args = events;
@@ -86,7 +124,7 @@ class Schedule extends React.Component {
     var result = data.map((value) => ({
       summary: `${value.courseName} - ${value.classID} - ${
         value.group === "CL" ? value.group : "N" + value.group
-      }`,
+        }`,
       location: `${value.auditorium}`,
       start: {
         dateTime: `2020-03-${value.dayOfWeek}T${value.start + 6}:00:00+07:00`,
@@ -121,19 +159,19 @@ class Schedule extends React.Component {
         dateTime: `2020-${value.day
           .split("/")[1]
           .padStart(2, "0")}-${value.day
-          .split("/")[0]
-          .padStart(2, "0")}T${value.start.substr(0, 2)}:${value.start.substr(
-          3,
-          2
-        )}:00+07:00`,
+            .split("/")[0]
+            .padStart(2, "0")}T${value.start.substr(0, 2)}:${value.start.substr(
+              3,
+              2
+            )}:00+07:00`,
         timeZone: "Asia/Saigon",
       },
       end: {
         dateTime: `2020-${value.day
           .split("/")[1]
           .padStart(2, "0")}-${value.day
-          .split("/")[0]
-          .padStart(2, "0")}T${covertShiftToHour(value.shift)}:00:00+07:00`,
+            .split("/")[0]
+            .padStart(2, "0")}T${covertShiftToHour(value.shift)}:00:00+07:00`,
         timeZone: "Asia/Saigon",
       },
     }));
