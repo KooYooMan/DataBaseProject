@@ -10,7 +10,7 @@ import "./StudentExam.scss";
 class BackButton extends React.Component {
   render() {
     return (
-      <a href="/#" className="back-button" onClick={this.props.backButton}>
+      <a  className="back-button" onClick={this.props.backButton}>
         <i
           className="button__icon fa fa-arrow-left"
           style={{ padding: "5px" }}

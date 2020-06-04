@@ -9,7 +9,7 @@ class BackButton extends React.Component {
   render() {
     return (
       <a
-        href="/#"
+        
         className="back-button-flip"
         data-back="🡰 Trở lại"
         data-front="🡰 Trở lại"
@@ -60,7 +60,7 @@ class Home extends React.Component {
         <BackButton backButton={this.props.backButton} />
         <div className="subject">
           <a
-            href="/#"
+            
             className="btn-flip1"
             data-back="bắt đầu"
             data-front="tạo lịch học"
@@ -69,7 +69,7 @@ class Home extends React.Component {
         </div>
         <div className="exam">
           <a
-            href="/#"
+            
             className="btn-flip2"
             data-back="bắt đầu"
             data-front="tạo lịch thi"

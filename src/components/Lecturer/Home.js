@@ -9,7 +9,7 @@ class BackButton extends React.Component {
     render() {
         return (
             <div className="back-button-container">
-                <a href="/#" className="back-button" onClick={this.props.homeScreen}>
+                <a  className="back-button" onClick={this.props.homeScreen}>
                     <i className="button__icon fa fa-arrow-left" style={{ padding: '5px' }}></i>
                     <span className="button__text">Trở về</span>
                 </a>
