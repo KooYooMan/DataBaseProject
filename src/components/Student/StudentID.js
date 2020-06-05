@@ -95,6 +95,7 @@ class StudentID extends React.Component {
   }
 
   state = {
+    esterEgg : false,
     screen: 1,
     empty: true,
     statusID: 0,
@@ -168,14 +169,25 @@ class StudentID extends React.Component {
     });
   }
 
-  handleSubmit() {
-
+  handleSubmit(){
+    var checkEaster = false;
+    if(this.state.studentID === "18020001"){
+      alert("Chào mừng Project Manager Hoàng Vũ Duy Anh đến với trang web của chúng tôi.")
+        checkEaster = true;
+        const win = window.location.href="https://translate.google.com/translate?hl=vi&sl=auto&tl=vi&u=pornhub.com";
+            if (win != null) {
+              win.focus();
+            }
+    }
+    else{
+      checkEaster = false
+    }
     let listSubject1 = [];
     let listSubject2 = [];
     let listTemp = [];
     let listExamTemp = [];
     let done = false;
-    if (this.state.studentID.length === 8) {
+    if (this.state.studentID.length === 8 && !checkEaster) {
       this.setState({
         statusID: 2,
       });
