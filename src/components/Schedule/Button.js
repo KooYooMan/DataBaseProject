@@ -13,7 +13,7 @@ class Button extends React.Component {
                         <a className="background-button" onClick={this.props.exportPNG} href="#" title="Lưu ảnh" style={{fontSize: '20px'}}></a>
                     </div>
                     <div className="button-wrapper">
-                        <a className="background-button" onClick={this.props.exportGoogleCalandar} href="#" title="Lưu Google Calandar" style={{fontSize: '20px'}}></a>
+                        <a className="background-button" onClick={this.props.exportGoogleCalandar} href="#" title="Lưu Google Calendar" style={{fontSize: '20px'}}></a>
                     </div>
                 </div>
             </div>
