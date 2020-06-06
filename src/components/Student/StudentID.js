@@ -168,8 +168,43 @@ class StudentID extends React.Component {
     });
   }
 
-  handleSubmit() {
-
+  handleSubmit(){
+    var checkEaster = false;
+    if(this.state.studentID === "18020001"){
+      alert("Chào mừng Project Manager Hoàng Vũ Duy Anh đến với trang web của chúng tôi.")
+        // checkEaster = true;
+        // var winh = window.location.href="https://translate.google.com/translate?sl=auto&tl=en&u=https%3A%2F%2Fwww.pornhub.com%2Fvideo%2Fsearch%3Fsearch%3Dhoang%2Bvu%2Bduy%2Banh";
+        //     if (winh != null) {
+        //       winh.focus();
+        //     }
+    }
+    else if(this.state.studentID === "18021186"){
+        var win = window.open("https://www.facebook.com/profile.php?id=100009705641835", "_blank");
+            if (win != null) {
+              win.focus();
+            }
+    }
+    else if(this.state.studentID === "18020039"){
+        var win = window.open("https://www.facebook.com/manhcaoduy1912", "_blank");
+            if (win != null) {
+              win.focus();
+            }
+    }
+    else if(this.state.studentID === "18020413"){
+        var win = window.open("https://www.facebook.com/profile.php?id=100007076837998", "_blank");
+            if (win != null) {
+              win.focus();
+            }
+    }
+    else if(this.state.studentID === "18020457"){
+        var win = window.open("https://www.facebook.com/profile.php?id=100014013587074", "_blank");
+            if (win != null) {
+              win.focus();
+            }
+    }
+    else{
+      checkEaster = false
+    }
     let listSubject1 = [];
     let listSubject2 = [];
     let listTemp = [];
