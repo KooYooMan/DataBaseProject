@@ -295,7 +295,7 @@ class Schedule extends React.Component {
                   type={this.props.listSubject.type}
                 />
               </div>
-              <div id="lecturer-table-container">
+              <div id="lecturer-table-container" style={{minHeight: '100vh'}}>
                 <Table
                   listSubject={this.state.listSubject}
                   type={this.props.listSubject.type}

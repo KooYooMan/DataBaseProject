@@ -24,3 +24,6 @@ class Table extends React.Component {
 }
 
 export default Table;
+
+//rgba(255,255,255,0.3);
+//rgba(255,255,255,0.2);

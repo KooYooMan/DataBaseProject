@@ -10,19 +10,19 @@ const TableBody = (props) => {
     var item = props.listSubject[i];
     if (currentDay !== item.day && currentDay !== "") {
       for (var j = currentShift + 1; j <= 4; ++j)
-        resultDay.push(<td style={{padding: '0px'}} key={j}></td>);
+        resultDay.push(<td style={{padding: '10px'}} key={j}></td>);
       result.push(<tr key={currentDay}>{resultDay}</tr>);
       resultDay = [];
       currentShift = -1;
     }
     if (currentDay !== item.day) {
-      resultDay.push(<td style={{padding: '0px'}} key={0}>{item.day}</td>);
+      resultDay.push(<td style={{padding: '10px'}} key={0}>{item.day}</td>);
       currentShift = 0;
     }
     for (var k = currentShift + 1; k < item.shift; ++k)
-      resultDay.push(<td style={{padding: '0px'}} key={k}></td>);
+      resultDay.push(<td style={{padding: '10px'}} key={k}></td>);
     resultDay.push(
-      <td style={{padding: '0px'}} key={item.shift} id={"subject-" + item.id}>
+      <td style={{padding: '10px'}} key={item.shift} id={"subject-" + item.id}>
         <div style={{ fontWeight: "bold" }}>
           {item.start}
           <br></br> <br></br>
@@ -37,7 +37,7 @@ const TableBody = (props) => {
     currentShift = item.shift;
   }
 
-  for (var j = currentShift + 1; j <= 4; ++j) resultDay.push(<td style={{padding: '0px'}} key={j}></td>);
+  for (var j = currentShift + 1; j <= 4; ++j) resultDay.push(<td style={{padding: '10px'}} key={j}></td>);
   result.push(<tr key={currentDay}>{resultDay}</tr>);
   return <tbody>{result}</tbody>;
 };
@@ -52,7 +52,7 @@ class ExamTable extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{padding: '20px'}}>
         <table id="schedule-table">
           <thead>
             <tr>
