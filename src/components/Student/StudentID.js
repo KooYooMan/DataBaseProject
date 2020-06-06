@@ -243,6 +243,7 @@ class StudentID extends React.Component {
           .then((result) => {
             if (result.data.scheduleList.length !== 0) {
               listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
+              listSubject1.sort((a,b) => (a.classID > b.classID)? 1: -1)
               this.setState({
                 listSubject: listSubject1,
                 empty: false,

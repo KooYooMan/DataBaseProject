@@ -54,7 +54,7 @@
     background-color: white;
     box-shadow: 0 0 6px 1.5px #888888;
     height: 40%;
-    max-height: 530px;
+    max-height: 80vh;
   }
   h1 {
     color: #403866;
@@ -180,7 +180,7 @@
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
-    max-height: 150px;
+    max-height: 35vh;
     & > button {
       color: white;
       margin: 5px auto;
