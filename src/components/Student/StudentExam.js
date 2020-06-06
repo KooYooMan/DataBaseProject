@@ -393,6 +393,7 @@ class StudentExam extends React.Component {
       .then((result) => {
         if (result.data.scheduleList.length !== 0) {
           var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+          temp_listUser.sort((a,b) => (a.classID > b.classID)? 1: -1)
           this.setState({
             users: temp_listUser,
           });

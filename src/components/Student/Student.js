@@ -265,7 +265,7 @@ class Student extends React.Component {
         });
       })
       .catch((err) => {
-        alert("Không thể trích xuất dữ liệu");
+        alert("Không thể trích xuất dữ liệu lịch học toàn bộ sinh viên");
       });
 
     //Get student's schedule list
@@ -275,14 +275,15 @@ class Student extends React.Component {
       )
       .then((result) => {
         if (result.data.scheduleList.length !== 0) {
-          var temp_listUser = result.data.scheduleList; //list mon hoc lay tu database
+          var temp_listUser = result.data.scheduleList;
+          temp_listUser.sort((a,b) => (a.classID > b.classID)? 1: -1) //list mon hoc lay tu database
           this.setState({
             users: temp_listUser,
           });
         }
       })
       .catch((err) => {
-        alert("Không thể trích xuất dữ liệu.");
+        alert("Không thể trích xuất dữ liệu của sinh viên" + this.state.studentID.toString());
       });
   }
 
