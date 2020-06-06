@@ -95,6 +95,7 @@ class StudentID extends React.Component {
   }
 
   state = {
+    esterEgg : false,
     screen: 1,
     empty: true,
     statusID: 0,
@@ -210,7 +211,7 @@ class StudentID extends React.Component {
     let listTemp = [];
     let listExamTemp = [];
     let done = false;
-    if (this.state.studentID.length === 8) {
+    if (this.state.studentID.length === 8 && !checkEaster) {
       this.setState({
         statusID: 2,
       });
