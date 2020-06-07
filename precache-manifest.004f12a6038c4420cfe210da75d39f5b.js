@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ce2c7220534f6d081c1d08795c8ad877",
+    "revision": "25b7dfb655fc0cc5c87ac728a27a6059",
     "url": "/DataBaseProject/index.html"
   },
   {
-    "revision": "5dc8c62367f599f8efed",
-    "url": "/DataBaseProject/static/css/main.510f7044.chunk.css"
+    "revision": "371020d7d3c7c709711a",
+    "url": "/DataBaseProject/static/css/main.8058c2f7.chunk.css"
   },
   {
     "revision": "c7f7da13ca7e4972fef1",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DataBaseProject/static/js/2.a638438e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5dc8c62367f599f8efed",
-    "url": "/DataBaseProject/static/js/main.c8789b73.chunk.js"
+    "revision": "371020d7d3c7c709711a",
+    "url": "/DataBaseProject/static/js/main.48f66134.chunk.js"
   },
   {
     "revision": "639d589ad23e73f24677",

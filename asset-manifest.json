@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/DataBaseProject/static/css/main.510f7044.chunk.css",
-    "main.js": "/DataBaseProject/static/js/main.c8789b73.chunk.js",
-    "main.js.map": "/DataBaseProject/static/js/main.c8789b73.chunk.js.map",
+    "main.css": "/DataBaseProject/static/css/main.8058c2f7.chunk.css",
+    "main.js": "/DataBaseProject/static/js/main.48f66134.chunk.js",
+    "main.js.map": "/DataBaseProject/static/js/main.48f66134.chunk.js.map",
     "runtime-main.js": "/DataBaseProject/static/js/runtime-main.9cd926aa.js",
     "runtime-main.js.map": "/DataBaseProject/static/js/runtime-main.9cd926aa.js.map",
     "static/js/2.a638438e.chunk.js": "/DataBaseProject/static/js/2.a638438e.chunk.js",
     "static/js/2.a638438e.chunk.js.map": "/DataBaseProject/static/js/2.a638438e.chunk.js.map",
     "index.html": "/DataBaseProject/index.html",
-    "precache-manifest.37e81450dda73404fda3d11f1420cb28.js": "/DataBaseProject/precache-manifest.37e81450dda73404fda3d11f1420cb28.js",
+    "precache-manifest.004f12a6038c4420cfe210da75d39f5b.js": "/DataBaseProject/precache-manifest.004f12a6038c4420cfe210da75d39f5b.js",
     "service-worker.js": "/DataBaseProject/service-worker.js",
-    "static/css/main.510f7044.chunk.css.map": "/DataBaseProject/static/css/main.510f7044.chunk.css.map",
+    "static/css/main.8058c2f7.chunk.css.map": "/DataBaseProject/static/css/main.8058c2f7.chunk.css.map",
     "static/js/2.a638438e.chunk.js.LICENSE.txt": "/DataBaseProject/static/js/2.a638438e.chunk.js.LICENSE.txt",
     "static/media/HomeStudent.scss": "/DataBaseProject/static/media/study_b.cb8f7ce1.jpg",
     "static/media/home.scss": "/DataBaseProject/static/media/student2.bfed14ff.jpg"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.9cd926aa.js",
     "static/js/2.a638438e.chunk.js",
-    "static/css/main.510f7044.chunk.css",
-    "static/js/main.c8789b73.chunk.js"
+    "static/css/main.8058c2f7.chunk.css",
+    "static/js/main.48f66134.chunk.js"
   ]
 }
