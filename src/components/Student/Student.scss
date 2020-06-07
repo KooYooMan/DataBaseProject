@@ -31,7 +31,7 @@
     font-weight: 700;
     display: block;
     border: 1px solid #f1f1f1;
-    width: 15%;
+    width: 200px;
     margin: 8px 0 0 0;
     border-radius: 15px;
     background-color: white;
@@ -68,6 +68,15 @@
     color: red;
     margin: 0 auto;
     margin-top: 10px;
+  }
+
+  .noticeText{
+    padding-top: 7px;
+    font-size: smaller;
+    font-style: italic;
+    width: 50%;
+    color: red;
+    margin-right: 10%;
   }
 
   input {
@@ -130,6 +139,26 @@
       transform: translateY(-7px);
     }
   }
+  .button-reset{
+    margin: 20px auto;
+    margin-right: 3%;
+    text-transform: uppercase;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.35s ease 0s;
+    background-color: #6dabe4;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    color: white;
+    border-radius: 20px;
+    outline: none;
+    &:hover {
+      background-color: #2ee59d;
+      box-shadow: 0px 7px 22px rgba(46, 229, 157, 0.3);
+      color: #fff;
+      transform: translateY(-7px);
+    }
+  }
   .button-submit {
     text-transform: uppercase;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
@@ -143,7 +172,6 @@
     color: white;
     border-radius: 20px;
     outline: none;
-    margin-left: 80%;
     &:hover {
       background-color: #2ee59d;
       box-shadow: 0px 7px 22px rgba(46, 229, 157, 0.3);
@@ -214,6 +242,12 @@
   .table_flex {
     margin: 20px 3% 0 3%;
     width: 75%;
+    display: flex;
+    flex-direction: column;
+    .table-footer{
+      display: flex;
+      flex-direction: row;
+    }
   }
   .table {
     box-shadow: 0 0 6px 1.5px #888888;

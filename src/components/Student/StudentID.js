@@ -10,13 +10,11 @@ import "./StudentID.scss";
 class BackButton extends React.Component {
   render() {
     return (
-      <a className="back-button" onClick={this.props.homeScreen}>
-        <i
-          className="button__icon fa fa-arrow-left"
-          style={{ padding: "5px" }}
-        ></i>
-        <span className="button__text">Trở lại</span>
-      </a>
+      <div className="back-button">
+        <a onClick={this.props.homeScreen}>
+            <p className="button-text">🡰 Trở lại</p>
+        </a>
+      </div>
     );
   }
 }
@@ -73,9 +71,9 @@ class Home extends React.Component {
               </button>
             </div>
             {this.props.statusID === 1 ? (
-              <p>Mã sinh viên không tồn tại</p>
+              <p className="text-description">Mã sinh viên không tồn tại</p>
             ) : this.props.statusID === 2 ? (
-              <p>Đang tải dữ liệu...</p>
+              <p className="text-description">Đang tải dữ liệu...</p>
             ) : null}
           </div>
         </div>
@@ -95,7 +93,7 @@ class StudentID extends React.Component {
   }
 
   state = {
-    esterEgg : false,
+    esterEgg: false,
     screen: 1,
     empty: true,
     statusID: 0,
@@ -169,42 +167,51 @@ class StudentID extends React.Component {
     });
   }
 
-  handleSubmit(){
+  handleSubmit() {
     var checkEaster = false;
-    if(this.state.studentID === "18020001"){
-      alert("Chào mừng Project Manager Hoàng Vũ Duy Anh đến với trang web của chúng tôi.")
-        // checkEaster = true;
-        // var winh = window.location.href="https://translate.google.com/translate?sl=auto&tl=en&u=https%3A%2F%2Fwww.pornhub.com%2Fvideo%2Fsearch%3Fsearch%3Dhoang%2Bvu%2Bduy%2Banh";
-        //     if (winh != null) {
-        //       winh.focus();
-        //     }
-    }
-    else if(this.state.studentID === "18021186"){
-        var win = window.open("https://www.facebook.com/profile.php?id=100009705641835", "_blank");
-            if (win != null) {
-              win.focus();
-            }
-    }
-    else if(this.state.studentID === "18020039"){
-        var win = window.open("https://www.facebook.com/manhcaoduy1912", "_blank");
-            if (win != null) {
-              win.focus();
-            }
-    }
-    else if(this.state.studentID === "18020413"){
-        var win = window.open("https://www.facebook.com/profile.php?id=100007076837998", "_blank");
-            if (win != null) {
-              win.focus();
-            }
-    }
-    else if(this.state.studentID === "18020457"){
-        var win = window.open("https://www.facebook.com/profile.php?id=100014013587074", "_blank");
-            if (win != null) {
-              win.focus();
-            }
-    }
-    else{
-      checkEaster = false
+    if (this.state.studentID === "18020001") {
+      alert(
+        "Chào mừng Project Manager Hoàng Vũ Duy Anh đến với trang web của chúng tôi."
+      );
+      // checkEaster = true;
+      // var winh = window.location.href="https://translate.google.com/translate?sl=auto&tl=en&u=https%3A%2F%2Fwww.pornhub.com%2Fvideo%2Fsearch%3Fsearch%3Dhoang%2Bvu%2Bduy%2Banh";
+      //     if (winh != null) {
+      //       winh.focus();
+      //     }
+    } else if (this.state.studentID === "18021186") {
+      var win = window.open(
+        "https://www.facebook.com/profile.php?id=100009705641835",
+        "_blank"
+      );
+      if (win != null) {
+        win.focus();
+      }
+    } else if (this.state.studentID === "18020039") {
+      var win = window.open(
+        "https://www.facebook.com/manhcaoduy1912",
+        "_blank"
+      );
+      if (win != null) {
+        win.focus();
+      }
+    } else if (this.state.studentID === "18020413") {
+      var win = window.open(
+        "https://www.facebook.com/profile.php?id=100007076837998",
+        "_blank"
+      );
+      if (win != null) {
+        win.focus();
+      }
+    } else if (this.state.studentID === "18020457") {
+      var win = window.open(
+        "https://www.facebook.com/profile.php?id=100014013587074",
+        "_blank"
+      );
+      if (win != null) {
+        win.focus();
+      }
+    } else {
+      checkEaster = false;
     }
     let listSubject1 = [];
     let listSubject2 = [];
@@ -243,7 +250,7 @@ class StudentID extends React.Component {
           .then((result) => {
             if (result.data.scheduleList.length !== 0) {
               listSubject1 = result.data.scheduleList; //list mon hoc lay tu database
-              listSubject1.sort((a,b) => (a.classID > b.classID)? 1: -1)
+              listSubject1.sort((a, b) => (a.classID > b.classID ? 1 : -1));
               this.setState({
                 listSubject: listSubject1,
                 empty: false,
