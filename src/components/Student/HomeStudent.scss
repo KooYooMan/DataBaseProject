@@ -30,6 +30,7 @@
 $speed: 0.35s;
 
 .back-button-flip{
+  
   width: 8%;
   height: 8vh;
   opacity: 1;
@@ -89,6 +90,7 @@ $speed: 0.35s;
 }
 //-----------------------------------
 .btn-flip1 {
+  text-shadow: 0px 0px 15px blue;
   width: 50%;
   height: 80%;
   opacity: 1;
@@ -125,7 +127,7 @@ $speed: 0.35s;
     opacity: 0;
     width: 100%;
     height: 100%;
-    color: #18aaa8;
+    // color: #18aaa8;
     display: block;
     transition: $speed;
     position: absolute;
@@ -158,6 +160,7 @@ $speed: 0.35s;
 }
 
 .btn-flip2 {
+  text-shadow: 0px 0px 15px red;
   width: 50%;
   height: 80%;
   opacity: 1;
@@ -195,7 +198,7 @@ $speed: 0.35s;
     opacity: 0;
     width: 100%;
     height: 100%;
-    color: #18aaa8;
+    // color: #18aaa8;
     display: block;
     transition: $speed;
     position: absolute;

@@ -279,7 +279,7 @@ class Home extends React.Component {
                 users={this.props.users}
                 deleteUser={this.props.deleteUser}
               />
-              {this.props.users.length !== 0 ? (
+              
                 <div className = "table-footer">
                     <p className = "noticeText">*Lưu ý: danh sách môn học chỉ được lưu sau khi bạn chọn tạo lịch thi</p>
                     <button
@@ -289,6 +289,7 @@ class Home extends React.Component {
                     >
                       Reset môn học
                     </button>
+                    {this.props.users.length !== 0 ? (
                     <button
                       type="submit"
                       className="button-submit"
@@ -296,8 +297,9 @@ class Home extends React.Component {
                     >
                       Lưu và tạo lịch thi
                     </button>
+                    ) : null}
                 </div>
-                ) : null}
+                
             </div>
           </div>
         </div>

@@ -575,7 +575,7 @@ class Student extends React.Component {
 
               <div className="table_flex">
                 <Table users={this.state.users} deleteUser={this.deleteUser} />
-                {this.state.users.length !== 0 ? (
+                
                 <div className = "table-footer">
                     <p className = "noticeText">*Lưu ý: danh sách môn học chỉ được lưu sau khi bạn chọn tạo TKB</p>
                     <button
@@ -585,6 +585,7 @@ class Student extends React.Component {
                     >
                       Reset môn học
                     </button>
+                    {this.state.users.length !== 0 ? (
                     <button
                       type="submit"
                       className="button-submit"
@@ -592,8 +593,9 @@ class Student extends React.Component {
                     >
                       Lưu và tạo TKB 
                     </button>
+                    ) : null}
                 </div>
-                ) : null}
+                
               </div>
             </div>
           </div>
