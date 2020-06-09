@@ -9,7 +9,7 @@ import axios from "axios";
 class BackButton extends React.Component {
   render() {
     return (
-      <a  className="back-button" onClick={this.props.backButton}>
+      <a className="back-button" onClick={this.props.backButton}>
         <i
           className="button__icon fa fa-arrow-left"
           style={{ padding: "5px" }}
@@ -176,6 +176,7 @@ class Student extends React.Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.resetFormState = this.resetFormState.bind(this);
     this.handleSubmitTKB = this.handleSubmitTKB.bind(this);
+    this.resetSubject = this.resetSubject.bind(this);
 
     this.state = {
       studentID: this.props.studentID,
@@ -276,14 +277,17 @@ class Student extends React.Component {
       .then((result) => {
         if (result.data.scheduleList.length !== 0) {
           var temp_listUser = result.data.scheduleList;
-          temp_listUser.sort((a,b) => (a.classID > b.classID)? 1: -1) //list mon hoc lay tu database
+          temp_listUser.sort((a, b) => (a.classID > b.classID ? 1 : -1)); //list mon hoc lay tu database
           this.setState({
             users: temp_listUser,
           });
         }
       })
       .catch((err) => {
-        alert("Không thể trích xuất dữ liệu của sinh viên" + this.state.studentID.toString());
+        alert(
+          "Không thể trích xuất dữ liệu của sinh viên" +
+            this.state.studentID.toString()
+        );
       });
   }
 

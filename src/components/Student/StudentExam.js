@@ -280,14 +280,24 @@ class Home extends React.Component {
                 deleteUser={this.props.deleteUser}
               />
               {this.props.users.length !== 0 ? (
-                <button
-                  type="submit"
-                  className="button-submit"
-                  onClick={this.props.handleSubmitTKB}
-                >
-                  Tạo lịch thi
-                </button>
-              ) : null}
+                <div className = "table-footer">
+                    <p className = "noticeText">*Lưu ý: danh sách môn học chỉ được lưu sau khi bạn chọn tạo lịch thi</p>
+                    <button
+                      type="submit"
+                      className="button-reset"
+                      onClick={this.props.resetSubject}
+                    >
+                      Reset môn học
+                    </button>
+                    <button
+                      type="submit"
+                      className="button-submit"
+                      onClick={this.props.handleSubmitTKB}
+                    >
+                      Tạo lịch thi
+                    </button>
+                </div>
+                ) : null}
             </div>
           </div>
         </div>
@@ -307,6 +317,7 @@ class StudentExam extends React.Component {
     this.deleteUser = this.deleteUser.bind(this);
     this.resetFormState = this.resetFormState.bind(this);
     this.handleSubmitTKB = this.handleSubmitTKB.bind(this);
+    this.resetSubject = this.resetSubject.bind(this);
     this.state = {
       screen: 5,
       studentID: this.props.studentID,
@@ -483,6 +494,10 @@ class StudentExam extends React.Component {
         listSuggestion: [],
       });
     }
+  }
+
+  resetSubject(){
+
   }
 
   resetFormState() {
@@ -696,6 +711,7 @@ class StudentExam extends React.Component {
             listThucHanh={this.state.listThucHanh}
             error_type={this.state.error_type}
             users={this.state.users}
+            resetSubject={this.resetSubject}
           />
         );
       case 6:
