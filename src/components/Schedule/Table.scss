@@ -12,12 +12,26 @@
         width: 90%;
         transform: translate(0%, 0%);
         table {
+            tbody {
+                display: block;
+                max-height: calc(100vh - 100px);
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
+            
+            .tbody::-webkit-scrollbar { width: 0 !important }
+            .tbody { overflow: -moz-scrollbars-none; }
+            .tbody { -ms-overflow-style: none; }
+
             td {
                 max-width: 30px;
                 font-size: 12px;
             }
             tr {
                 height: 30px;
+                display:table;
+                width:100%;
+                table-layout:fixed;
             }
             width: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -51,8 +65,8 @@
                 position: absolute;
                 background-color: rgba(255, 255, 255, 0.2);
                 left: 0;
-                top: -50000px;
-                height: 100000px;
+                top: -10000px;
+                height: 10000px;
                 width: 100%;
                 z-index: -1;
             }

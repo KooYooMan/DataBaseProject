@@ -38,7 +38,7 @@ const TableBody = (props) => {
         }
         result.push(<tr key={i}>{resultDay}</tr>)
     }
-    return <tbody>{result}</tbody>
+    return <tbody className="tbody">{result}</tbody>
 }
 
 class WorkingTable extends React.Component {

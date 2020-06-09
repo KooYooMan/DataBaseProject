@@ -39,7 +39,7 @@ const TableBody = (props) => {
 
   for (var j = currentShift + 1; j <= 4; ++j) resultDay.push(<td style={{padding: '10px'}} key={j}></td>);
   result.push(<tr key={currentDay}>{resultDay}</tr>);
-  return <tbody>{result}</tbody>;
+  return <tbody className="tbody">{result}</tbody>;
 };
 
 class ExamTable extends React.Component {
