@@ -14,62 +14,12 @@ class Home extends React.Component {
             <h2>Học sinh</h2>
             <i className="fas fa-arrow-right" />
             <div className="pic" />
-            {/* <ul>
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-            </ul> */}
             <button></button>
           </button>
           <button className="card card2" onClick={this.props.lecturerScreen}>
             <h2>Giảng viên</h2>
             <i className="fas fa-arrow-right" />
             <div className="pic" />
-            <ul>
-              {/* <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li />
-              <li /> */}
-            </ul>
             <button></button>
           </button>
         </div>
