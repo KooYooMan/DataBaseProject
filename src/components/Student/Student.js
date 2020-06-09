@@ -344,6 +344,28 @@ class Student extends React.Component {
     }
   }
 
+  resetSubject(){
+    axios
+    .get(
+      `https://uet-schedule.herokuapp.com/student/getDefaultSchedule?studentID=${this.state.studentID}`
+    )
+    .then((result) => {
+      if (result.data.scheduleList.length !== 0) {
+        var temp_listUser = result.data.scheduleList;
+        temp_listUser.sort((a, b) => (a.classID > b.classID ? 1 : -1)); //list mon hoc lay tu database
+        this.setState({
+          users: temp_listUser,
+        });
+      }
+    })
+    .catch((err) => {
+      alert(
+        "Không thể trích xuất dữ liệu của sinh viên" +
+          this.state.studentID.toString()
+      );
+    });
+  }
+
   resetFormState() {
     document.querySelector("input[name=classID]").value = "";
     this.setState({
@@ -550,13 +572,23 @@ class Student extends React.Component {
               <div className="table_flex">
                 <Table users={this.state.users} deleteUser={this.deleteUser} />
                 {this.state.users.length !== 0 ? (
-                  <button
-                    type="submit"
-                    className="button-submit"
-                    onClick={this.handleSubmitTKB}
-                  >
-                    Tạo TKB
-                  </button>
+                <div className = "table-footer">
+                    <p className = "noticeText">*Lưu ý: danh sách môn học chỉ được lưu sau khi bạn chọn tạo TKB</p>
+                    <button
+                      type="submit"
+                      className="button-reset"
+                      onClick={this.resetSubject}
+                    >
+                      Reset môn học
+                    </button>
+                    <button
+                      type="submit"
+                      className="button-submit"
+                      onClick={this.handleSubmitTKB}
+                    >
+                      Lưu và tạo TKB 
+                    </button>
+                </div>
                 ) : null}
               </div>
             </div>
