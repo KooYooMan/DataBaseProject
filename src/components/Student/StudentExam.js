@@ -294,7 +294,7 @@ class Home extends React.Component {
                       className="button-submit"
                       onClick={this.props.handleSubmitTKB}
                     >
-                      Tạo lịch thi
+                      Lưu và tạo lịch thi
                     </button>
                 </div>
                 ) : null}
@@ -497,7 +497,25 @@ class StudentExam extends React.Component {
   }
 
   resetSubject(){
-
+    axios
+    .get(
+      `https://uet-schedule.herokuapp.com/student/getDefaultSchedule?studentID=${this.state.studentID}`
+    )
+    .then((result) => {
+      if (result.data.scheduleList.length !== 0) {
+        var temp_listUser = result.data.scheduleList;
+        temp_listUser.sort((a, b) => (a.classID > b.classID ? 1 : -1)); //list mon hoc lay tu database
+        this.setState({
+          users: temp_listUser,
+        });
+      }
+    })
+    .catch((err) => {
+      alert(
+        "Không thể trích xuất dữ liệu của sinh viên" +
+          this.state.studentID.toString()
+      );
+    });
   }
 
   resetFormState() {
