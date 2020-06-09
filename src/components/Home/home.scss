@@ -7,14 +7,13 @@
   $img-url2: './lecturer2.jpeg';
   $img-url: './student2.jpg';
 
-  height: 100%;
-  width: 100%;
-
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   background: 
   url('https://www.airport-technology.com/wp-content/uploads/sites/14/2020/02/3d-ai-artificial-intelligence-artwork-1166602.jpg')
   no-repeat;
   background-size: cover;
-
   * {
     margin: 0;
     padding: 0;

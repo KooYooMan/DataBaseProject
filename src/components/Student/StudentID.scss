@@ -17,7 +17,7 @@
     flex-direction: column;
   }
 
-  p{
+  .text-description{
     color: red;
     font-style: italic;
   }
@@ -28,7 +28,7 @@
     width: 80%;
     margin: 0 auto;
     align-items: center;
-    height: 450px;
+    height: 100vh;
   }
 
   h1 {
@@ -63,11 +63,11 @@
   // Basic styles
   button,
   .back-button {
+    cursor: pointer;
     background: none;
     border: none;
     box-sizing: border-box;
-    margin: 0;
-    padding: 1em 1em;
+    // padding: 1em 1em;
     border-image: linear-gradient(to right, $primary, $secondary);
     // Using inset box-shadow instead of border for sizing simplicity
     box-shadow: inset 0 0 0 2px black;
@@ -90,6 +90,7 @@
 
   .button-submit,
   .back-button {
+    width: 9%;
     outline: none;
     transition: color 0.25s;
     text-transform: uppercase;
@@ -147,9 +148,18 @@
     width: 8%;
     margin: 5px 0 0 5px;
     font-size: 14px;
-    padding: 8px 0 0 12px;
     height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    justify-content: center;
   }
+
+  .button-text{
+    margin: 0;
+  }
+
+  
 
   .form__group {
     position: relative;
