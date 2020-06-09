@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/DataBaseProject/static/css/main.8058c2f7.chunk.css",
-    "main.js": "/DataBaseProject/static/js/main.9b7e7225.chunk.js",
-    "main.js.map": "/DataBaseProject/static/js/main.9b7e7225.chunk.js.map",
+    "main.css": "/DataBaseProject/static/css/main.c0b546e4.chunk.css",
+    "main.js": "/DataBaseProject/static/js/main.e351b3be.chunk.js",
+    "main.js.map": "/DataBaseProject/static/js/main.e351b3be.chunk.js.map",
     "runtime-main.js": "/DataBaseProject/static/js/runtime-main.9cd926aa.js",
     "runtime-main.js.map": "/DataBaseProject/static/js/runtime-main.9cd926aa.js.map",
-    "static/js/2.a638438e.chunk.js": "/DataBaseProject/static/js/2.a638438e.chunk.js",
-    "static/js/2.a638438e.chunk.js.map": "/DataBaseProject/static/js/2.a638438e.chunk.js.map",
+    "static/js/2.7b33a81e.chunk.js": "/DataBaseProject/static/js/2.7b33a81e.chunk.js",
+    "static/js/2.7b33a81e.chunk.js.map": "/DataBaseProject/static/js/2.7b33a81e.chunk.js.map",
     "index.html": "/DataBaseProject/index.html",
-    "precache-manifest.affa0bb01bd1f472174f1356fd840a6c.js": "/DataBaseProject/precache-manifest.affa0bb01bd1f472174f1356fd840a6c.js",
+    "precache-manifest.fa4a26d394d0d919124a8cec26ed8c76.js": "/DataBaseProject/precache-manifest.fa4a26d394d0d919124a8cec26ed8c76.js",
     "service-worker.js": "/DataBaseProject/service-worker.js",
-    "static/css/main.8058c2f7.chunk.css.map": "/DataBaseProject/static/css/main.8058c2f7.chunk.css.map",
-    "static/js/2.a638438e.chunk.js.LICENSE.txt": "/DataBaseProject/static/js/2.a638438e.chunk.js.LICENSE.txt",
+    "static/css/main.c0b546e4.chunk.css.map": "/DataBaseProject/static/css/main.c0b546e4.chunk.css.map",
+    "static/js/2.7b33a81e.chunk.js.LICENSE.txt": "/DataBaseProject/static/js/2.7b33a81e.chunk.js.LICENSE.txt",
     "static/media/HomeStudent.scss": "/DataBaseProject/static/media/study_b.cb8f7ce1.jpg",
     "static/media/home.scss": "/DataBaseProject/static/media/student2.bfed14ff.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.9cd926aa.js",
-    "static/js/2.a638438e.chunk.js",
-    "static/css/main.8058c2f7.chunk.css",
-    "static/js/main.9b7e7225.chunk.js"
+    "static/js/2.7b33a81e.chunk.js",
+    "static/css/main.c0b546e4.chunk.css",
+    "static/js/main.e351b3be.chunk.js"
   ]
 }
