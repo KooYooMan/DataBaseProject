@@ -6,6 +6,7 @@
   height: 100vh;
   margin: 0;
   overflow: hidden;
+  width: 100vw;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -27,11 +28,11 @@
     width: 80%;
     margin: 0 auto;
     align-items: center;
-    height: 90vh;
+    height: 100vh;
   }
 
   h1 {
-    margin: 18vh auto 80px auto;
+    margin: 150px auto 80px auto;
     font-size: 40px;
   }
 
@@ -62,6 +63,7 @@
   // Basic styles
   button,
   .back-button {
+    cursor: pointer;
     background: none;
     border: none;
     box-sizing: border-box;

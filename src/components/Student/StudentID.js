@@ -10,9 +10,9 @@ import "./StudentID.scss";
 class BackButton extends React.Component {
   render() {
     return (
-      <div className="back-button">
-        <a onClick={this.props.homeScreen}>
-            <p className="button-text">🡰 Trở lại</p>
+      <div className="back-button" onClick={this.props.homeScreen}>
+        <a >
+            <span className="button-text" onClick={this.props.homeScreen}>🡰 Trở lại</span>
         </a>
       </div>
     );
@@ -344,7 +344,7 @@ class StudentID extends React.Component {
 
   render() {
     return (
-      <div style={(this.props.style, { height: "100%" })}>
+      <div >
         {this.renderedScreen(this.state.screen)}
       </div>
     );
