@@ -267,6 +267,7 @@ class Schedule extends React.Component {
                   backButton={this.props.backButton}
                   exportPNG={() => {
                     document.getElementById("menu__toggle").checked = false;
+                    document.getElementsByTagName('tbody')[0].style.maxHeight = "";
                     for (
                       var i = 0;
                       i < document.getElementsByTagName("td").length;
@@ -286,6 +287,7 @@ class Schedule extends React.Component {
                         element.style.backgroundColor =
                           "rgba(255, 255, 255, 0.2)";
                       }
+                      document.getElementsByTagName('tbody')[0].style.maxHeight = "calc(100vh - 100px)";
                     }, 2000);
                   }}
                   exportGoogleCalandar={this.exportGoogleCalandar}

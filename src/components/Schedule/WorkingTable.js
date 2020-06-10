@@ -38,7 +38,7 @@ const TableBody = (props) => {
         }
         result.push(<tr key={i}>{resultDay}</tr>)
     }
-    return <tbody className="tbody">{result}</tbody>
+    return <tbody className="tbody" style={{maxHeight: 'calc(100vh - 100px)'}}>{result}</tbody>
 }
 
 class WorkingTable extends React.Component {
