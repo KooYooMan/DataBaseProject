@@ -9,6 +9,10 @@
   * Tạo, sửa đổi và tra cứu thời khóa biểu, lịch bằng mã lớp học cho sinh viên
   * Tra cứu lịch dạy của giảng viên
 ### 2. Cơ sở dữ liệu
+  * Sơ đồ ER
+  ![ER](https://i.imgur.com/h4R0eEV.png)
+
+  * Cơ sở dữ liệu
   ![ERD](https://i.imgur.com/fObau4b.png)
 ### 3. Truy vấn cơ sở dữ liệu
 * Giảng viên
