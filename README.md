@@ -1,4 +1,5 @@
 # Website tạo thời khóa biểu cho sinh viên UET
+## Lớp Cơ sở dữ liệu INT2207 1 - Thầy Lê Hồng Hải
 ## Thành viên đóng góp
   * Cao Duy Mạnh - 18020039
   * Vương Tiến Thành - 18021186
@@ -65,4 +66,19 @@ select * from examschedule
 ~~~
 select * from schedules
 ~~~
-  
+
+### 4. Hình ảnh sản phẩm
+  * Liên kết đến sản phẩm đã triển khai: https://kooyooman.github.io/DataBaseProject/
+  * Giao diện khởi đầu
+  ![main](https://i.imgur.com/dTRwiWT.png)
+  * Tra cứu lịch học (thi) theo mã sinh viên
+  ![stuid](https://i.imgur.com/mK8KpvX.png)
+  * Chọn loại lịch
+  ![select](https://i.imgur.com/ZhVY1nT.png)
+  * Sửa đổi danh sách môn học
+  ![mod](https://i.imgur.com/39tY2bT.png)
+  * Lịch biểu theo bảng và các chức năng
+  ![tab](https://i.imgur.com/hoVUeE7.png)
+  * Tra cứu lịch theo tên giảng viên
+  ![lecturer](https://i.imgur.com/cHzhxMx.png)
+ 
