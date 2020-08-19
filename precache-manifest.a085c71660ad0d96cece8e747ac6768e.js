@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "526b957e706468eea426eb3459b76322",
+    "revision": "8e51be77d3f7b35e9e6c7f8e9d431673",
     "url": "/DataBaseProject/index.html"
   },
   {
-    "revision": "6d4b3c9f84d4f1e2bdd8",
-    "url": "/DataBaseProject/static/css/main.ceab4513.chunk.css"
+    "revision": "b8d2eb6ee6af205c1617",
+    "url": "/DataBaseProject/static/css/main.cb601400.chunk.css"
   },
   {
-    "revision": "05937429257c2494dc1b",
-    "url": "/DataBaseProject/static/js/2.1a1b880c.chunk.js"
+    "revision": "776fdc1ca358280c914c",
+    "url": "/DataBaseProject/static/js/2.6c337c57.chunk.js"
   },
   {
     "revision": "e0c192547816ef7be36ef6ba4b9d10df",
-    "url": "/DataBaseProject/static/js/2.1a1b880c.chunk.js.LICENSE.txt"
+    "url": "/DataBaseProject/static/js/2.6c337c57.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6d4b3c9f84d4f1e2bdd8",
-    "url": "/DataBaseProject/static/js/main.0bc92ba2.chunk.js"
+    "revision": "b8d2eb6ee6af205c1617",
+    "url": "/DataBaseProject/static/js/main.3000e311.chunk.js"
   },
   {
-    "revision": "639d589ad23e73f24677",
-    "url": "/DataBaseProject/static/js/runtime-main.9cd926aa.js"
+    "revision": "38616e10f4613f649f09",
+    "url": "/DataBaseProject/static/js/runtime-main.6a9961aa.js"
   },
   {
     "revision": "6363e4d5e3a136e94f61c20ff7fda23c",
