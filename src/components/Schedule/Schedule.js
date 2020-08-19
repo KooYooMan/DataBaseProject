@@ -127,11 +127,11 @@ class Schedule extends React.Component {
         }`,
       location: `${value.auditorium}`,
       start: {
-        dateTime: `2020-03-${value.dayOfWeek}T${value.start + 6}:00:00+07:00`,
+        dateTime: ((value.dayOfWeek === 2) ? `2020-08-31T${value.start + 6}:00:00+07:00` : `2020-09-${value.dayOfWeek - 2}T${value.start + 6}:00:00+07:00`),
         timeZone: "Asia/Saigon",
       },
       end: {
-        dateTime: `2020-03-${value.dayOfWeek}T${value.finish + 6}:50:00+07:00`,
+        dateTime: ((value.dayOfWeek === 2) ? `2020-08-31T${value.finish + 6}:50:00+07:00` : `2020-09-${value.dayOfWeek - 2}T${value.finish + 6}:50:00+07:00`),
         timeZone: "Asia/Saigon",
       },
       recurrence: ["RRULE:FREQ=WEEKLY;COUNT=15"],
