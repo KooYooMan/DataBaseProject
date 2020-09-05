@@ -82,16 +82,18 @@ class googleCalendar {
                   calendarId: calendarId,
                   resource: event,
                 });
-                request.execute(() => {
-                  if (i === events.length - 1) {
-                    alert("Đã thêm toàn bộ môn học");
-                    const win = window.open("https://calendar.google.com", "_blank");
-                    if (win != null) {
-                      win.focus();
-                    }
-                  }
-                });
+                console.log(event);
+                setTimeout(() => {
+                  request.execute(() => {})
+                }, i * 1000);
               }
+              setTimeout(() => {
+                alert("Đã thêm toàn bộ môn học");
+                const win = window.open("https://calendar.google.com", "_blank");
+                if (win != null) {
+                  win.focus();
+                }
+              }, event.length * 1000);
             })
             .catch(() => { })
         }
@@ -135,6 +137,15 @@ class Schedule extends React.Component {
         timeZone: "Asia/Saigon",
       },
       recurrence: ["RRULE:FREQ=WEEKLY;COUNT=15"],
+      reminders: {
+        useDefault: false,
+        overrides: [
+          {
+            method: "popup",
+            minutes: 30,
+          }
+        ]
+      },
     }));
     return result;
   }
@@ -297,7 +308,7 @@ class Schedule extends React.Component {
                   type={this.props.listSubject.type}
                 />
               </div>
-              <div id="lecturer-table-container" style={{minHeight: '100vh'}}>
+              <div id="lecturer-table-container" style={{ minHeight: '100vh' }}>
                 <Table
                   listSubject={this.state.listSubject}
                   type={this.props.listSubject.type}
