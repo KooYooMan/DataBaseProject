@@ -40,7 +40,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "gh-pages": "^2.2.0",
     "googleapis": "^51.0.0",

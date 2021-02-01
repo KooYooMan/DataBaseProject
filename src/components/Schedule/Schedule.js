@@ -3,11 +3,7 @@ import "./Schedule.scss";
 import Table from "./Table";
 import Button from "./Button";
 import CourseList from "./CourseList";
-import {
-  exportComponentAsJPEG,
-  exportComponenstAsPDF,
-  exportComponentAsPNG,
-} from "react-component-export-image";
+import { exportComponentAsJPEG } from "react-component-export-image";
 import { Spring } from "react-spring/renderprops";
 
 class googleCalendar {
@@ -45,7 +41,6 @@ class googleCalendar {
 
   createEvent(events) {
     if (this.userAuthStatus()) {
-
       var request = window.gapi.client.calendar.calendarList.list({});
 
       request.execute(function (resp) {
@@ -53,29 +48,29 @@ class googleCalendar {
           const process = new Promise((resolve, reject) => {
             let found = false;
             let calendarId;
-            resp.items.forEach(value => {
-              if (value.summary === 'UETSchedule') {
+            resp.items.forEach((value) => {
+              if (value.summary === "UETSchedule") {
                 found = true;
                 calendarId = value.id;
               }
             });
 
             if (!found) {
-              const createRequest = window.gapi.client.calendar.calendars.insert({ summary: 'UETSchedule' })
-              createRequest.execute(resp => {
+              const createRequest = window.gapi.client.calendar.calendars.insert(
+                { summary: "UETSchedule" }
+              );
+              createRequest.execute((resp) => {
                 if (!resp.error) {
                   calendarId = resp.id;
                   resolve(calendarId);
-                }
-                else {
+                } else {
                   reject();
                 }
-              })
-            }
-            else resolve(calendarId);
+              });
+            } else resolve(calendarId);
           });
           process
-            .then(calendarId => {
+            .then((calendarId) => {
               for (let i = 0; i < events.length; ++i) {
                 var event = events[i];
                 let request = window.gapi.client.calendar.events.insert({
@@ -84,21 +79,23 @@ class googleCalendar {
                 });
                 console.log(event);
                 setTimeout(() => {
-                  request.execute(() => {})
+                  request.execute(() => {});
                 }, i * 1000);
               }
               setTimeout(() => {
                 alert("Đã thêm toàn bộ môn học");
-                const win = window.open("https://calendar.google.com", "_blank");
+                const win = window.open(
+                  "https://calendar.google.com",
+                  "_blank"
+                );
                 if (win != null) {
                   win.focus();
                 }
               }, event.length * 1000);
             })
-            .catch(() => { })
-        }
-        else {
-          alert('Error!')
+            .catch(() => {});
+        } else {
+          alert("Error!");
         }
       });
     } else {
@@ -126,14 +123,14 @@ class Schedule extends React.Component {
     var result = data.map((value) => ({
       summary: `${value.courseName} - ${value.classID} - ${
         value.group === "CL" ? value.group : "N" + value.group
-        }`,
+      }`,
       location: `${value.auditorium}`,
       start: {
-        dateTime: ((value.dayOfWeek === 2) ? `2020-08-31T${value.start + 6}:00:00+07:00` : `2020-09-${value.dayOfWeek - 2}T${value.start + 6}:00:00+07:00`),
+        dateTime:`2021-01-${value.dayOfWeek + 16}T${value.start + 6}:00:00+07:00`,
         timeZone: "Asia/Saigon",
       },
       end: {
-        dateTime: ((value.dayOfWeek === 2) ? `2020-08-31T${value.finish + 6}:50:00+07:00` : `2020-09-${value.dayOfWeek - 2}T${value.finish + 6}:50:00+07:00`),
+        dateTime:`2021-01-${value.dayOfWeek + 16}T${value.finish + 6}:50:00+07:00`,
         timeZone: "Asia/Saigon",
       },
       recurrence: ["RRULE:FREQ=WEEKLY;COUNT=15"],
@@ -143,8 +140,8 @@ class Schedule extends React.Component {
           {
             method: "popup",
             minutes: 30,
-          }
-        ]
+          },
+        ],
       },
     }));
     return result;
@@ -167,22 +164,22 @@ class Schedule extends React.Component {
       summary: `${value.courseName} - ${value.classID}`,
       location: `${value.auditorium}`,
       start: {
-        dateTime: `2020-${value.day
+        dateTime: `2021-${value.day
           .split("/")[1]
           .padStart(2, "0")}-${value.day
-            .split("/")[0]
-            .padStart(2, "0")}T${value.start.substr(0, 2)}:${value.start.substr(
-              3,
-              2
-            )}:00+07:00`,
+          .split("/")[0]
+          .padStart(2, "0")}T${value.start.substr(0, 2)}:${value.start.substr(
+          3,
+          2
+        )}:00+07:00`,
         timeZone: "Asia/Saigon",
       },
       end: {
-        dateTime: `2020-${value.day
+        dateTime: `2021-${value.day
           .split("/")[1]
           .padStart(2, "0")}-${value.day
-            .split("/")[0]
-            .padStart(2, "0")}T${covertShiftToHour(value.shift)}:00:00+07:00`,
+          .split("/")[0]
+          .padStart(2, "0")}T${covertShiftToHour(value.shift)}:00:00+07:00`,
         timeZone: "Asia/Saigon",
       },
     }));
@@ -278,7 +275,8 @@ class Schedule extends React.Component {
                   backButton={this.props.backButton}
                   exportPNG={() => {
                     document.getElementById("menu__toggle").checked = false;
-                    document.getElementsByTagName('tbody')[0].style.maxHeight = "";
+                    document.getElementsByTagName("tbody")[0].style.maxHeight =
+                      "";
                     for (
                       var i = 0;
                       i < document.getElementsByTagName("td").length;
@@ -298,7 +296,9 @@ class Schedule extends React.Component {
                         element.style.backgroundColor =
                           "rgba(255, 255, 255, 0.2)";
                       }
-                      document.getElementsByTagName('tbody')[0].style.maxHeight = "calc(100vh - 100px)";
+                      document.getElementsByTagName(
+                        "tbody"
+                      )[0].style.maxHeight = "calc(100vh - 100px)";
                     }, 2000);
                   }}
                   exportGoogleCalandar={this.exportGoogleCalandar}
@@ -308,7 +308,7 @@ class Schedule extends React.Component {
                   type={this.props.listSubject.type}
                 />
               </div>
-              <div id="lecturer-table-container" style={{ minHeight: '100vh' }}>
+              <div id="lecturer-table-container" style={{ minHeight: "100vh" }}>
                 <Table
                   listSubject={this.state.listSubject}
                   type={this.props.listSubject.type}
